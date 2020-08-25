@@ -195,28 +195,28 @@ def notify():
     'type': 'docker',
     'name': 'chat-notification',
     'clone': {
-			'disable': True
-		},
+      'disable': True
+    },
     'steps': [
       {
         'name': 'notify-rocketchat',
         'image': 'plugins/slack:1',
-				'pull': 'always',
-				'settings': {
-					'webhook': {
-						'from_secret': 'private_rocketchat'
-					},
-					'channel': 'builds'
-				}
+        'pull': 'always',
+        'settings': {
+          'webhook': {
+            'from_secret': 'private_rocketchat'
+          },
+          'channel': 'builds'
+        }
       },
     ],
     'trigger': {
       'ref': [
-				'refs/tags/**'
-			],
-			'status': [
-				'success',
-				'failure'
-			]
+        'refs/tags/**'
+      ],
+      'status': [
+        'success',
+        'failure'
+      ]
     },
   }
