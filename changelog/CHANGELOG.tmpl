@@ -1,9 +1,9 @@
-{{ $allVersions := . }}
+{{ `{{ $allVersions := . }}
 {{- range $index, $changes := . }}{{ with $changes -}}
-Changelog for ownCloud Files Picker [{{ .Version }}] ({{ .Date }})
-=======================================
-The following sections list the changes in ownCloud Files Picker {{ .Version }} relevant to
-ownCloud admins and users.
+{{ if gt (len $allVersions) 1 -}}
+# Changelog for [{{ .Version }}] ({{ .Date }})
+
+The following sections list the changes in File Picker`}} {{`{{ .Version }}.
 
 {{/* creating version compare links */ -}}
 {{ $next := add1 $index -}}
@@ -11,24 +11,29 @@ ownCloud admins and users.
 {{ $previousVersion := (index $allVersions $next).Version -}}
 {{ if eq .Version "unreleased" -}}
 [{{ .Version }}]: https://github.com/owncloud/file-picker/compare/v{{ $previousVersion }}...master
-{{- else -}}
+
+{{ else -}}
 [{{ .Version }}]: https://github.com/owncloud/file-picker/compare/v{{ $previousVersion }}...v{{ .Version }}
-{{- end -}}
+
+{{ end -}}
 {{ end -}}
 
 {{- /* last version managed by calens, end of the loop */ -}}
-{{ if eq .Version "0.2.7" -}}
-[{{ .Version }}]: https://github.com/owncloud/file-picker/compare/v0.2.6...v{{ .Version }}
-{{- end }}
+{{ if eq .Version "0.1.0" -}}
+[{{ .Version }}]: https://github.com/owncloud/file-picker/compare/f9d6d96e52b9fa0c275e9971a11e02d11e9ecd85...v{{ .Version }}
 
-Summary
--------
+{{ end -}}
+{{ else -}}
+# Changes in {{ .Version }}
+
+{{ end -}}
+
+## Summary
 {{ range $entry := .Entries }}{{ with $entry }}
 * {{ .Type }} - {{ .Title }}: [#{{ .PrimaryID }}]({{ .PrimaryURL }})
 {{- end }}{{ end }}
 
-Details
--------
+## Details
 {{ range $entry := .Entries }}{{ with $entry }}
 * {{ .Type }} - {{ .Title }}: [#{{ .PrimaryID }}]({{ .PrimaryURL }})
 {{ range $par := .Paragraphs }}
@@ -43,5 +48,6 @@ Details
 {{ range $url := .OtherURLs }}
    {{ $url -}}
 {{ end }}
-{{ end }}{{ end }}
+
 {{ end }}{{ end -}}
+{{ end }}{{ end -}}` }}
