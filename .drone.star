@@ -1,10 +1,11 @@
 def main(ctx):
   before = [
-    changelog(ctx),
-    website(ctx),
+    tests(ctx),
   ]
 
   after = [
+    changelog(ctx),
+    website(ctx),
     notify(),
   ]
 
@@ -218,5 +219,49 @@ def notify():
         'success',
         'failure'
       ]
+    },
+  }
+
+def tests():
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'tests',
+    'platform': {
+      'os': 'linux',
+      'arch': 'amd64',
+    },
+    'steps': [
+      {
+        'name': 'install',
+        'image': 'webhippie/nodejs:latest',
+        'pull': 'always',
+        'commands': [
+          'yarn install --frozen-lockfile',
+        ],
+      },
+      {
+        'name': 'lint',
+        'image': 'webhippie/nodejs:latest',
+        'pull': 'always',
+        'commands': [
+          'yarn lint',
+        ],
+      },
+      {
+        'name': 'build',
+        'image': 'webhippie/nodejs:latest',
+        'pull': 'always',
+        'commands': [
+          'yarn build',
+        ],
+      },
+    ],
+    'trigger': {
+      'ref': [
+        'refs/heads/master',
+        'refs/tags/**',
+        'refs/pull/**',
+      ],
     },
   }
