@@ -1,15 +1,19 @@
 def main(ctx):
   before = [
     tests(ctx),
+    changelog(ctx),
+    website(ctx),
+  ]
+
+  stages = [
+    release(ctx),
   ]
 
   after = [
-    changelog(ctx),
-    website(ctx),
     notify(),
   ]
 
-  return before + after
+  return before + stages + after
 
 def changelog(ctx):
   repo_slug = ctx.build.source_repo if ctx.build.source_repo else ctx.repo.slug
@@ -264,4 +268,68 @@ def tests(ctx):
         'refs/pull/**',
       ],
     },
+  }
+
+def release(ctx):
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'release',
+    'platform': {
+      'os': 'linux',
+      'arch': 'amd64',
+    },
+    'steps': [
+      {
+        'name': 'build',
+        'image': 'webhippie/nodejs:latest',
+        'pull': 'always',
+        'commands': [
+          'yarn install --frozen-lockfile'
+          'yarn build'
+        ]
+      },
+      {
+        'name': 'publish-github',
+        'image': 'plugins/github-release:latest',
+        'pull': 'always',
+        'settings': {
+          'api_key': {
+            'from_secret': 'github_token',
+          },
+          'title': ctx.build.ref.replace("refs/tags/v", ""),
+          'note': 'dist/CHANGELOG.md',
+          'overwrite': True,
+        },
+        'trigger': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+      {
+        'name': 'publish-npm',
+        'image': 'plugins/npm:latest',
+        'pull': 'always',
+        'settings': {
+          'username': {
+            'from_secret': 'npm_username',
+          },
+          'email': {
+            'from_secret': 'npm_email',
+          },
+          'token': {
+            'from_secret': 'npm_token',
+          },
+        },
+        'depends_on': [
+          'tests'
+        ],
+        'trigger': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+    ]
   }
