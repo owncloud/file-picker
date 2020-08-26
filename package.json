@@ -4,7 +4,7 @@
   "author": "ownclouders <devops@owncloud.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target wc --name file-picker",
+    "build": "vue-cli-service build --target wc --name file-picker && rm ./dist/demo.html",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
