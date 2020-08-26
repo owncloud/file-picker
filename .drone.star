@@ -222,7 +222,7 @@ def notify():
     },
   }
 
-def tests():
+def tests(ctx):
   return {
     'kind': 'pipeline',
     'type': 'docker',
