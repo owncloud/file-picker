@@ -285,7 +285,7 @@ def release(ctx):
         'image': 'webhippie/nodejs:latest',
         'pull': 'always',
         'commands': [
-          'yarn install --frozen-lockfile'
+          'yarn install --frozen-lockfile',
           'yarn build'
         ]
       },

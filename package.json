@@ -1,7 +1,31 @@
 {
-  "name": "file-picker",
+  "name": "@owncloud/file-picker",
   "version": "0.1.0",
   "author": "ownclouders <devops@owncloud.com>",
+  "description": "Easily integrate ownCloud into your existing products",
+  "type": "module",
+  "module": "dist/file-picker.js",
+  "main": "dist/file-picker.js",
+  "unpkg": "dist/file-picker.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owncloud/file-picker.git"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "file",
+    "picker",
+    "ocis",
+    "owncloud",
+    "location",
+    "picker"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/owncloud/file-picker/issues"
+  },
+  "homepage": "https://owncloud.github.io/integration/file_picker",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target wc --name file-picker && rm ./dist/demo.html",
