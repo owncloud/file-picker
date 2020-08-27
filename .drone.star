@@ -321,15 +321,15 @@ def release(ctx):
           'token': {
             'from_secret': 'npm_token',
           },
-        },
-        'depends_on': [
-          'tests'
-        ],
-        'trigger': {
-          'ref': [
-            'refs/tags/**',
-          ],
-        },
+        }
       },
-    ]
+    ],
+    'depends_on': [
+      'tests'
+    ],
+    'trigger': {
+      'ref': [
+        'refs/tags/**',
+      ],
+    },
   }
