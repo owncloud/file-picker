@@ -287,7 +287,25 @@ def release(ctx):
         'commands': [
           'yarn install --frozen-lockfile',
           'yarn build'
-        ]
+        ],
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+      {
+        'name': 'changelog',
+        'image': 'toolhippie/calens:latest',
+        'pull': 'always',
+        'commands': [
+          'calens --version %s -o dist/CHANGELOG.md' % ctx.build.ref.replace("refs/tags/v", "").split("-")[0],
+        ],
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
       },
       {
         'name': 'publish-github',
@@ -301,7 +319,7 @@ def release(ctx):
           'note': 'dist/CHANGELOG.md',
           'overwrite': True,
         },
-        'trigger': {
+        'when': {
           'ref': [
             'refs/tags/**',
           ],
@@ -321,7 +339,12 @@ def release(ctx):
           'token': {
             'from_secret': 'npm_token',
           },
-        }
+        },
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
       },
     ],
     'depends_on': [
