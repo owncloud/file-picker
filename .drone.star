@@ -238,7 +238,7 @@ def tests(ctx):
     'steps': [
       {
         'name': 'install',
-        'image': 'webhippie/nodejs:latest',
+        'image': 'owncloudci/nodejs:11',
         'pull': 'always',
         'commands': [
           'yarn install --frozen-lockfile',
@@ -246,7 +246,7 @@ def tests(ctx):
       },
       {
         'name': 'lint',
-        'image': 'webhippie/nodejs:latest',
+        'image': 'owncloudci/nodejs:11',
         'pull': 'always',
         'commands': [
           'yarn lint',
@@ -254,7 +254,7 @@ def tests(ctx):
       },
       {
         'name': 'build',
-        'image': 'webhippie/nodejs:latest',
+        'image': 'owncloudci/nodejs:11',
         'pull': 'always',
         'commands': [
           'yarn build',
@@ -282,7 +282,7 @@ def release(ctx):
     'steps': [
       {
         'name': 'build',
-        'image': 'webhippie/nodejs:latest',
+        'image': 'owncloudci/nodejs:11',
         'pull': 'always',
         'commands': [
           'yarn install --frozen-lockfile',
