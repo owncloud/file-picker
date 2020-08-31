@@ -51,10 +51,10 @@ def changelog(ctx):
       },
       {
         'name': 'generate',
-        'image': 'webhippie/golang:1.13',
+        'image': 'toolhippie/calens:latest',
         'pull': 'always',
         'commands': [
-          'make changelog',
+          'calens >| CHANGELOG.md',
         ],
       },
       {
