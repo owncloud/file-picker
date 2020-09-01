@@ -1,9 +1,9 @@
-{{ `{{ $allVersions := . }}
+{{ $allVersions := . }}
 {{- range $index, $changes := . }}{{ with $changes -}}
 {{ if gt (len $allVersions) 1 -}}
 # Changelog for [{{ .Version }}] ({{ .Date }})
 
-The following sections list the changes in File Picker`}} {{`{{ .Version }}.
+The following sections list the changes in ownCloud File picker {{ .Version }}.
 
 {{/* creating version compare links */ -}}
 {{ $next := add1 $index -}}
@@ -50,4 +50,4 @@ The following sections list the changes in File Picker`}} {{`{{ .Version }}.
 {{ end }}
 
 {{ end }}{{ end -}}
-{{ end }}{{ end -}}` }}
+{{ end }}{{ end -}}

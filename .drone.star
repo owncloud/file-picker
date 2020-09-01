@@ -1,17 +1,21 @@
 def main(ctx):
   before = [
     tests(ctx),
-    changelog(ctx),
-    website(ctx),
   ]
 
   stages = [
+    changelog(ctx),
+    website(ctx),
     release(ctx),
   ]
+
+  dependsOn(before, stages)
 
   after = [
     notify(),
   ]
+
+  dependsOn(stages, after)
 
   return before + stages + after
 
@@ -103,6 +107,7 @@ def changelog(ctx):
         },
       },
     ],
+    'depends_on': [],
     'trigger': {
       'ref': [
         'refs/heads/master',
@@ -186,6 +191,7 @@ def website(ctx):
         },
       },
     ],
+    'depends_on': [],
     'trigger': {
       'ref': [
         'refs/heads/master',
@@ -215,6 +221,7 @@ def notify():
         }
       },
     ],
+    'depends_on': [],
     'trigger': {
       'ref': [
         'refs/tags/**'
@@ -261,6 +268,7 @@ def tests(ctx):
         ],
       },
     ],
+    'depends_on': [],
     'trigger': {
       'ref': [
         'refs/heads/master',
@@ -339,7 +347,6 @@ def release(ctx):
           'token': {
             'from_secret': 'npm_token',
           },
-          'access': 'public',
         },
         'when': {
           'ref': [
@@ -348,12 +355,15 @@ def release(ctx):
         },
       },
     ],
-    'depends_on': [
-      'tests'
-    ],
+    'depends_on': [],
     'trigger': {
       'ref': [
         'refs/tags/**',
       ],
     },
   }
+
+def dependsOn(earlierStages, nextStages):
+	for earlierStage in earlierStages:
+		for nextStage in nextStages:
+			nextStage['depends_on'].append(earlierStage['name'])
