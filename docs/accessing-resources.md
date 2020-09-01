@@ -11,7 +11,7 @@ geekdocFilePath: accessing-resources.md
 
 File picker is returning selected resources via event called `selectResources`. To access them, you need to set an event listener where you'll be able to get them as part of the response of the callback function.
 
-## Access resources in vanilla JavaScript
+## Access resources
 ```html
 <file-picker id="file-picker" variation="resource"></file-picker>
 
@@ -22,26 +22,5 @@ File picker is returning selected resources via event called `selectResources`. 
   item.addEventListener('selectResources', event => {
     resources = event.detail[0]
   })
-</script>
-```
-
-## Access resources in Vue.js web application
-```vuejs
-<template>
-  <file-picker variation="resources" @selectResources="setResources">
-</template>
-
-<script>
-...
-data: () => ({
-  resources: []
-}),
-...
-methods: {
-  setResources(event) {
-    this.resources = event.detail[0]
-  }
-},
-...
 </script>
 ```
