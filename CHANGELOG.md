@@ -1,53 +1,16 @@
-{{ $allVersions := . }}
-{{- range $index, $changes := . }}{{ with $changes -}}
-{{ if gt (len $allVersions) 1 -}}
-# Changelog for [{{ .Version }}] ({{ .Date }})
-
-The following sections list the changes in File Picker {{ .Version }}.
-
-{{/* creating version compare links */ -}}
-{{ $next := add1 $index -}}
-{{ if ne (len $allVersions) $next -}}
-{{ $previousVersion := (index $allVersions $next).Version -}}
-{{ if eq .Version "unreleased" -}}
-[{{ .Version }}]: https://github.com/owncloud/file-picker/compare/v{{ $previousVersion }}...master
-
-{{ else -}}
-[{{ .Version }}]: https://github.com/owncloud/file-picker/compare/v{{ $previousVersion }}...v{{ .Version }}
-
-{{ end -}}
-{{ end -}}
-
-{{- /* last version managed by calens, end of the loop */ -}}
-{{ if eq .Version "0.1.0" -}}
-[{{ .Version }}]: https://github.com/owncloud/file-picker/compare/f9d6d96e52b9fa0c275e9971a11e02d11e9ecd85...v{{ .Version }}
-
-{{ end -}}
-{{ else -}}
-# Changes in {{ .Version }}
-
-{{ end -}}
+# Changes in unreleased
 
 ## Summary
-{{ range $entry := .Entries }}{{ with $entry }}
-* {{ .Type }} - {{ .Title }}: [#{{ .PrimaryID }}]({{ .PrimaryURL }})
-{{- end }}{{ end }}
+
+* Enhancement - Add basic implementation of file picker: [#2](https://github.com/owncloud/file-picker/pull/2)
 
 ## Details
-{{ range $entry := .Entries }}{{ with $entry }}
-* {{ .Type }} - {{ .Title }}: [#{{ .PrimaryID }}]({{ .PrimaryURL }})
-{{ range $par := .Paragraphs }}
-   {{ wrapIndent $par 80 3 }}
-{{ end -}}
-{{ range $url := .IssueURLs }}
-   {{ $url -}}
-{{ end -}}
-{{ range $url := .PRURLs }}
-   {{ $url -}}
-{{ end -}}
-{{ range $url := .OtherURLs }}
-   {{ $url -}}
-{{ end }}
 
-{{ end }}{{ end -}}
-{{ end }}{{ end -}}
+* Enhancement - Add basic implementation of file picker: [#2](https://github.com/owncloud/file-picker/pull/2)
+
+   We've added a basic implementation of ownCloud file picker. File picker is a web component
+   which can be integrated into existing products and is firing event providing array of selected
+   resources
+
+   https://github.com/owncloud/file-picker/pull/2
+
