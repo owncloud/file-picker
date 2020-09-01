@@ -1,14 +1,19 @@
 def main(ctx):
   before = [
+    tests(ctx),
     changelog(ctx),
     website(ctx),
+  ]
+
+  stages = [
+    release(ctx),
   ]
 
   after = [
     notify(),
   ]
 
-  return before + after
+  return before + stages + after
 
 def changelog(ctx):
   repo_slug = ctx.build.source_repo if ctx.build.source_repo else ctx.repo.slug
@@ -46,10 +51,10 @@ def changelog(ctx):
       },
       {
         'name': 'generate',
-        'image': 'webhippie/golang:1.13',
+        'image': 'toolhippie/calens:latest',
         'pull': 'always',
         'commands': [
-          'make changelog',
+          'calens >| CHANGELOG.md',
         ],
       },
       {
@@ -218,5 +223,136 @@ def notify():
         'success',
         'failure'
       ]
+    },
+  }
+
+def tests(ctx):
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'tests',
+    'platform': {
+      'os': 'linux',
+      'arch': 'amd64',
+    },
+    'steps': [
+      {
+        'name': 'install',
+        'image': 'owncloudci/nodejs:11',
+        'pull': 'always',
+        'commands': [
+          'yarn install --frozen-lockfile',
+        ],
+      },
+      {
+        'name': 'lint',
+        'image': 'owncloudci/nodejs:11',
+        'pull': 'always',
+        'commands': [
+          'yarn lint',
+        ],
+      },
+      {
+        'name': 'build',
+        'image': 'owncloudci/nodejs:11',
+        'pull': 'always',
+        'commands': [
+          'yarn build',
+        ],
+      },
+    ],
+    'trigger': {
+      'ref': [
+        'refs/heads/master',
+        'refs/tags/**',
+        'refs/pull/**',
+      ],
+    },
+  }
+
+def release(ctx):
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'release',
+    'platform': {
+      'os': 'linux',
+      'arch': 'amd64',
+    },
+    'steps': [
+      {
+        'name': 'build',
+        'image': 'owncloudci/nodejs:11',
+        'pull': 'always',
+        'commands': [
+          'yarn install --frozen-lockfile',
+          'yarn build'
+        ],
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+      {
+        'name': 'changelog',
+        'image': 'toolhippie/calens:latest',
+        'pull': 'always',
+        'commands': [
+          'calens --version %s -o dist/CHANGELOG.md' % ctx.build.ref.replace("refs/tags/v", "").split("-")[0],
+        ],
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+      {
+        'name': 'publish-github',
+        'image': 'plugins/github-release:latest',
+        'pull': 'always',
+        'settings': {
+          'api_key': {
+            'from_secret': 'github_token',
+          },
+          'title': ctx.build.ref.replace("refs/tags/v", ""),
+          'note': 'dist/CHANGELOG.md',
+          'overwrite': True,
+        },
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+      {
+        'name': 'publish-npm',
+        'image': 'plugins/npm:latest',
+        'pull': 'always',
+        'settings': {
+          'username': {
+            'from_secret': 'npm_username',
+          },
+          'email': {
+            'from_secret': 'npm_email',
+          },
+          'token': {
+            'from_secret': 'npm_token',
+          },
+        },
+        'when': {
+          'ref': [
+            'refs/tags/**',
+          ],
+        },
+      },
+    ],
+    'depends_on': [
+      'tests'
+    ],
+    'trigger': {
+      'ref': [
+        'refs/tags/**',
+      ],
     },
   }
