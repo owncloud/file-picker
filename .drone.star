@@ -347,6 +347,7 @@ def release(ctx):
           'token': {
             'from_secret': 'npm_token',
           },
+          'access': 'public',
         },
         'when': {
           'ref': [
