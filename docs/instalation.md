@@ -52,7 +52,23 @@ For the purpose of this example, we will assume that you do not move installed p
 ```
 
 ## Integrate in Vue web application
-Thanks to Vue being already available in the web application, we do not need to import it again as it will get picked up automatically.
+There is a caveat when using the File picker inside existing Vue application. Since the web component will be imported before Vue, we need to define it as a global variable on our own.
+This requires us to separate import of Vue into a bootstrap file.
+
+vue.js:
+```js
+import Vue from 'vue'
+window.Vue = Vue
+```
+
+main.js:
+```js
+import Vue from './vue'
+
+new Vue(...)
+```
+
+When importing the component, we need to reach it under `.default` key.
 
 ```vuejs
 <template>
@@ -60,11 +76,9 @@ Thanks to Vue being already available in the web application, we do not need to 
 </template>
 
 <script>
-import FilePicker from '@owncloud/file-picker'
-
 export default: {
   components: {
-    FilePicker
+    FilePicker: require('@owncloud/file-picker').default
   }
 }
 </script>
