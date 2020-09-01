@@ -1,5 +1,5 @@
 {
-  "name": "@owncloud/file-picker",
+  "name": "@ownclouders/file-picker",
   "version": "0.1.0",
   "author": "ownclouders <devops@owncloud.com>",
   "description": "Easily integrate ownCloud into your existing products",
