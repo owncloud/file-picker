@@ -76,6 +76,7 @@ export default {
 
   methods: {
     openFolder(path) {
+      this.resetResourceSelection()
       this.$emit('openFolder', path)
     },
 
@@ -130,6 +131,11 @@ export default {
 
     sortResources(resources) {
       return resources.sort(sortByName)
+    },
+
+    resetResourceSelection() {
+      this.selectedResources = []
+      this.$emit('selectResources', [])
     }
   }
 }
