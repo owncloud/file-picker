@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import sdk from 'owncloud-sdk'
 import DesignSystem from 'owncloud-design-system'
 import initVueAuthenticate from './services/auth'
@@ -26,11 +25,12 @@ import FilePicker from './components/FilePicker.vue'
 import Login from './components/Login.vue'
 
 // Init sdk and design system
+/* global Vue */
 Vue.prototype.$client = new sdk()
 Vue.use(DesignSystem)
 
 export default {
-  name: 'App',
+  name: 'FilePicker',
 
   components: {
     FilePicker,
