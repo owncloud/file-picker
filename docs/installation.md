@@ -29,9 +29,9 @@ The config for authorization is provided via a json file. Location of the file c
 To integrate File picker into your own product, you can install it via one of the following commands:
 
 ```bash
-npm install @owncloud/file-picker --save
+npm install @ownclouders/file-picker --save
 # OR
-yarn add @owncloud/file-picker
+yarn add @ownclouders/file-picker
 ```
 
 ## Integrate in HTML page with vanilla JavaScript
