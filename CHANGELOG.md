@@ -2,9 +2,18 @@
 
 ## Summary
 
+* Enhancement - Do not import Vue: [#16](https://github.com/owncloud/file-picker/pull/16)
 * Enhancement - Add basic implementation of file picker: [#2](https://github.com/owncloud/file-picker/pull/2)
 
 ## Details
+
+* Enhancement - Do not import Vue: [#16](https://github.com/owncloud/file-picker/pull/16)
+
+   We've stopped importing Vue because it is not bundled during the build process and needs to be
+   included as a global variable in the target web application.
+
+   https://github.com/owncloud/file-picker/pull/16
+
 
 * Enhancement - Add basic implementation of file picker: [#2](https://github.com/owncloud/file-picker/pull/2)
 
