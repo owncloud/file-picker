@@ -9,7 +9,7 @@ geekdocFilePath: getting-started.md
 
 {{< toc >}}
 
-ownCloud File picker is a web component which can be integrated into existing web applications. It connects to an ownCloud server and enables a user to select resources which are then provided in a response of a fired event. Visit [instlalation]({{< ref "installation.md" >}}) to see how to integrate the File picker into your product.
+ownCloud File picker is a web component which can be integrated into existing web applications. It connects to an ownCloud server and enables a user to select resources which are then provided in a response of a fired event. Visit [installation]({{< ref "installation.md" >}}) to see how to integrate the File picker into your product.
 
 ## Components of the File picker
 The file picker can be used in two different variations: File picker and location picker.
