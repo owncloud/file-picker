@@ -30,7 +30,7 @@ Vue.prototype.$client = new sdk()
 Vue.use(DesignSystem)
 
 export default {
-  name: 'FilePicker',
+  name: 'App',
 
   components: {
     FilePicker,
