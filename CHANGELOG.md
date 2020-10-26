@@ -3,6 +3,7 @@
 ## Summary
 
 * Bugfix - Reset resource selection when opening folder: [#11](https://github.com/owncloud/file-picker/pull/11)
+* Enhancement - Bootstrap Vue: [#19](https://github.com/owncloud/file-picker/pull/19)
 * Enhancement - Do not import Vue: [#16](https://github.com/owncloud/file-picker/pull/16)
 * Enhancement - Add basic implementation of file picker: [#2](https://github.com/owncloud/file-picker/pull/2)
 
@@ -14,6 +15,13 @@
    selected resources which are not visible.
 
    https://github.com/owncloud/file-picker/pull/11
+
+
+* Enhancement - Bootstrap Vue: [#19](https://github.com/owncloud/file-picker/pull/19)
+
+   We've bootstrapped Vue to add access to the file picker via window.
+
+   https://github.com/owncloud/file-picker/pull/19
 
 
 * Enhancement - Do not import Vue: [#16](https://github.com/owncloud/file-picker/pull/16)
