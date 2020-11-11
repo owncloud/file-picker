@@ -29,13 +29,14 @@ export function initVueAuthenticate(config) {
         Object.assign(openIdConfig, {
           authority: config.auth.url,
           metadataUrl: config.auth.metaDataUrl,
-          client_id: config.auth.clientId
+          client_id: config.auth.clientId,
+          redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin + '/oidc-callback.html'
         })
       } else {
         // oauth2 setup
         Object.assign(openIdConfig, {
           authority: config.auth.url,
-          // with OAuth2 we need to se the metadata manually
+          // with OAuth2 we need to set the metadata manually
           metadata: {
             issuer: config.auth.url,
             authorization_endpoint: config.auth.authUrl,
@@ -43,6 +44,7 @@ export function initVueAuthenticate(config) {
             userinfo_endpoint: ''
           },
           client_id: config.auth.clientId,
+          redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin + '/oidc-callback.html',
           response_type: 'token', // token is implicit flow - to be killed
           scope: 'openid profile',
           loadUserInfo: false
