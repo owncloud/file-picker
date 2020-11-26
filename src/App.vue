@@ -47,12 +47,16 @@ export default {
       type: String,
       required: false,
       default: () => window.location.origin + '/file-picker-config.json'
+    },
+    bearerToken: {
+      type: String,
+      required: false,
+      default: null
     }
   },
 
   data: () => ({
     authInstance: null,
-    bearerToken: '',
     state: 'loading',
     config: null
   }),
@@ -67,13 +71,13 @@ export default {
 
   methods: {
     initApp() {
-      this.bearerToken = this.authInstance.getToken()
+      const bearerToken = this.bearerToken || this.authInstance.getToken()
 
       // Init owncloud-sdk
       this.$client.init({
         baseUrl: this.config.server,
         auth: {
-          bearer: this.bearerToken
+          bearer: bearerToken
         },
         headers: {
           'X-Requested-With': 'XMLHttpRequest'
@@ -86,9 +90,14 @@ export default {
     },
 
     async initAuthentication() {
+      // Get config
       let config = await fetch(this.configLocation)
-
       this.config = await config.json()
+
+      if (this.bearerToken) {
+        return this.initApp()
+      }
+
       this.authInstance = initVueAuthenticate(this.config)
       this.checkUserAuthentication()
     },
