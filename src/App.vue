@@ -26,7 +26,11 @@ import Login from './components/Login.vue'
 
 // Init sdk and design system
 /* global Vue */
-Vue.prototype.$client = new sdk()
+if (!Vue.prototype.$client) {
+  Vue.prototype.$client = new sdk()
+}
+
+// TODO: After we enable importing single components, remove this
 Vue.use(DesignSystem)
 
 export default {
@@ -52,6 +56,16 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    configObject: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    isSdkProvided: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
@@ -71,28 +85,32 @@ export default {
 
   methods: {
     initApp() {
-      const bearerToken = this.bearerToken || this.authInstance.getToken()
+      if (!this.isSdkProvided) {
+        const bearerToken = this.bearerToken || this.authInstance.getToken()
 
-      // Init owncloud-sdk
-      this.$client.init({
-        baseUrl: this.config.server,
-        auth: {
-          bearer: bearerToken
-        },
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      })
+        // Init owncloud-sdk
+        this.$client.init({
+          baseUrl: this.config.server,
+          auth: {
+            bearer: bearerToken
+          },
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+      }
 
       this.state = 'authorized'
-
-      return
     },
 
     async initAuthentication() {
-      // Get config
-      let config = await fetch(this.configLocation)
-      this.config = await config.json()
+      // If configObject is passed - use that one instead of fetching one
+      if (this.configObject !== null) {
+        this.config = this.configObject
+      } else {
+        let config = await fetch(this.configLocation)
+        this.config = await config.json()
+      }
 
       if (this.bearerToken) {
         return this.initApp()
