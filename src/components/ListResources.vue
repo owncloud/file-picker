@@ -21,7 +21,7 @@
       >
         <div v-if="!isLocationPicker">
           <oc-checkbox
-            class="uk-margin-small-left"
+            class="file-picker-resource-checkbox uk-margin-small-left"
             :value="isResourceSelected(rowItem)"
             :label="selectCheckboxLabel(rowItem.name)"
             :hide-label="true"
@@ -29,7 +29,11 @@
             @change.native="toggleResourceSelection(rowItem)"
           />
         </div>
-        <resource class="uk-width-auto" :item="rowItem" @navigate="openFolder" />
+        <resource
+          class="file-picker-resource uk-width-auto"
+          :item="rowItem"
+          @navigate="openFolder"
+        />
       </oc-grid>
     </div>
   </RecycleScroller>
@@ -57,10 +61,6 @@ export default {
       type: Boolean,
       required: false,
       default: false
-    },
-    currentFolder: {
-      type: Object,
-      required: true
     }
   },
 
