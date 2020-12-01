@@ -88,3 +88,6 @@ export default: {
 As described in [Getting Started]({{< ref "getting-started.md#components-of-the-file-picker" >}}), File picker comes in two variations. To define which one should be used, you need to pass it to the component via its `variation` property. Valid values are:
 - `resource` - File picker
 - `location` - Location picker
+
+## Pass bearer token
+In case you already have a bearer token and want to skip the whole authorization process inside of the File picker, you can pass it to the component via prop called `bearerToken`.
