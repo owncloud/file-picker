@@ -28,7 +28,7 @@ exports[`File picker renders list of resources 1`] = `
                 </div>
                 <div class="uk-text-meta">
                   0 B - Last modified
-                  11 days ago
+                  11 hours ago
                 </div>
               </div>
             </div>
@@ -49,7 +49,7 @@ exports[`File picker renders list of resources 1`] = `
                 </div>
                 <div class="uk-text-meta">
                   1.3 MB - Last modified
-                  11 days ago
+                  11 hours ago
                 </div>
               </div>
             </div>
@@ -68,7 +68,7 @@ exports[`File picker renders list of resources 1`] = `
                 <div filename="ownCloud Manual.pdf" class="file-row-name uk-text-truncate"><span role="button" class="uk-text-bold oc-cursor-pointer oc-file-name uk-padding-remove-left">ownCloud Manual</span><span class="uk-text-meta oc-file-extension">.pdf</span></div>
                 <div class="uk-text-meta">
                   5.8 MB - Last modified
-                  11 days ago
+                  11 hours ago
                 </div>
               </div>
             </div>
