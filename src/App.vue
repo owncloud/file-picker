@@ -26,7 +26,11 @@ import Login from './components/Login.vue'
 
 // Init sdk and design system
 /* global Vue */
-Vue.prototype.$client = new sdk()
+if (!Vue.prototype.$client) {
+  Vue.prototype.$client = new sdk()
+}
+
+// TODO: After we enable importing single components, remove this
 Vue.use(DesignSystem)
 
 export default {
@@ -47,12 +51,26 @@ export default {
       type: String,
       required: false,
       default: () => window.location.origin + '/file-picker-config.json'
+    },
+    bearerToken: {
+      type: String,
+      required: false,
+      default: null
+    },
+    configObject: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    isSdkProvided: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
   data: () => ({
     authInstance: null,
-    bearerToken: '',
     state: 'loading',
     config: null
   }),
@@ -67,28 +85,37 @@ export default {
 
   methods: {
     initApp() {
-      this.bearerToken = this.authInstance.getToken()
+      if (!this.isSdkProvided) {
+        const bearerToken = this.bearerToken || this.authInstance.getToken()
 
-      // Init owncloud-sdk
-      this.$client.init({
-        baseUrl: this.config.server,
-        auth: {
-          bearer: this.bearerToken
-        },
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      })
+        // Init owncloud-sdk
+        this.$client.init({
+          baseUrl: this.config.server,
+          auth: {
+            bearer: bearerToken
+          },
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+      }
 
       this.state = 'authorized'
-
-      return
     },
 
     async initAuthentication() {
-      let config = await fetch(this.configLocation)
+      // If configObject is passed - use that one instead of fetching one
+      if (this.configObject !== null) {
+        this.config = this.configObject
+      } else {
+        let config = await fetch(this.configLocation)
+        this.config = await config.json()
+      }
 
-      this.config = await config.json()
+      if (this.bearerToken) {
+        return this.initApp()
+      }
+
       this.authInstance = initVueAuthenticate(this.config)
       this.checkUserAuthentication()
     },

@@ -267,6 +267,14 @@ def tests(ctx):
           'yarn build',
         ],
       },
+      {
+        'name': 'unit',
+        'image': 'owncloudci/nodejs:11',
+        'pull': 'always',
+        'commands': [
+          'yarn test:unit'
+        ],
+      },
     ],
     'depends_on': [],
     'trigger': {

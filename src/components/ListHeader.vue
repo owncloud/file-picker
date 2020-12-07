@@ -4,10 +4,11 @@
     <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" />
     <div>
       <oc-button
+        class="file-picker-btn-select-resources"
         variation="primary"
         :disabled="!isSelectBtnEnabled"
         :uk-tooltip="disabledSelectBtnTooltip"
-        @click.native="select"
+        @click="select"
       >
         {{ selectBtnLabel }}
       </oc-button>
