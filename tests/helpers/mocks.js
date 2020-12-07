@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 const getCurrentDate = () => {
-  return moment().format('ddd, DD MMM YYYY hh:mm:ss')
+  return moment().format('ddd, DD MMM YYYY hh')
 }
 
 export const testResources = [
@@ -17,7 +17,7 @@ export const testResources = [
       '{http://owncloud.org/ns}share-types': '',
       '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144055',
       '{http://owncloud.org/ns}size': '7505867',
-      '{DAV:}getlastmodified': getCurrentDate() + ' GMT',
+      '{DAV:}getlastmodified': getCurrentDate() + ':00:00 GMT',
       '{DAV:}getetag': '"5fc4c975019f9"',
       '{DAV:}resourcetype': [{}]
     },
