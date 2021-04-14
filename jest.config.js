@@ -6,5 +6,6 @@ module.exports = {
     '!./src/main.js',
     '!./src/services/auth.js',
     '!./src/assets/**/*'
-  ]
+  ],
+  setupFiles: ['./tests/unit/config/jest.init.js']
 }
