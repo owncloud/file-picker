@@ -112,3 +112,16 @@ export default: {
 As described in [Getting Started]({{< ref "getting-started.md#components-of-the-file-picker" >}}), File picker comes in two variations. To define which one should be used, you need to pass it to the component via its `variation` property. Valid values are:
 - `resource` - File picker
 - `location` - Location picker
+
+## Buttons and events
+The wording of buttons can be customized.
+
+### Select button
+The file picker has a button in the top right for emitting an event with the selected location or resource, depending on the configured variation.
+This button has default labels, depending on the chosen variation. However, it is possible to define a different button label by setting
+`select-btn-label="<your select button label>""`. Using the select button will emit an event with the name `selectResources`.
+
+### Cancel button
+Cancellation for the file picker is disabled by default. When a label is provided, the file picker renders a cancel button on the left side of the select button.
+This can be achieved by setting `cancel-btn-label="<your cancel button label>""`. This will also add a keyboard event on the `ESC` key. Using
+the cancel button or the `ESC` key on the keyboard will emit an event with the name `cancel`.
