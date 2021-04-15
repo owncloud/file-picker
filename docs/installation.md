@@ -9,9 +9,18 @@ geekdocFilePath: installation.md
 
 {{< toc >}}
 
-## Setup authorization
-The config for authorization is provided via a json file. Location of the file can be provided via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`). If the prop is not defined, the location will fallback to `https://<your-server>/file-picker-config.json`. The config can point to both oauth2 and OIDC. You can take a look at the following example to see how OIDC can be defined:
+## Setup authentication
+The config for the server backend and authentication needs to be provided in json format. The full set of options is listed below in two examples. One for authentication with OAuth2 and one with OpenID Connect.  
 
+There are different ways of providing the config JSON to the file picker:
+- As a JSON object via a prop called `configObject`
+- As a JSON string via the same prop (`configObject`)
+- As a URL via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`)
+- If none of the props (`configObject` or `configLocation`) is defined, the file picker has a `configLocation` of `https://<your-server>/file-picker-config.json` as fallback
+
+Location of the file can be provided via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`). If the prop is not defined, the location will fallback to `https://<your-server>/file-picker-config.json`. The config can point to both oauth2 and OIDC. You can take a look at the following example to see how OIDC can be defined:
+
+### OpenID Connect config
 ```json
 {
   "server": "<owncloud-server>",
@@ -21,8 +30,20 @@ The config for authorization is provided via a json file. Location of the file c
     "client_id": "<client-id>",
     "response_type": "code",
     "scope": "openid profile email"
-  },
-} 
+  }
+}
+```
+
+### OAuth2 config
+```json
+{
+  "server": "<owncloud-server>",
+  "auth": {
+    "clientId": "<oauth2-client-id>",
+    "url": "<your-server>/index.php/apps/oauth2/api/v1/token",
+    "authUrl": "<your-server>/index.php/apps/oauth2/authorize"
+  }
+}
 ```
 
 ## Install File picker package
