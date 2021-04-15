@@ -135,7 +135,7 @@ def website(ctx):
       },
       {
         'name': 'test',
-        'image': 'webhippie/hugo:latest',
+				'image': 'owncloudci/hugo:0.71.0',
         'commands': [
           'cd hugo',
           'hugo',
@@ -245,7 +245,7 @@ def tests(ctx):
     'steps': [
       {
         'name': 'install',
-        'image': 'owncloudci/nodejs:11',
+        'image': 'owncloudci/nodejs:12',
         'pull': 'always',
         'commands': [
           'yarn install --frozen-lockfile',
@@ -253,7 +253,7 @@ def tests(ctx):
       },
       {
         'name': 'lint',
-        'image': 'owncloudci/nodejs:11',
+        'image': 'owncloudci/nodejs:12',
         'pull': 'always',
         'commands': [
           'yarn lint',
@@ -261,7 +261,7 @@ def tests(ctx):
       },
       {
         'name': 'build',
-        'image': 'owncloudci/nodejs:11',
+        'image': 'owncloudci/nodejs:12',
         'pull': 'always',
         'commands': [
           'yarn build',
@@ -269,7 +269,7 @@ def tests(ctx):
       },
       {
         'name': 'unit',
-        'image': 'owncloudci/nodejs:11',
+        'image': 'owncloudci/nodejs:12',
         'pull': 'always',
         'commands': [
           'yarn test:unit'

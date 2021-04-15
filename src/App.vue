@@ -23,6 +23,7 @@ import DesignSystem from 'owncloud-design-system'
 import initVueAuthenticate from './services/auth'
 import FilePicker from './components/FilePicker.vue'
 import Login from './components/Login.vue'
+import { loadConfig } from './helpers/config'
 
 // Init sdk and design system
 /* global Vue */
@@ -58,7 +59,7 @@ export default {
       default: null
     },
     configObject: {
-      type: Object,
+      type: [Object, String],
       required: false,
       default: null
     },
@@ -104,13 +105,7 @@ export default {
     },
 
     async initAuthentication() {
-      // If configObject is passed - use that one instead of fetching one
-      if (this.configObject !== null) {
-        this.config = this.configObject
-      } else {
-        let config = await fetch(this.configLocation)
-        this.config = await config.json()
-      }
+      this.config = await loadConfig(this.configObject, this.configLocation)
 
       if (this.bearerToken) {
         return this.initApp()
