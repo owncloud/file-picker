@@ -4,13 +4,20 @@
     <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" />
     <div>
       <oc-button
+        v-if="cancelBtnLabel"
+        class="file-picker-btn-cancel uk-margin-small-right"
+        @click="cancel"
+      >
+        {{ cancelBtnLabel }}
+      </oc-button>
+      <oc-button
         class="file-picker-btn-select-resources"
         variation="primary"
         :disabled="!isSelectBtnEnabled"
         :uk-tooltip="disabledSelectBtnTooltip"
         @click="select"
       >
-        {{ selectBtnLabel }}
+        {{ submitBtnLabel }}
       </oc-button>
     </div>
   </header>
@@ -31,6 +38,16 @@ export default {
     isSelectBtnEnabled: {
       type: Boolean,
       required: true
+    },
+    selectBtnLabel: {
+      type: String,
+      required: false,
+      default: null
+    },
+    cancelBtnLabel: {
+      type: String,
+      required: false,
+      default: null
     },
     isLocationPicker: {
       type: Boolean,
@@ -83,7 +100,11 @@ export default {
       return 'Please select at least one resource. You can select a resource by clicking on its row or via its checkbox.'
     },
 
-    selectBtnLabel() {
+    submitBtnLabel() {
+      if (this.selectBtnLabel) {
+        return this.selectBtnLabel
+      }
+
       if (this.isLocationPicker) {
         return this.areResourcesSelected ? 'Select folder' : 'Select current folder'
       }
@@ -99,6 +120,10 @@ export default {
 
     select() {
       this.$emit('select')
+    },
+
+    cancel() {
+      this.$emit('cancel')
     }
   }
 }
