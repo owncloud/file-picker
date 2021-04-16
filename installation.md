@@ -9,9 +9,18 @@ geekdocFilePath: installation.md
 
 {{< toc >}}
 
-## Setup authorization
-The config for authorization is provided via a json file. Location of the file can be provided via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`). If the prop is not defined, the location will fallback to `https://<your-server>/file-picker-config.json`. The config can point to both oauth2 and OIDC. You can take a look at the following example to see how OIDC can be defined:
+## Setup authentication
+The config for the server backend and authentication needs to be provided in json format. The full set of options is listed below in two examples. One for authentication with OAuth2 and one with OpenID Connect.  
 
+There are different ways of providing the config JSON to the file picker:
+- As a JSON object via a prop called `configObject`
+- As a JSON string via the same prop (`configObject`)
+- As a URL via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`)
+- If none of the props (`configObject` or `configLocation`) is defined, the file picker has a `configLocation` of `https://<your-server>/file-picker-config.json` as fallback
+
+Location of the file can be provided via a prop called `configLocation`. This requires full URL address (e.g. `https://<your-server>/<path-to-the-config>`). If the prop is not defined, the location will fallback to `https://<your-server>/file-picker-config.json`. The config can point to both oauth2 and OIDC. You can take a look at the following example to see how OIDC can be defined:
+
+### OpenID Connect config
 ```json
 {
   "server": "<owncloud-server>",
@@ -21,9 +30,24 @@ The config for authorization is provided via a json file. Location of the file c
     "client_id": "<client-id>",
     "response_type": "code",
     "scope": "openid profile email"
-  },
-} 
+  }
+}
 ```
+
+### OAuth2 config
+```json
+{
+  "server": "<owncloud-server>",
+  "auth": {
+    "clientId": "<oauth2-client-id>",
+    "url": "<your-server>/index.php/apps/oauth2/api/v1/token",
+    "authUrl": "<your-server>/index.php/apps/oauth2/authorize"
+  }
+}
+```
+
+### Pass bearer token
+In case you already have a bearer token and want to skip the whole authorization process inside of the File picker, you can pass it to the component via prop called `bearerToken`.
 
 ## Install File picker package
 To integrate File picker into your own product, you can install it via one of the following commands:
@@ -89,5 +113,15 @@ As described in [Getting Started]({{< ref "getting-started.md#components-of-the-
 - `resource` - File picker
 - `location` - Location picker
 
-## Pass bearer token
-In case you already have a bearer token and want to skip the whole authorization process inside of the File picker, you can pass it to the component via prop called `bearerToken`.
+## Buttons and events
+The wording of buttons can be customized.
+
+### Select button
+The file picker has a button in the top right for emitting an event with the selected location or resource, depending on the configured variation.
+This button has default labels, depending on the chosen variation. However, it is possible to define a different button label by setting
+`select-btn-label="<your select button label>"`. Using the select button will emit an event with the name `selectResources`.
+
+### Cancel button
+Cancellation for the file picker is disabled by default. When a label is provided, the file picker renders a cancel button on the left side of the select button.
+This can be achieved by setting `cancel-btn-label="<your cancel button label>"`. This will also add a keyboard event on the `ESC` key. Using
+the cancel button or the `ESC` key on the keyboard will emit an event with the name `cancel`.
