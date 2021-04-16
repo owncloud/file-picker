@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 const getCurrentDate = () => {
-  return moment().format('ddd, DD MMM YYYY HH:mm:ss') + ' GMT'
+  return moment().toISOString()
 }
 
 export const testResources = [
