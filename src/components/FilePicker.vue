@@ -5,8 +5,11 @@
       :is-select-btn-enabled="isSelectBtnEnabled"
       :is-location-picker="isLocationPicker"
       :are-resources-selected="areResourcesSelected"
+      :select-btn-label="selectBtnLabel"
+      :cancel-btn-label="cancelBtnLabel"
       @openFolder="loadFolder"
       @select="emitSelectedResources"
+      @cancel="emitCancel"
     />
     <div
       v-if="state === 'loading'"
@@ -29,7 +32,7 @@
 </template>
 
 <script>
-import { buildResource } from '../helpers/resources'
+import { buildResource } from '@/helpers/resources'
 import ListResources from './ListResources.vue'
 import ListHeader from './ListHeader.vue'
 
@@ -46,6 +49,16 @@ export default {
       type: String,
       required: true,
       validator: value => value === 'resource' || 'location'
+    },
+    selectBtnLabel: {
+      type: String,
+      required: false,
+      default: null
+    },
+    cancelBtnLabel: {
+      type: String,
+      required: false,
+      default: null
     }
   },
 
@@ -111,6 +124,10 @@ export default {
 
     emitSelectedResources() {
       this.$emit('selectResources', this.selectedResources)
+    },
+
+    emitCancel() {
+      this.$emit('cancel')
     }
   }
 }

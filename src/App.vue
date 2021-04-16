@@ -1,5 +1,5 @@
 <template>
-  <div id="oc-file-picker" class="uk-height-1-1">
+  <div id="oc-file-picker" class="uk-height-1-1" tabindex="0" @keyup.esc="cancel">
     <div
       v-if="state === 'loading'"
       class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
@@ -12,7 +12,10 @@
       key="file-picker"
       class="uk-height-1-1"
       :variation="variation"
+      :select-btn-label="selectBtnLabel"
+      :cancel-btn-label="cancelBtnLabel"
       @selectResources="selectResources"
+      @cancel="cancel"
     />
   </div>
 </template>
@@ -67,6 +70,16 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    selectBtnLabel: {
+      type: String,
+      required: false,
+      default: null
+    },
+    cancelBtnLabel: {
+      type: String,
+      required: false,
+      default: null
     }
   },
 
@@ -134,6 +147,14 @@ export default {
 
     selectResources(resources) {
       this.$emit('selectResources', resources)
+    },
+
+    cancel() {
+      if (this.cancelBtnLabel === null) {
+        // don't propagate cancel events if we don't have a cancel button
+        return
+      }
+      this.$emit('cancel')
     }
   }
 }
