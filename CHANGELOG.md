@@ -1,3 +1,40 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.2.0...master
+
+## Summary
+
+* Enhancement - Cancelling the file picker: [#29](https://github.com/owncloud/file-picker/pull/29)
+* Enhancement - Allow string as configObject attribute: [#27](https://github.com/owncloud/file-picker/pull/27)
+* Enhancement - Select button label: [#29](https://github.com/owncloud/file-picker/pull/29)
+
+## Details
+
+* Enhancement - Cancelling the file picker: [#29](https://github.com/owncloud/file-picker/pull/29)
+
+   We added two options for emitting a `cancel` event from the file picker: - pressing ESC on the
+   keyboard while the file picker is focussed - clicking the new `Cancel` button which appears in
+   the top bar as soon as a `cancelBtnLabel` is provided
+
+   https://github.com/owncloud/file-picker/pull/29
+
+
+* Enhancement - Allow string as configObject attribute: [#27](https://github.com/owncloud/file-picker/pull/27)
+
+   The property/attribute "configObject" is now allowed to be a string. We'll parse it as JSON.
+
+   https://github.com/owncloud/file-picker/pull/27
+   https://github.com/owncloud/file-picker/pull/28
+
+
+* Enhancement - Select button label: [#29](https://github.com/owncloud/file-picker/pull/29)
+
+   It is now possible to provide a dedicated label overriding the default Select button label.
+
+   https://github.com/owncloud/file-picker/pull/29
+
 # Changelog for [0.2.0] (2020-12-07)
 
 The following sections list the changes in ownCloud File picker 0.2.0.
