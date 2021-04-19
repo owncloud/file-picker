@@ -1,8 +1,8 @@
-# Changelog for [unreleased] (UNRELEASED)
+# Changelog for [0.3.0] (2021-04-19)
 
-The following sections list the changes in ownCloud File picker unreleased.
+The following sections list the changes in ownCloud File picker 0.3.0.
 
-[unreleased]: https://github.com/owncloud/file-picker/compare/v0.2.0...master
+[0.3.0]: https://github.com/owncloud/file-picker/compare/v0.2.0...v0.3.0
 
 ## Summary
 
