@@ -1,5 +1,5 @@
 <template>
-  <div id="oc-file-picker" class="uk-height-1-1" tabindex="0" @keyup.esc="cancel">
+  <div id="oc-file-picker" tabindex="0" @keyup.esc="cancel">
     <div
       v-if="state === 'loading'"
       class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
@@ -174,5 +174,9 @@ export default {
 
 * {
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.oc-file-picker {
+  position: relative;
 }
 </style>

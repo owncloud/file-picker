@@ -4,16 +4,17 @@
     v-slot="{ item: rowItem, index, active }"
     :key="resources.length"
     :items="resourcesSorted"
-    :item-size="68"
+    :item-size="73"
+    class="uk-position-relative"
   >
     <div
+      :id="'file-row-' + rowItem.id"
       :key="rowItem.viewId"
       :data-is-visible="active"
       :class="rowClasses(rowItem)"
       @click="toggleResourceSelection(rowItem)"
     >
       <oc-grid
-        :id="'file-row-' + rowItem.id"
         :ref="index === 0 ? 'firstRow' : null"
         gutter="small"
         flex
@@ -116,7 +117,7 @@ export default {
     },
 
     rowClasses(resource) {
-      const classes = []
+      const classes = ['oc-file-picker-row']
 
       if (this.isResourceSelected(resource)) {
         classes.push('oc-background-selected')
@@ -141,11 +142,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import '../../node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
 .files-list-row-disabled {
   opacity: 0.3;
   pointer-events: none;
+}
+
+.oc-file-picker-row {
+  min-height: 73px;
+  max-height: 73px;
 }
 </style>

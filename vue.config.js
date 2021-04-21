@@ -3,5 +3,8 @@ module.exports = {
     resolve: {
       symlinks: false
     }
+  },
+  css: {
+    extract: true
   }
 }

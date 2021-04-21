@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-height-1-1 uk-flex uk-flex-column uk-overflow-hidden">
+  <div class="uk-flex uk-height-1-1 uk-flex-column uk-overflow-hidden">
     <list-header
       :current-folder="currentFolder"
       :is-select-btn-enabled="isSelectBtnEnabled"
