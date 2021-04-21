@@ -47,6 +47,7 @@
     "uikit": "^3.6.19",
     "vue-avatar": "^2.3.3",
     "vue-datetime": "^1.0.0-beta.14",
+    "vue-gettext": "^2.1.12",
     "vue-inline-svg": "^2.0.0",
     "vue-select": "^3.11.2",
     "vue-virtual-scroller": "^1.0.10"

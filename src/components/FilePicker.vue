@@ -23,7 +23,6 @@
       key="resources-list"
       class="uk-flex-1 oc-border"
       :resources="resources"
-      :current-folder="currentFolder"
       :is-location-picker="isLocationPicker"
       @openFolder="loadFolder"
       @selectResources="selectResources"

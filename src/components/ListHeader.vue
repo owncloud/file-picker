@@ -129,18 +129,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.file-picker-header {
-  position: sticky;
-  background-color: var(--brand-primary);
-}
-
-/* TODO: Move to ODS */
-.oc-light .oc-breadcrumb-list-item > a,
-.oc-light .oc-breadcrumb-list-item .oc-icon > svg,
-.oc-light .oc-breadcrumb-list-item::before {
-  color: white !important;
-  fill: white;
-}
-</style>
