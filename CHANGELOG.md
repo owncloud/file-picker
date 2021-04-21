@@ -1,3 +1,22 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.3.0...master
+
+## Summary
+
+* Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
+
+## Details
+
+* Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
+
+   We've added a build script which creates a library bundle with the File picker. This bundle can
+   be directly imported during build time into any Vuejs app.
+
+   https://github.com/owncloud/file-picker/pull/32
+
 # Changelog for [0.3.0] (2021-04-19)
 
 The following sections list the changes in ownCloud File picker 0.3.0.
