@@ -34,9 +34,6 @@ if (!Vue.prototype.$client) {
   Vue.prototype.$client = new sdk()
 }
 
-// TODO: After we enable importing single components, remove this
-Vue.use(DesignSystem)
-
 export default {
   name: 'App',
 
@@ -80,6 +77,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    isOdsProvided: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
@@ -90,6 +92,11 @@ export default {
   }),
 
   created() {
+    if (!this.isOdsProvided) {
+      // TODO: After we enable importing single components, remove this
+      Vue.use(DesignSystem)
+    }
+
     this.initAuthentication()
   },
 
