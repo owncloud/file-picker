@@ -61,14 +61,12 @@ yarn add @ownclouders/file-picker
 ## Integrate in HTML page with vanilla JavaScript
 When including File picker in an HTML page, it is important to include Vue.js as well. In this case, we will import it via [unpkg](https://unpkg.com). Without this, the component won't work. Vue needs to be included also if you're importing the File picker into a web application built with other framework than Vue (e.g. React, Angular).
 
-For the purpose of this example, we will assume that you do not move installed packages and include the folder "node_modules" with installed packages in the same location as your index.html file on your server.
-
 ```html
 ...
 <meta charset="utf-8">
 <title>File picker example</title>
 <script src="https://unpkg.com/vue"></script>
-<script src="./node_modules/file-picker/dist/file-picker.js"></script>
+<script src="https://unpkg.com/file-picker/dist/wc/file-picker.js"></script>
 ...
 
 
@@ -92,17 +90,17 @@ import Vue from './vue'
 new Vue(...)
 ```
 
-When importing the component, we need to reach it under the `.default` key.
-
 ```vuejs
 <template>
   <file-picker variation="location" />
 </template>
 
 <script>
+import FilePicker from '@ownclouders/file-picker'
+
 export default: {
   components: {
-    FilePicker: require('@owncloud/file-picker').default
+    FilePicker
   }
 }
 </script>
