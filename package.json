@@ -41,7 +41,7 @@
     "luxon": "^1.26.0",
     "moment": "^2.27.0",
     "oidc-client": "^1.10.1",
-    "owncloud-design-system": "^6.0.1",
+    "owncloud-design-system": "^6.2.0",
     "owncloud-sdk": "^1.0.0-2238",
     "path": "^0.12.7",
     "uikit": "^3.6.19",

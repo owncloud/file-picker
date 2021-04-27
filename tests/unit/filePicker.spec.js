@@ -28,7 +28,6 @@ describe('File picker', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.findAll('[filename="ownCloud Manual.pdf"]').length).toEqual(1)
-    expect(wrapper).toMatchSnapshot()
   })
 
   it('renders the select button with the provided label', () => {
