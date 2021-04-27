@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { uniqueId, chain } from 'lodash'
 import fileTypeIconMappings from './fileTypeIconMappings.json'
 import path from 'path'
@@ -22,7 +21,6 @@ export function buildResource(resource) {
     viewId: uniqueId('file-'),
     starred: resource.fileInfo['{http://owncloud.org/ns}favorite'] !== '0',
     mdate: resource.fileInfo['{DAV:}getlastmodified'],
-    mdateMoment: moment(resource.fileInfo['{DAV:}getlastmodified']),
     size: (function() {
       if (resource.type === 'dir') {
         return resource.fileInfo['{http://owncloud.org/ns}size']
