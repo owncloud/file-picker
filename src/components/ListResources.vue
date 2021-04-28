@@ -4,6 +4,7 @@
       v-for="resource in resources"
       :key="resource.viewId"
       :class="rowClasses(resource)"
+      :data-testid="`list-resources-row-${resource.id}`"
       @click.native="toggleResourceSelection(resource)"
     >
       <oc-td v-if="!isLocationPicker" class="oc-pm" width="shrink">

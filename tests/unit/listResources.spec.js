@@ -1,23 +1,23 @@
 import { mount } from '@vue/test-utils'
 
-import { testResources } from '../helpers/mocks'
+import resources from '../fixtures/resources'
 import { stubs } from '../helpers/stubs'
 import { buildResource } from '@/helpers/resources'
 
 import ListResources from '@/components/ListResources.vue'
 
-const resources = testResources.map(resource => buildResource(resource))
+const _resources = resources['/'].map(resource => buildResource(resource))
 
 describe('List resources', () => {
   it('Resets resources selection on navigation', async () => {
     const wrapper = mount(ListResources, {
       propsData: {
-        resources
+        resources: _resources
       },
       stubs
     })
 
-    await wrapper.setData({ selectedResources: resources })
+    await wrapper.setData({ selectedResources: _resources })
 
     wrapper
       .findAll('.file-picker-resource')
