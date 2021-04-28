@@ -1,9 +1,3 @@
-import moment from 'moment'
-
-const getCurrentDate = () => {
-  return moment().toISOString()
-}
-
 export const testResources = [
   {
     name: '',
@@ -17,7 +11,7 @@ export const testResources = [
       '{http://owncloud.org/ns}share-types': '',
       '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144055',
       '{http://owncloud.org/ns}size': '7505867',
-      '{DAV:}getlastmodified': getCurrentDate(),
+      '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
       '{DAV:}getetag': '"5fc4c975019f9"',
       '{DAV:}resourcetype': [{}]
     },
@@ -35,7 +29,7 @@ export const testResources = [
       '{http://owncloud.org/ns}share-types': '',
       '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144227',
       '{http://owncloud.org/ns}size': '0',
-      '{DAV:}getlastmodified': getCurrentDate(),
+      '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
       '{DAV:}getetag': '"5fb64a9d08be7"',
       '{DAV:}resourcetype': [{}]
     },
@@ -53,7 +47,7 @@ export const testResources = [
       '{http://owncloud.org/ns}share-types': '',
       '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144228',
       '{http://owncloud.org/ns}size': '1395095',
-      '{DAV:}getlastmodified': getCurrentDate(),
+      '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
       '{DAV:}getetag': '"5fb64b0c5ba65"',
       '{DAV:}resourcetype': [{}]
     },
@@ -72,7 +66,7 @@ export const testResources = [
       '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144242',
       '{DAV:}getcontentlength': '6110772',
       '{http://owncloud.org/ns}size': '6110772',
-      '{DAV:}getlastmodified': getCurrentDate(),
+      '{DAV:}getlastmodified': 'Wed, 21 Apr 2021 15:25:32 GMT',
       '{DAV:}getetag': '"4b585b2818ce17bd711919b56d1bdaf2"',
       '{DAV:}resourcetype': ''
     },
