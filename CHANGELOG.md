@@ -6,10 +6,28 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
+* Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
 * Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
 
 ## Details
+
+* Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
+
+   When selecting the current folder in the location picker, an empty array has been emitted.
+   We've fixed this by emitting the current folder.
+
+   https://github.com/owncloud/file-picker/pull/42
+
+
+* Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
+
+   We've added an initial focus so that when the File picker is mounted, it immediately becomes
+   focused.
+
+   https://github.com/owncloud/file-picker/pull/44
+
 
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
 
