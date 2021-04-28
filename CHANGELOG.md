@@ -7,6 +7,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 ## Summary
 
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
+* Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
 
 ## Details
 
@@ -16,6 +17,15 @@ The following sections list the changes in ownCloud File picker unreleased.
    be directly imported during build time into any Vuejs app.
 
    https://github.com/owncloud/file-picker/pull/32
+
+
+* Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
+
+   We've updated ODS to version 6.2.0. This version brings new components that we used to make the
+   location picker an actual table of resources.
+
+   https://github.com/owncloud/file-picker/pull/36
+   https://github.com/owncloud/owncloud-design-system/releases/tag/v6.2.0
 
 # Changelog for [0.3.0] (2021-04-19)
 
