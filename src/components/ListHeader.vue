@@ -11,6 +11,7 @@
         {{ cancelBtnLabel }}
       </oc-button>
       <oc-button
+        data-testid="list-header-btn-select"
         class="file-picker-btn-select-resources"
         variation="primary"
         appearance="filled"

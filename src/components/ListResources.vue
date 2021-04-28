@@ -1,5 +1,5 @@
 <template>
-  <oc-table-simple>
+  <oc-table-simple data-testid="list-resources-table">
     <oc-tr
       v-for="resource in resources"
       :key="resource.viewId"
