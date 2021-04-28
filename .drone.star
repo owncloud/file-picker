@@ -258,6 +258,7 @@ def tests(ctx):
         'commands': [
           'yarn lint',
         ],
+        'depends_on': ['install']
       },
       {
         'name': 'build',
@@ -266,6 +267,7 @@ def tests(ctx):
         'commands': [
           'yarn build',
         ],
+        'depends_on': ['lint']
       },
       {
         'name': 'unit',
@@ -274,7 +276,17 @@ def tests(ctx):
         'commands': [
           'yarn test:unit'
         ],
+        'depends_on': ['build']
       },
+      {
+        'name': 'integration',
+        'image': 'owncloudci/nodejs:14',
+        'pull': 'always',
+        'commands': [
+          'yarn test:integration'
+        ],
+        'depends_on': ['build']
+      }
     ],
     'depends_on': [],
     'trigger': {

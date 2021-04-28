@@ -122,7 +122,12 @@ export default {
     },
 
     emitSelectedResources() {
-      this.$emit('selectResources', this.selectedResources)
+      const resources =
+        this.selectedResources.length < 1 && this.isLocationPicker
+          ? this.currentFolder
+          : this.selectedResources
+
+      this.$emit('selectResources', resources)
     },
 
     emitCancel() {
