@@ -1,5 +1,5 @@
 <template>
-  <div id="oc-file-picker" tabindex="0" @keyup.esc="cancel">
+  <div id="oc-file-picker" ref="filePicker" tabindex="-1" @keyup.esc="cancel">
     <div
       v-if="state === 'loading'"
       class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
@@ -108,6 +108,10 @@ export default {
     }
 
     this.initAuthentication()
+  },
+
+  mounted() {
+    this.$refs.filePicker.focus()
   },
 
   beforeDestroy() {
