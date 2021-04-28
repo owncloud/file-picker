@@ -1,46 +1,33 @@
 <template>
-  <RecycleScroller
-    v-if="resources.length"
-    v-slot="{ item: rowItem, index, active }"
-    :key="resources.length"
-    :items="resourcesSorted"
-    :item-size="68"
-  >
-    <div
-      :key="rowItem.viewId"
-      :data-is-visible="active"
-      :class="rowClasses(rowItem)"
-      @click="toggleResourceSelection(rowItem)"
+  <oc-table-simple>
+    <oc-tr
+      v-for="resource in resources"
+      :key="resource.viewId"
+      :class="rowClasses(resource)"
+      @click.native="toggleResourceSelection(resource)"
     >
-      <oc-grid
-        :id="'file-row-' + rowItem.id"
-        :ref="index === 0 ? 'firstRow' : null"
-        gutter="small"
-        flex
-        class="uk-padding-small oc-border-top"
-      >
-        <div v-if="!isLocationPicker">
-          <oc-checkbox
-            class="file-picker-resource-checkbox uk-margin-small-left"
-            :value="isResourceSelected(rowItem)"
-            :label="selectCheckboxLabel(rowItem.name)"
-            :hide-label="true"
-            @click.stop
-            @change.native="toggleResourceSelection(rowItem)"
-          />
-        </div>
+      <oc-td v-if="!isLocationPicker" class="oc-pm" width="shrink">
+        <oc-checkbox
+          class="file-picker-resource-checkbox uk-margin-small-left"
+          :value="isResourceSelected(resource)"
+          :label="selectCheckboxLabel(resource.name)"
+          :hide-label="true"
+          @click.stop
+          @change.native="toggleResourceSelection(resource)"
+        />
+      </oc-td>
+      <oc-td class="oc-pm">
         <resource
           class="file-picker-resource uk-width-auto"
-          :item="rowItem"
+          :item="resource"
           @navigate="openFolder"
         />
-      </oc-grid>
-    </div>
-  </RecycleScroller>
+      </oc-td>
+    </oc-tr>
+  </oc-table-simple>
 </template>
 
 <script>
-import { RecycleScroller } from 'vue-virtual-scroller'
 import { sortByName } from '../helpers/sort'
 import Resource from './Resource.vue'
 
@@ -48,7 +35,6 @@ export default {
   name: 'ListResources',
 
   components: {
-    RecycleScroller,
     Resource
   },
 
@@ -116,7 +102,7 @@ export default {
     },
 
     rowClasses(resource) {
-      const classes = []
+      const classes = ['oc-file-picker-row']
 
       if (this.isResourceSelected(resource)) {
         classes.push('oc-background-selected')
@@ -141,9 +127,7 @@ export default {
 }
 </script>
 
-<style scoped>
-@import '../../node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.css';
-
+<style>
 .files-list-row-disabled {
   opacity: 0.3;
   pointer-events: none;

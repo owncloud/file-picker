@@ -1,5 +1,5 @@
 <template>
-  <header class="uk-background-primary uk-padding-small uk-flex uk-flex-middle uk-flex-between">
+  <header class="file-picker-header uk-padding-small uk-flex uk-flex-middle uk-flex-between">
     <!-- TODO: Use icon instead of "Home" text -->
     <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" />
     <div>
@@ -13,6 +13,7 @@
       <oc-button
         class="file-picker-btn-select-resources"
         variation="primary"
+        appearance="filled"
         :disabled="!isSelectBtnEnabled"
         :uk-tooltip="disabledSelectBtnTooltip"
         @click="select"
@@ -128,13 +129,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/* TODO: Move to ODS */
-.oc-light .oc-breadcrumb-list-item > a,
-.oc-light .oc-breadcrumb-list-item .oc-icon > svg,
-.oc-light .oc-breadcrumb-list-item::before {
-  color: white !important;
-  fill: white;
-}
-</style>

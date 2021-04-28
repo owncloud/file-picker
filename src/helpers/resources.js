@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { uniqueId, chain } from 'lodash'
-import filesize from 'filesize'
 import fileTypeIconMappings from './fileTypeIconMappings.json'
+import path from 'path'
 
 function _extName(fileName) {
   let ext = ''
@@ -33,20 +33,7 @@ export function buildResource(resource) {
     extension: (function() {
       return ext
     })(),
-    name: (function() {
-      const pathList = resource.name.split('/').filter(e => e !== '')
-      return pathList.length === 0 ? '' : pathList[pathList.length - 1]
-    })(),
-    basename: (function() {
-      const pathList = resource.name.split('/').filter(e => e !== '')
-      const name = pathList.length === 0 ? '' : pathList[pathList.length - 1]
-      // FIXME: this is really just a view/formatting thing, should better
-      // be processed at render time instead of storing an extra value
-      if (ext) {
-        return name.substring(0, name.length - ext.length - 1)
-      }
-      return name
-    })(),
+    name: path.basename(resource.name),
     path: resource.name,
     permissions: resource.fileInfo['{http://owncloud.org/ns}permissions'] || '',
     etag: resource.fileInfo['{DAV:}getetag'],
@@ -107,21 +94,4 @@ export function getResourceIcon(resource) {
     if (icon) return `${icon}`
   }
   return 'x-office-document'
-}
-
-export function getResourceSize(size) {
-  if (size < 0) {
-    return ''
-  }
-
-  if (isNaN(size)) {
-    return '?'
-  }
-
-  const mb = 1048576
-
-  // TODO: Pass current language as locale to display correct separator
-  return filesize(size, {
-    round: size < mb ? 0 : 1
-  })
 }

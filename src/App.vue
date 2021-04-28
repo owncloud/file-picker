@@ -1,5 +1,5 @@
 <template>
-  <div id="oc-file-picker" class="uk-height-1-1" tabindex="0" @keyup.esc="cancel">
+  <div id="oc-file-picker" tabindex="0" @keyup.esc="cancel">
     <div
       v-if="state === 'loading'"
       class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
@@ -23,16 +23,26 @@
 <script>
 import sdk from 'owncloud-sdk'
 import DesignSystem from 'owncloud-design-system'
-import initVueAuthenticate from './services/auth'
-import FilePicker from './components/FilePicker.vue'
-import Login from './components/Login.vue'
-import { loadConfig } from './helpers/config'
+import VueGettext from 'vue-gettext'
 
-// Init sdk and design system
 /* global Vue */
 if (!Vue.prototype.$client) {
   Vue.prototype.$client = new sdk()
 }
+
+if (!Vue.prototype.$gettext) {
+  Vue.use(VueGettext, {
+    silent: true,
+    translations: {}
+  })
+}
+
+import initVueAuthenticate from './services/auth'
+
+import { loadConfig } from './helpers/config'
+
+import FilePicker from './components/FilePicker.vue'
+import Login from './components/Login.vue'
 
 export default {
   name: 'App',
