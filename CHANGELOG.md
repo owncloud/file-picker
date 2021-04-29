@@ -9,6 +9,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 * Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
 * Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
+* Enhancement - Make it possible to select folder via keyboard: [#51](https://github.com/owncloud/file-picker/pull/51)
 * Enhancement - Add translations: [#49](https://github.com/owncloud/file-picker/pull/49)
 * Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
 
@@ -36,6 +37,14 @@ The following sections list the changes in ownCloud File picker unreleased.
    be directly imported during build time into any Vuejs app.
 
    https://github.com/owncloud/file-picker/pull/32
+
+
+* Enhancement - Make it possible to select folder via keyboard: [#51](https://github.com/owncloud/file-picker/pull/51)
+
+   We've made the table row in the File picker focusable and the selection of folder in location
+   picker triggerable by hitting enter.
+
+   https://github.com/owncloud/file-picker/pull/51
 
 
 * Enhancement - Add translations: [#49](https://github.com/owncloud/file-picker/pull/49)
