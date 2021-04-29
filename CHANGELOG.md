@@ -9,6 +9,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 * Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
 * Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
+* Enhancement - Add translations: [#49](https://github.com/owncloud/file-picker/pull/49)
 * Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
 
 ## Details
@@ -35,6 +36,13 @@ The following sections list the changes in ownCloud File picker unreleased.
    be directly imported during build time into any Vuejs app.
 
    https://github.com/owncloud/file-picker/pull/32
+
+
+* Enhancement - Add translations: [#49](https://github.com/owncloud/file-picker/pull/49)
+
+   We've added vue-gettext library to add support for translations.
+
+   https://github.com/owncloud/file-picker/pull/49
 
 
 * Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
