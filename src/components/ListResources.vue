@@ -5,13 +5,15 @@
       :key="resource.viewId"
       :class="rowClasses(resource)"
       :data-testid="`list-resources-row-${resource.id}`"
+      v-bind="bindRowProps(resource.name)"
       @click.native="toggleResourceSelection(resource)"
+      @keydown.enter.native="toggleResourceSelection(resource)"
     >
       <oc-td v-if="!isLocationPicker" class="oc-pm" width="shrink">
         <oc-checkbox
           class="file-picker-resource-checkbox uk-margin-small-left"
           :value="isResourceSelected(resource)"
-          :label="selectCheckboxLabel(resource.name)"
+          :label="selectLabel(resource.name)"
           :hide-label="true"
           @click.stop
           @change.native="toggleResourceSelection(resource)"
@@ -89,7 +91,7 @@ export default {
       this.$emit('selectResources', this.selectedResources)
     },
 
-    selectCheckboxLabel(name) {
+    selectLabel(name) {
       const translated = this.$gettext('Select %{ name }')
 
       return this.$gettextInterpolate(translated, { name: path.basename(name) })
@@ -128,6 +130,14 @@ export default {
     resetResourceSelection() {
       this.selectedResources = []
       this.$emit('selectResources', [])
+    },
+
+    bindRowProps(path) {
+      if (this.isLocationPicker) {
+        return { 'aria-label': this.selectLabel(path), tabindex: '0' }
+      }
+
+      return null
     },
   },
 }

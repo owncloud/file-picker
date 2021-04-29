@@ -6,7 +6,6 @@ new Vue({
     return h(App, {
       props: {
         variation: 'resource',
-        locale: 'cs_CZ',
       },
     })
   },
