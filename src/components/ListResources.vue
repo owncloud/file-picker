@@ -29,36 +29,39 @@
 </template>
 
 <script>
+import path from 'path'
+
 import { sortByName } from '../helpers/sort'
+
 import Resource from './Resource.vue'
 
 export default {
   name: 'ListResources',
 
   components: {
-    Resource
+    Resource,
   },
 
   props: {
     resources: {
       type: Array,
-      required: true
+      required: true,
     },
     isLocationPicker: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data: () => ({
-    selectedResources: []
+    selectedResources: [],
   }),
 
   computed: {
     resourcesSorted() {
       return this.sortResources(this.resources)
-    }
+    },
   },
 
   methods: {
@@ -87,7 +90,9 @@ export default {
     },
 
     selectCheckboxLabel(name) {
-      return `Select ${name}`
+      const translated = this.$gettext('Select %{ name }')
+
+      return this.$gettextInterpolate(translated, { name: path.basename(name) })
     },
 
     isResourceSelected(resource) {
@@ -123,8 +128,8 @@ export default {
     resetResourceSelection() {
       this.selectedResources = []
       this.$emit('selectResources', [])
-    }
-  }
+    },
+  },
 }
 </script>
 

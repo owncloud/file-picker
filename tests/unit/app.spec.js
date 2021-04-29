@@ -18,10 +18,10 @@ describe('App', () => {
         isOdsProvided: true,
         isSdkProvided: true,
         configObject: {},
-        bearerToken: 'token'
+        bearerToken: 'token',
       },
       stubs,
-      localVue
+      localVue,
     })
 
     expect(document.activeElement).toBe(wrapper.find('#oc-file-picker').element)

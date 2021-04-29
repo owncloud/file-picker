@@ -5,13 +5,13 @@
   >
     <div class="oc-login-card">
       <div class="oc-login-card-body">
-        <h3 class="oc-login-card-title">
-          Welcome to ownCloud File picker
-        </h3>
-        <p>
-          Please click the button below to authenticate and get access to your data.
-        </p>
-        <oc-button variation="primary" @click="login">Log in</oc-button>
+        <h3 class="oc-login-card-title" v-text="$gettext('Welcome to ownCloud File picker')" />
+        <p
+          v-text="
+            $gettext('Please, click the button below to authenticate and get access to your data.')
+          "
+        />
+        <oc-button variation="primary" @click="login" v-text="$gettext('Log in')" />
       </div>
     </div>
   </div>
@@ -26,13 +26,13 @@ export default {
   computed: {
     backgroundImage() {
       return backgroundImage
-    }
+    },
   },
 
   methods: {
     login() {
       this.$emit('login')
-    }
-  }
+    },
+  },
 }
 </script>

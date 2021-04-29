@@ -22,14 +22,14 @@
           :type="item.type"
         />
       </component>
-      <div class="uk-text-meta">
-        <oc-resource-size :size="item.size" /> - Last modified {{ formDateFromNow(item.mdate) }}
-      </div>
+      <div class="uk-text-meta"><oc-resource-size :size="item.size" /> - {{ mDate }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import path from 'path'
+
 import { getResourceIcon } from '../helpers/resources'
 import { formDateFromNow } from '../helpers/date'
 
@@ -39,8 +39,8 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   computed: {
@@ -59,15 +59,17 @@ export default {
     },
 
     navigateButtonLabel() {
-      return `Navigate into ${this.item.name}`
+      const translated = this.$gettext('Navigate into %{ name }')
+
+      return this.$gettextInterpolate(translated, { name: path.basename(this.item.name) })
     },
 
     resourceNameProps() {
       if (this.item.type === 'folder') {
         return {
-          ariaLabel: 'navigateButtonLabel',
+          ariaLabel: this.navigateButtonLabel,
           appearance: 'raw',
-          variation: 'passive'
+          variation: 'passive',
         }
       }
 
@@ -80,7 +82,13 @@ export default {
       }
 
       return null
-    }
+    },
+
+    mDate() {
+      const translated = this.$gettext('Last modified %{ date }')
+
+      return this.$gettextInterpolate(translated, { date: formDateFromNow(this.item.mdate) })
+    },
   },
 
   mounted() {
@@ -92,13 +100,9 @@ export default {
   },
 
   methods: {
-    formDateFromNow(date) {
-      return formDateFromNow(date)
-    },
-
     navigate() {
       this.$emit('navigate', this.item.path)
-    }
-  }
+    },
+  },
 }
 </script>

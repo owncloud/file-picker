@@ -6,15 +6,17 @@ import { listResources } from '../../helpers/mocks'
 fetchMock.enableMocks()
 
 Vue.use(ODS)
+Vue.config.language = 'en'
 
 config.mocks = {
   $client: {
     files: {
-      list: listResources
-    }
+      list: listResources,
+    },
   },
-  $gettext: str => str,
+  $gettext: (str) => str,
+  $gettextInterpolate: (str) => str,
   $language: {
-    current: 'en_US'
-  }
+    current: 'en_US',
+  },
 }

@@ -4,7 +4,7 @@
       v-if="state === 'loading'"
       class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
     >
-      <oc-spinner aria-label="Loading ownCloud file picker" />
+      <oc-spinner :aria-label="$gettext('Loading ownCloud File Picker')" />
     </div>
     <login v-if="state === 'unauthorized'" key="login-form" @login="authenticate" />
     <file-picker
@@ -24,82 +24,110 @@
 import sdk from 'owncloud-sdk'
 import DesignSystem from 'owncloud-design-system'
 import VueGettext from 'vue-gettext'
+import merge from 'lodash-es/merge'
 
 /* global Vue */
 if (!Vue.prototype.$client) {
   Vue.prototype.$client = new sdk()
 }
 
-if (!Vue.prototype.$gettext) {
-  Vue.use(VueGettext, {
-    silent: true,
-    translations: {}
-  })
-}
-
 import initVueAuthenticate from './services/auth'
 
 import { loadConfig } from './helpers/config'
 
+import filePickerTranslations from '../l10n/translations.json'
+import odsTranslations from 'owncloud-design-system/dist/system/translations.json'
+
 import FilePicker from './components/FilePicker.vue'
 import Login from './components/Login.vue'
+
+if (!Vue.prototype.$gettext) {
+  const supportedLanguages = {
+    en: 'English',
+    de: 'Deutsch',
+    es: 'Español',
+    cs: 'Czech',
+    fr: 'Français',
+    it: 'Italiano',
+    gl: 'Galego',
+  }
+  const translations = merge({}, filePickerTranslations, odsTranslations)
+
+  Vue.use(VueGettext, {
+    availableLanguages: supportedLanguages,
+    defaultLanguage: navigator.language.substring(0, 2),
+    translations,
+    silent: true,
+  })
+}
 
 export default {
   name: 'App',
 
   components: {
     FilePicker,
-    Login
+    Login,
   },
 
   props: {
     variation: {
       type: String,
       required: true,
-      validator: value => value === 'resource' || value === 'location'
+      validator: (value) => value === 'resource' || value === 'location',
     },
     configLocation: {
       type: String,
       required: false,
-      default: () => window.location.origin + '/file-picker-config.json'
+      default: () => window.location.origin + '/file-picker-config.json',
     },
     bearerToken: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     configObject: {
       type: [Object, String],
       required: false,
-      default: null
+      default: null,
     },
     isSdkProvided: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     isOdsProvided: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
+    locale: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 
   data: () => ({
     authInstance: null,
     state: 'loading',
-    config: null
+    config: null,
   }),
+
+  computed: {
+    currentLocale() {
+      return this.locale || navigator.language.substring(0, 2)
+    },
+  },
 
   created() {
     if (!this.isOdsProvided) {
@@ -111,6 +139,7 @@ export default {
   },
 
   mounted() {
+    this.$language.current = this.currentLocale
     this.$refs.filePicker.focus()
   },
 
@@ -127,11 +156,11 @@ export default {
         this.$client.init({
           baseUrl: this.config.server,
           auth: {
-            bearer: bearerToken
+            bearer: bearerToken,
           },
           headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          }
+            'X-Requested-With': 'XMLHttpRequest',
+          },
         })
       }
 
@@ -176,8 +205,8 @@ export default {
         return
       }
       this.$emit('cancel')
-    }
-  }
+    },
+  },
 }
 </script>
 
