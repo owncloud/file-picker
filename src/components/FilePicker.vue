@@ -16,7 +16,7 @@
       key="loading-message"
       class="uk-flex uk-flex-1 uk-flex-middle uk-flex-center"
     >
-      <oc-spinner aria-label="Loading resources" />
+      <oc-spinner :aria-label="$gettext('Loading resources')" />
     </div>
     <list-resources
       v-if="state === 'loaded'"
@@ -40,25 +40,25 @@ export default {
 
   components: {
     ListHeader,
-    ListResources
+    ListResources,
   },
 
   props: {
     variation: {
       type: String,
       required: true,
-      validator: value => value === 'resource' || 'location'
+      validator: (value) => value === 'resource' || 'location',
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
 
   data: () => ({
@@ -78,8 +78,8 @@ export default {
       '{http://owncloud.org/ns}size',
       '{DAV:}getlastmodified',
       '{DAV:}getetag',
-      '{DAV:}resourcetype'
-    ]
+      '{DAV:}resourcetype',
+    ],
   }),
 
   computed: {
@@ -93,7 +93,7 @@ export default {
 
     areResourcesSelected() {
       return this.selectedResources.length > 0
-    }
+    },
   },
 
   created() {
@@ -105,13 +105,13 @@ export default {
       this.state = 'loading'
       this.$client.files
         .list(path, 1, this.davProperties)
-        .then(resources => {
-          resources = resources.map(resource => buildResource(resource))
+        .then((resources) => {
+          resources = resources.map((resource) => buildResource(resource))
           this.resources = resources.splice(1)
           this.currentFolder = resources[0]
           this.state = 'loaded'
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
           this.state = 'failed'
         })
@@ -132,7 +132,7 @@ export default {
 
     emitCancel() {
       this.$emit('cancel')
-    }
-  }
+    },
+  },
 }
 </script>

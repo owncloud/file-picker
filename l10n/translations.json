@@ -1,0 +1,16 @@
+{
+  "cs_CZ": {
+    "Loading ownCloud File Picker": "Načítám ownCloud File Picker",
+    "Loading resources": "Načítám soubory",
+    "Home": "Domů",
+    "Please, select at least one resource. You can select a resource by clicking on its row or via its checkbox.": "Prosím, zvolte alespoň jeden soubor. Soubor můžete označit kliknutím na jeho řádek nebo přes zaškrtávací pole.",
+    "Select folder": "Zvolit složku",
+    "Select current folder": "Zvolit otevřenou složku",
+    "Select resources": "Zvolit soubory",
+    "Select %{ name }": "Označit %{ name }",
+    "Welcome to ownCloud File picker": "Vítejte v ownCloud File Pickeru",
+    "Please, click the button below to authenticate and get access to your data.": "Prosím, klikněte na tlačítko níže, abyste se autorizovali a získali tak přístup k vašim souborům.",
+    "Navigate into %{ name }": "Zobrazit %{ name }",
+    "Last modified %{ date }": "Naposledy upraveno %{ date }"
+  }
+}

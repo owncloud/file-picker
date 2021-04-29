@@ -7,9 +7,8 @@
         v-if="cancelBtnLabel"
         class="file-picker-btn-cancel uk-margin-small-right"
         @click="cancel"
-      >
-        {{ cancelBtnLabel }}
-      </oc-button>
+        v-text="cancelBtnLabel"
+      />
       <oc-button
         data-testid="list-header-btn-select"
         class="file-picker-btn-select-resources"
@@ -18,9 +17,8 @@
         :disabled="!isSelectBtnEnabled"
         :uk-tooltip="disabledSelectBtnTooltip"
         @click="select"
-      >
-        {{ submitBtnLabel }}
-      </oc-button>
+        v-text="submitBtnLabel"
+      />
     </div>
   </header>
 </template>
@@ -35,40 +33,40 @@ export default {
     currentFolder: {
       type: Object,
       required: false,
-      default: () => null
+      default: () => null,
     },
     isSelectBtnEnabled: {
       type: Boolean,
-      required: true
+      required: true,
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     isLocationPicker: {
       type: Boolean,
-      required: true
+      required: true,
     },
     areResourcesSelected: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
 
   computed: {
     breadcrumbsItems() {
       let breadcrumbs = [
         {
-          text: 'Home',
-          onClick: () => this.openFolder('/')
-        }
+          text: this.$gettext('Home'),
+          onClick: () => this.openFolder('/'),
+        },
       ]
 
       if (!this.currentFolder) {
@@ -87,7 +85,7 @@ export default {
         breadcrumbs.push({
           index: i,
           text: pathSplit.slice(0, i + 1)[i],
-          onClick: () => this.openFolder(itemPath)
+          onClick: () => this.openFolder(itemPath),
         })
       }
 
@@ -99,7 +97,9 @@ export default {
         return null
       }
 
-      return 'Please select at least one resource. You can select a resource by clicking on its row or via its checkbox.'
+      return this.$gettext(
+        'Please, select at least one resource. You can select a resource by clicking on its row or via its checkbox.'
+      )
     },
 
     submitBtnLabel() {
@@ -108,11 +108,13 @@ export default {
       }
 
       if (this.isLocationPicker) {
-        return this.areResourcesSelected ? 'Select folder' : 'Select current folder'
+        return this.areResourcesSelected
+          ? this.$gettext('Select folder')
+          : this.$gettext('Select current folder')
       }
 
-      return 'Select resources'
-    }
+      return this.$gettext('Select resources')
+    },
   },
 
   methods: {
@@ -126,7 +128,7 @@ export default {
 
     cancel() {
       this.$emit('cancel')
-    }
-  }
+    },
+  },
 }
 </script>
