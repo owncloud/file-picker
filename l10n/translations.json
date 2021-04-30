@@ -12,5 +12,19 @@
     "Please, click the button below to authenticate and get access to your data.": "Prosím, klikněte na tlačítko níže, abyste se autorizovali a získali tak přístup k vašim souborům.",
     "Navigate into %{ name }": "Zobrazit %{ name }",
     "Last modified %{ date }": "Naposledy upraveno %{ date }"
+  },
+    "de": {
+    "Loading ownCloud File Picker": "Lade ownCloud File Picker",
+    "Loading resources": "Lade Dateien",
+    "Home": "Start",
+    "Please, select at least one resource. You can select a resource by clicking on its row or via its checkbox.": "Bitte wählen Sie mindestens eine Datei. Klicken Sie auf eine Reihe oder ein Kontrollkästchen, um eine Datei auszuwählen.",
+    "Select folder": "Ordner wählen",
+    "Select current folder": "Aktuellen Ordner wählen",
+    "Select resources": "Dateien wählen",
+    "Select %{ name }": "Wähle %{ name }",
+    "Welcome to ownCloud File picker": "Willkommen beim ownCloud File Picker",
+    "Please, click the button below to authenticate and get access to your data.": "Bitte klicken Sie auf die Schaltfläche unten, um sich zu authentifizieren und Zugriff auf Ihre Daten zu erhalten.",
+    "Navigate into %{ name }": "Navigiere zu %{ name }",
+    "Last modified %{ date }": "Zuletzt geändert am %{ date }"
   }
 }
