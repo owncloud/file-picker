@@ -6,6 +6,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Do not propagate click event on checkbox: [#53](https://github.com/owncloud/file-picker/pull/53)
 * Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
 * Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
@@ -14,6 +15,15 @@ The following sections list the changes in ownCloud File picker unreleased.
 * Enhancement - Update ODS to 6.2.0: [#36](https://github.com/owncloud/file-picker/pull/36)
 
 ## Details
+
+* Bugfix - Do not propagate click event on checkbox: [#53](https://github.com/owncloud/file-picker/pull/53)
+
+   When clicking on the checkbox to select a resource, it hasn't been selected because a click on
+   the row would have been caught as well which would reset the selection again. We've fixed this
+   issue by not propagating the click event on checkbox to the parent.
+
+   https://github.com/owncloud/file-picker/pull/53
+
 
 * Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
 
