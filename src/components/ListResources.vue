@@ -12,11 +12,12 @@
       <oc-td v-if="!isLocationPicker" class="oc-pm" width="shrink">
         <oc-checkbox
           class="file-picker-resource-checkbox uk-margin-small-left"
+          :data-testid="`list-resources-checkbox-${resource.id}`"
           :value="isResourceSelected(resource)"
           :label="selectLabel(resource.name)"
           :hide-label="true"
-          @click.stop
-          @change.native="toggleResourceSelection(resource)"
+          @click.native.stop
+          @input="toggleResourceSelection(resource)"
         />
       </oc-td>
       <oc-td class="oc-pm">
