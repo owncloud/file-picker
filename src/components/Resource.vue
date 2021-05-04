@@ -9,9 +9,9 @@
     />
     <div class="uk-width-expand">
       <component
-        :is="item.type === 'folder' ? 'oc-button' : 'div'"
+        :is="item.type === 'folder' ? 'oc-button' : 'p'"
         v-bind="resourceNameProps"
-        class="file-row-name uk-text-truncate"
+        class="file-row-name uk-text-truncate oc-my-rm"
         :filename="item.name"
         v-on="resourceNameEvents"
       >
@@ -22,7 +22,7 @@
           :type="item.type"
         />
       </component>
-      <div class="uk-text-meta"><oc-resource-size :size="item.size" /> - {{ mDate }}</div>
+      <p class="uk-text-meta oc-my-rm"><oc-resource-size :size="item.size" /> - {{ mDate }}</p>
     </div>
   </div>
 </template>
