@@ -97,6 +97,7 @@ new Vue(...)
 
 <script>
 import FilePicker from '@ownclouders/file-picker'
+import '@ownclouders/file-picker/dist/lib/file-picker.css'
 
 export default: {
   components: {
@@ -110,6 +111,9 @@ export default: {
 As described in [Getting Started]({{< ref "getting-started.md#components-of-the-file-picker" >}}), File picker comes in two variations. To define which one should be used, you need to pass it to the component via its `variation` property. Valid values are:
 - `resource` - File picker
 - `location` - Location picker
+
+## Theming
+File picker comes by default with extracted stylesheet which combines our ownCloud Design System and a few custom styles. If you want to create a custom theme, do not include our stylesheet and create a custom one using File picker selectors.
 
 ## Buttons and events
 The wording of buttons can be customized.
