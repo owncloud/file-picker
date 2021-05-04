@@ -26,6 +26,7 @@
       :is-location-picker="isLocationPicker"
       @openFolder="loadFolder"
       @selectResources="selectResources"
+      @selectLocation="emitSelectedResources"
     />
   </div>
 </template>

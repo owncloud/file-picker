@@ -5,12 +5,11 @@
       :key="resource.viewId"
       :class="rowClasses(resource)"
       :data-testid="`list-resources-row-${resource.id}`"
-      v-bind="bindRowProps(resource.name)"
       @click.native="toggleResourceSelection(resource)"
-      @keydown.enter.native="toggleResourceSelection(resource)"
     >
-      <oc-td v-if="!isLocationPicker" class="oc-pm" width="shrink">
+      <oc-td class="oc-pm uk-display-relative" width="shrink">
         <oc-checkbox
+          v-if="!isLocationPicker"
           class="file-picker-resource-checkbox uk-margin-small-left"
           :data-testid="`list-resources-checkbox-${resource.id}`"
           :value="isResourceSelected(resource)"
@@ -18,6 +17,13 @@
           :hide-label="true"
           @click.native.stop
           @input="toggleResourceSelection(resource)"
+        />
+        <button
+          v-else-if="isLocationPicker && resource.type === 'folder'"
+          class="file-picker-btn-sr-select"
+          tabindex="0"
+          @click="selectLocation(resource)"
+          v-text="selectLabel(resource.name)"
         />
       </oc-td>
       <oc-td class="oc-pm">
@@ -133,20 +139,32 @@ export default {
       this.$emit('selectResources', [])
     },
 
-    bindRowProps(path) {
-      if (this.isLocationPicker) {
-        return { 'aria-label': this.selectLabel(path), tabindex: '0' }
-      }
-
-      return null
+    selectLocation(location) {
+      this.$emit('selectLocation', [location])
     },
   },
 }
 </script>
 
-<style>
+<style lang="scss">
 .files-list-row-disabled {
   opacity: 0.3;
   pointer-events: none;
+}
+
+.file-picker-btn-sr-select {
+  position: absolute;
+  z-index: -1;
+  top: var(--oc-space-xsmall);
+  left: var(--oc-space-xsmall);
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+
+  &:focus {
+    opacity: 1;
+    z-index: 1;
+    pointer-events: auto;
+  }
 }
 </style>
