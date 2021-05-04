@@ -8,6 +8,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 * Bugfix - Do not propagate click event on checkbox: [#53](https://github.com/owncloud/file-picker/pull/53)
 * Bugfix - Emit current folder: [#42](https://github.com/owncloud/file-picker/pull/42)
+* Enhancement - Improve resource name and info readability: [#55](https://github.com/owncloud/file-picker/pull/55)
 * Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
 * Enhancement - Build File picker as a library: [#32](https://github.com/owncloud/file-picker/pull/32)
 * Enhancement - Make it possible to select folder via keyboard: [#51](https://github.com/owncloud/file-picker/pull/51)
@@ -31,6 +32,14 @@ The following sections list the changes in ownCloud File picker unreleased.
    We've fixed this by emitting the current folder.
 
    https://github.com/owncloud/file-picker/pull/42
+
+
+* Enhancement - Improve resource name and info readability: [#55](https://github.com/owncloud/file-picker/pull/55)
+
+   We've added paragraph elements for resource name and info so that the readability is improved
+   when using screen readers.
+
+   https://github.com/owncloud/file-picker/pull/55
 
 
 * Enhancement - Add initial focus: [#44](https://github.com/owncloud/file-picker/pull/44)
