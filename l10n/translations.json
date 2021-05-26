@@ -25,6 +25,6 @@
     "Welcome to ownCloud File picker": "Willkommen beim ownCloud File Picker",
     "Please, click the button below to authenticate and get access to your data.": "Bitte klicken Sie auf die Schaltfläche unten, um sich zu authentifizieren und Zugriff auf Ihre Daten zu erhalten.",
     "Navigate into %{ name }": "Navigiere zu %{ name }",
-    "Last modified %{ date }": "Zuletzt geändert am %{ date }"
+    "Last modified %{ date }": "Zuletzt geändert %{ date }"
   }
 }
