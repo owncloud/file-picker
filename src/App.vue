@@ -13,8 +13,10 @@
       class="uk-height-1-1"
       :variation="variation"
       :select-btn-label="selectBtnLabel"
+      :is-select-btn-displayed="isSelectBtnDisplayed"
       :cancel-btn-label="cancelBtnLabel"
       @selectResources="selectResources"
+      @selectBtnClick="emitSelectBtnClick"
       @cancel="cancel"
     />
   </div>
@@ -99,6 +101,11 @@ export default {
       type: String,
       required: false,
       default: null,
+    },
+    isSelectBtnDisplayed: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     cancelBtnLabel: {
       type: String,
@@ -197,6 +204,10 @@ export default {
 
     selectResources(resources) {
       this.$emit('selectResources', resources)
+    },
+
+    emitSelectBtnClick(resources) {
+      this.$emit('selectBtnClick', resources)
     },
 
     cancel() {

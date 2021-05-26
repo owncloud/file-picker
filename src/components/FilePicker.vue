@@ -3,12 +3,13 @@
     <list-header
       :current-folder="currentFolder"
       :is-select-btn-enabled="isSelectBtnEnabled"
+      :is-select-btn-displayed="isSelectBtnDisplayed"
       :is-location-picker="isLocationPicker"
       :are-resources-selected="areResourcesSelected"
       :select-btn-label="selectBtnLabel"
       :cancel-btn-label="cancelBtnLabel"
       @openFolder="loadFolder"
-      @select="emitSelectedResources"
+      @select="emitSelectBtnClick"
       @cancel="emitCancel"
     />
     <div
@@ -26,7 +27,7 @@
       :is-location-picker="isLocationPicker"
       @openFolder="loadFolder"
       @selectResources="selectResources"
-      @selectLocation="emitSelectedResources"
+      @selectLocation="emitSelectBtnClick"
     />
   </div>
 </template>
@@ -59,6 +60,11 @@ export default {
       type: String,
       required: false,
       default: null,
+    },
+    isSelectBtnDisplayed: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 
@@ -120,15 +126,16 @@ export default {
 
     selectResources(resources) {
       this.selectedResources = resources
+      this.$emit('selectResources', resources)
     },
 
-    emitSelectedResources() {
+    emitSelectBtnClick() {
       const resources =
         this.selectedResources.length < 1 && this.isLocationPicker
           ? [this.currentFolder]
           : this.selectedResources
 
-      this.$emit('selectResources', resources)
+      this.$emit('selectBtnClick', resources)
     },
 
     emitCancel() {
