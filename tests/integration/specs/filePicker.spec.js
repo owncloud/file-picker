@@ -17,7 +17,7 @@ describe('Users can select location from within the file picker', () => {
 
     const rootFolder = resources['/'][0]
 
-    expect(emitted().selectBtnClick[0][0][0].id).toMatch(
+    expect(emitted().select[0][0][0].id).toMatch(
       rootFolder.fileInfo['{http://owncloud.org/ns}fileid']
     )
   })
@@ -50,7 +50,7 @@ describe('Users can select location from within the file picker', () => {
       (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === '1'
     )
 
-    expect(emitted().selectBtnClick[0][0][0].id).toMatch(
+    expect(emitted().select[0][0][0].id).toMatch(
       expectedFolder.fileInfo['{http://owncloud.org/ns}fileid']
     )
   })
@@ -87,12 +87,12 @@ describe('Users can select resources from within the file picker', () => {
 
     expect(
       expectedResources.find(
-        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().selectBtnClick[0][0][0].id
+        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().select[0][0][0].id
       )
     ).toBeTruthy()
     expect(
       expectedResources.find(
-        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().selectBtnClick[0][0][1].id
+        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().select[0][0][1].id
       )
     ).toBeTruthy()
   })
@@ -116,14 +116,14 @@ describe('Users can select resources from within the file picker', () => {
       getByTestId('list-resources-checkbox-144242').querySelector('.oc-checkbox')
     )
 
-    expect(emitted().selectResources[0][0].length).toBe(2)
-    expect(emitted().selectResources[0][0][0].id).toMatch('144228')
-    expect(emitted().selectResources[0][0][1].id).toMatch('144242')
+    expect(emitted().update[0][0].length).toBe(2)
+    expect(emitted().update[0][0][0].id).toMatch('144228')
+    expect(emitted().update[0][0][1].id).toMatch('144242')
 
     await fireEvent.click(
       getByTestId('list-resources-checkbox-144242').querySelector('.oc-checkbox')
     )
 
-    expect(emitted().selectResources[0][0].length).toBe(1)
+    expect(emitted().update[0][0].length).toBe(1)
   })
 })

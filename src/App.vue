@@ -15,8 +15,8 @@
       :select-btn-label="selectBtnLabel"
       :is-select-btn-displayed="isSelectBtnDisplayed"
       :cancel-btn-label="cancelBtnLabel"
-      @selectResources="selectResources"
-      @selectBtnClick="emitSelectBtnClick"
+      @update="selectResources"
+      @select="emitSelectBtnClick"
       @cancel="cancel"
     />
   </div>
@@ -203,11 +203,11 @@ export default {
     },
 
     selectResources(resources) {
-      this.$emit('selectResources', resources)
+      this.$emit('update', resources)
     },
 
     emitSelectBtnClick(resources) {
-      this.$emit('selectBtnClick', resources)
+      this.$emit('select', resources)
     },
 
     cancel() {

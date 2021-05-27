@@ -126,7 +126,7 @@ export default {
 
     selectResources(resources) {
       this.selectedResources = resources
-      this.$emit('selectResources', resources)
+      this.$emit('update', resources)
     },
 
     emitSelectBtnClick() {
@@ -135,7 +135,7 @@ export default {
           ? [this.currentFolder]
           : this.selectedResources
 
-      this.$emit('selectBtnClick', resources)
+      this.$emit('select', resources)
     },
 
     emitCancel() {

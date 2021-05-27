@@ -66,7 +66,7 @@ describe('File picker', () => {
     await wrapper.vm.$nextTick()
 
     // Need to access nested array
-    expect(wrapper.emitted().selectBtnClick[0][0]).toContain('Documents')
+    expect(wrapper.emitted().select[0][0]).toContain('Documents')
   })
 
   it('emits a cancel event on button click', async () => {

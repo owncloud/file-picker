@@ -29,6 +29,6 @@ geekdocFilePath: component-reference.md
 ## Events
 | Event | Arguments | Description |
 | :---- | :-------- | :---------- |
-| `selectResources` | Resources array | Emitted when any resource or location is selected or deselected |
-| `selectBtnClick` | Resources array | Emitted when the select button is clicked |
+| `update` | Resources array | Emitted when any resource or location is selected or deselected |
+| `select` | Resources array | Emitted when the select button is clicked |
 | `cancel` | Native click event object | Emitted when the cancel button is clicked |
