@@ -1,15 +1,16 @@
 <template>
   <header class="file-picker-header uk-padding-small uk-flex uk-flex-middle uk-flex-between">
-    <!-- TODO: Use icon instead of "Home" text -->
     <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" />
-    <div>
+    <div v-if="cancelBtnLabel || isSelectBtnDisplayed">
       <oc-button
         v-if="cancelBtnLabel"
+        data-testid="list-header-btn-cancel"
         class="file-picker-btn-cancel uk-margin-small-right"
         @click="cancel"
         v-text="cancelBtnLabel"
       />
       <oc-button
+        v-if="isSelectBtnDisplayed"
         data-testid="list-header-btn-select"
         class="file-picker-btn-select-resources"
         variation="primary"
@@ -38,6 +39,11 @@ export default {
     isSelectBtnEnabled: {
       type: Boolean,
       required: true,
+    },
+    isSelectBtnDisplayed: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     selectBtnLabel: {
       type: String,

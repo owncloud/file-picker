@@ -9,8 +9,8 @@ const localVue = createLocalVue()
 
 localVue.prototype.$client = {
   files: {
-    list: listResources
-  }
+    list: listResources,
+  },
 }
 
 describe('File picker', () => {
@@ -18,9 +18,9 @@ describe('File picker', () => {
     const wrapper = mount(FilePicker, {
       localVue,
       propsData: {
-        variation: 'resource'
+        variation: 'resource',
       },
-      stubs
+      stubs,
     })
 
     // Wait twice to give the list of resources enough time to render
@@ -35,9 +35,9 @@ describe('File picker', () => {
       localVue,
       propsData: {
         variation: 'resource',
-        selectBtnLabel: 'TestLabel'
+        selectBtnLabel: 'TestLabel',
       },
-      stubs
+      stubs,
     })
 
     expect(wrapper.findAll('.file-picker-btn-select-resources').length).toBe(1)
@@ -48,9 +48,9 @@ describe('File picker', () => {
     const wrapper = mount(FilePicker, {
       localVue,
       propsData: {
-        variation: 'resource'
+        variation: 'resource',
       },
-      stubs
+      stubs,
     })
 
     // Wait twice to give the list of resources enough time to render
@@ -66,33 +66,7 @@ describe('File picker', () => {
     await wrapper.vm.$nextTick()
 
     // Need to access nested array
-    expect(wrapper.emitted().selectResources[0][0]).toContain('Documents')
-  })
-
-  it('has no cancel button by default', () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource'
-      },
-      stubs
-    })
-
-    expect(wrapper.findAll('.file-picker-btn-cancel').length).toBe(0)
-  })
-
-  it('renders a cancel button if a label is provided', () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource',
-        cancelBtnLabel: 'Cancel'
-      },
-      stubs
-    })
-
-    expect(wrapper.findAll('.file-picker-btn-cancel').length).toBe(1)
-    expect(wrapper.find('.file-picker-btn-cancel').text()).toBe('Cancel')
+    expect(wrapper.emitted().select[0][0]).toContain('Documents')
   })
 
   it('emits a cancel event on button click', async () => {
@@ -100,9 +74,9 @@ describe('File picker', () => {
       localVue,
       propsData: {
         variation: 'resource',
-        cancelBtnLabel: 'Cancel'
+        cancelBtnLabel: 'Cancel',
       },
-      stubs
+      stubs,
     })
 
     // Emit click event instead of calling `trigger()` due to stubbed component
