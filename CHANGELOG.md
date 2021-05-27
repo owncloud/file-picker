@@ -1,3 +1,46 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.4.0...master
+
+## Summary
+
+* Change - Remove focus management: [#61](https://github.com/owncloud/file-picker/pull/61)
+* Enhancement - Add a prop to hide the select button: [#60](https://github.com/owncloud/file-picker/pull/60)
+* Enhancement - Always emit event when a resource is selected: [#60](https://github.com/owncloud/file-picker/pull/60)
+* Enhancement - Emit event when clicking the select button: [#60](https://github.com/owncloud/file-picker/pull/60)
+
+## Details
+
+* Change - Remove focus management: [#61](https://github.com/owncloud/file-picker/pull/61)
+
+   We've removed the initial focus management and shift the responsibility to the consuming app.
+
+   https://github.com/owncloud/file-picker/pull/61
+
+
+* Enhancement - Add a prop to hide the select button: [#60](https://github.com/owncloud/file-picker/pull/60)
+
+   We've added a new prop `isSelectBtnDisplayed` which can be used to hiding the select button.
+
+   https://github.com/owncloud/file-picker/pull/60
+
+
+* Enhancement - Always emit event when a resource is selected: [#60](https://github.com/owncloud/file-picker/pull/60)
+
+   We've started emitting `update` event every time a resource or location is selected or
+   deselected.
+
+   https://github.com/owncloud/file-picker/pull/60
+
+
+* Enhancement - Emit event when clicking the select button: [#60](https://github.com/owncloud/file-picker/pull/60)
+
+   We've started emitting `select` event when the select button is clicked.
+
+   https://github.com/owncloud/file-picker/pull/60
+
 # Changelog for [0.4.0] (2021-05-04)
 
 The following sections list the changes in ownCloud File picker 0.4.0.
