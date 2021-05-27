@@ -5,6 +5,7 @@ weight: 1
 geekdocRepo: https://github.com/owncloud/file-picker
 geekdocEditPath: edit/master/docs
 geekdocFilePath: _index.md
+geekdocCollapseSection: true
 ---
 
 Easily integrate ownCloud into your own product.
