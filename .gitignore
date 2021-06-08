@@ -18,5 +18,8 @@ public/file-picker-config.json
 public/demo.html
 public/file-picker.js
 public/img
+public/file-picker.min.js
+public/file-picker.js.map
+public/file-picker.min.js.map
 
 coverage
