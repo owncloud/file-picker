@@ -38,6 +38,7 @@
   "dependencies": {
     "core-js": "^3.11.1",
     "filesize": "^6.3.0",
+    "focus-trap": "^6.5.0",
     "focus-trap-vue": "^1.1.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
