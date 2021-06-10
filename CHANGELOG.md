@@ -1,3 +1,23 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.5.0...master
+
+## Summary
+
+* Enhancement - Update ODS to 7.1.2: [#63](https://github.com/owncloud/file-picker/pull/63)
+
+## Details
+
+* Enhancement - Update ODS to 7.1.2: [#63](https://github.com/owncloud/file-picker/pull/63)
+
+   We've updated ODS to version 7.1.2. This version brings our css custom properties so that the
+   theme is properly applied.
+
+   https://github.com/owncloud/file-picker/pull/63
+   https://github.com/owncloud/owncloud-design-system/releases/tag/v7.1.2
+
 # Changelog for [0.5.0] (2021-05-27)
 
 The following sections list the changes in ownCloud File picker 0.5.0.
