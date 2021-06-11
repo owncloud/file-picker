@@ -8406,10 +8406,10 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-owncloud-design-system@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/owncloud-design-system/-/owncloud-design-system-7.1.2.tgz#ec78d2655504bc702eb2540239ded5c6de9dd0c8"
-  integrity sha512-c12+xWFklBFlo1ePxhMz6eCrGFRsO7+2eijiLTdpDN+YaUcfYZ29Q/USCyMNz5i/kkZF1sf48EfMfPRa+87Jhg==
+owncloud-design-system@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/owncloud-design-system/-/owncloud-design-system-7.2.0.tgz#ae5774e6e1b5931fa24345950596fa5e3469d8b6"
+  integrity sha512-1jfHCsjwmU/OORNpipQBcdy/2ZVXdzjiWbd5u0lVSaU2pfcVS1Br7dnrd8C5fq4VyJrJN0nGG3o+5DVw7fJQFQ==
 
 owncloud-sdk@^1.0.0-2296:
   version "1.0.0-2296"
