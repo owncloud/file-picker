@@ -1,6 +1,6 @@
 {
   "name": "@ownclouders/file-picker",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "ownclouders <devops@owncloud.com>",
   "description": "Easily integrate ownCloud into your existing products",
   "type": "commonjs",
