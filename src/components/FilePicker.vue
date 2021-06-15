@@ -111,7 +111,7 @@ export default {
     loadFolder(path) {
       this.state = 'loading'
       this.$client.files
-        .list(path, 1, this.davProperties)
+        .list(decodeURIComponent(path), 1, this.davProperties)
         .then((resources) => {
           resources = resources.map((resource) => buildResource(resource))
           this.resources = resources.splice(1)
