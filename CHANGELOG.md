@@ -6,9 +6,18 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Decode path: [#69](https://github.com/owncloud/file-picker/pull/69)
 * Enhancement - Update ODS to 7.2.0: [#65](https://github.com/owncloud/file-picker/pull/65)
 
 ## Details
+
+* Bugfix - Decode path: [#69](https://github.com/owncloud/file-picker/pull/69)
+
+   We've started decoding the path to the resource so that loading folders when using breadcumbs
+   navigation can work properly.
+
+   https://github.com/owncloud/file-picker/pull/69
+
 
 * Enhancement - Update ODS to 7.2.0: [#65](https://github.com/owncloud/file-picker/pull/65)
 
