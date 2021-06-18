@@ -1,3 +1,23 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.6.0...master
+
+## Summary
+
+* Enhancement - Emit update on location change: [#71](https://github.com/owncloud/file-picker/issues/71)
+
+## Details
+
+* Enhancement - Emit update on location change: [#71](https://github.com/owncloud/file-picker/issues/71)
+
+   If a new folder in Location picker is loaded, emit it in the `update` event so that in case of
+   hidden select button, consuming app can still receive the location.
+
+   https://github.com/owncloud/file-picker/issues/71
+   https://github.com/owncloud/file-picker/pull/72
+
 # Changelog for [0.6.0] (2021-06-15)
 
 The following sections list the changes in ownCloud File picker 0.6.0.
