@@ -110,16 +110,23 @@ export default {
   methods: {
     loadFolder(path) {
       this.state = 'loading'
+
       this.$client.files
         .list(decodeURIComponent(path), 1, this.davProperties)
         .then((resources) => {
           resources = resources.map((resource) => buildResource(resource))
           this.resources = resources.splice(1)
           this.currentFolder = resources[0]
+
+          if (this.isLocationPicker) {
+            this.$emit('update', this.currentFolder)
+          }
+
           this.state = 'loaded'
         })
         .catch((error) => {
           console.error(error)
+
           this.state = 'failed'
         })
     },
