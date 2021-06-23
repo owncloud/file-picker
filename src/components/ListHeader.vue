@@ -68,31 +68,25 @@ export default {
 
   computed: {
     breadcrumbsItems() {
-      let breadcrumbs = [
-        {
-          text: this.$gettext('Home'),
-          onClick: () => this.openFolder('/'),
-        },
-      ]
+      const breadcrumbs = []
 
       if (!this.currentFolder) {
         return breadcrumbs
       }
 
-      const pathSplit = this.currentFolder.path ? this.currentFolder.path.split('/') : []
+      const pathSplit = this.currentFolder.path ? this.currentFolder.path.split('/') : ['']
 
-      for (let i = 1; i < pathSplit.length; i++) {
+      for (let i = 0; i < pathSplit.length; i++) {
         let itemPath = encodeURIComponent(path.join.apply(null, pathSplit.slice(0, i + 1)))
-
-        if (i === pathSplit.length - 1) {
-          itemPath = null
-        }
 
         breadcrumbs.push({
           index: i,
-          text: pathSplit.slice(0, i + 1)[i],
-          onClick: () => this.openFolder(itemPath),
+          text: i === 0 ? this.$gettext('Home') : pathSplit.slice(0, i + 1)[i],
         })
+
+        if (pathSplit.length > 1 && i < pathSplit.length - 1) {
+          breadcrumbs[i].onClick = () => this.openFolder(itemPath || '/')
+        }
       }
 
       return breadcrumbs

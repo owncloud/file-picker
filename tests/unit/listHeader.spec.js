@@ -56,4 +56,15 @@ describe('List header', () => {
 
     expect(wrapper.find('[data-testid="list-header-btn-cancel"]').exists()).toBeFalsy()
   })
+
+  it("doesn't insert last breadcrumb item as interactible element", () => {
+    const wrapper = shallowMount(ListHeader, {
+      propsData: defaultProps,
+      stubs,
+    })
+
+    expect(typeof wrapper.vm.breadcrumbsItems[0].onClick).toEqual('function')
+    expect(typeof wrapper.vm.breadcrumbsItems[1].onClick).toEqual('function')
+    expect(wrapper.vm.breadcrumbsItems[2].onClick).toEqual(undefined)
+  })
 })
