@@ -1,10 +1,11 @@
-import { Log, User, UserManager, WebStorageStateStore } from 'oidc-client'
+import { Log, User, UserManager, InMemoryWebStorage, WebStorageStateStore } from 'oidc-client'
 
 export function initVueAuthenticate(config) {
   if (config) {
+    const storage = config.storage === 'memory' ? new InMemoryWebStorage() : sessionStorage
     const store = new WebStorageStateStore({
       prefix: 'oc_oAuth',
-      store: sessionStorage
+      store: storage,
     })
 
     const openIdConfig = {
@@ -19,7 +20,7 @@ export function initVueAuthenticate(config) {
       automaticSilentRenew: true,
       filterProtocolClaims: true,
       loadUserInfo: true,
-      logLevel: Log.INFO
+      logLevel: Log.INFO,
     }
     if (config.openIdConnect && config.openIdConnect.authority) {
       Object.assign(openIdConfig, config.openIdConnect)
@@ -30,7 +31,9 @@ export function initVueAuthenticate(config) {
           authority: config.auth.url,
           metadataUrl: config.auth.metaDataUrl,
           client_id: config.auth.clientId,
-          redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin + '/oidc-callback.html'
+          redirect_uri: config.auth.redirectUri
+            ? config.auth.redirectUri
+            : window.location.origin + '/oidc-callback.html',
         })
       } else {
         // oauth2 setup
@@ -41,13 +44,15 @@ export function initVueAuthenticate(config) {
             issuer: config.auth.url,
             authorization_endpoint: config.auth.authUrl,
             token_endpoint: config.auth.url,
-            userinfo_endpoint: ''
+            userinfo_endpoint: '',
           },
           client_id: config.auth.clientId,
-          redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin + '/oidc-callback.html',
+          redirect_uri: config.auth.redirectUri
+            ? config.auth.redirectUri
+            : window.location.origin + '/oidc-callback.html',
           response_type: 'token', // token is implicit flow - to be killed
           scope: 'openid profile',
-          loadUserInfo: false
+          loadUserInfo: false,
         })
       }
     }
@@ -57,7 +62,7 @@ export function initVueAuthenticate(config) {
     Log.logger = console
     Log.level = openIdConfig.logLevel
 
-    mgr.events.addUserSignedOut(function() {
+    mgr.events.addUserSignedOut(function () {
       console.log('UserSignedOut：', arguments)
     })
 
@@ -66,25 +71,33 @@ export function initVueAuthenticate(config) {
         return mgr.signinPopup()
       },
       getToken() {
-        const storageString = sessionStorage.getItem('oc_oAuth' + mgr._userStoreKey)
+        const storageString = storage.getItem('oc_oAuth' + mgr._userStoreKey)
+
         if (storageString) {
           const user = User.fromStorageString(storageString)
+
           if (user) {
             mgr.events.load(user, false)
+
             return user.access_token
           }
         }
+
         return null
       },
       getStoredUserObject() {
-        const storageString = sessionStorage.getItem('oc_oAuth' + mgr._userStoreKey)
+        const storageString = storage.getItem('oc_oAuth' + mgr._userStoreKey)
+
         if (storageString) {
           const user = User.fromStorageString(storageString)
+
           if (user) {
             mgr.events.load(user, false)
+
             return user
           }
         }
+
         return null
       },
       isAuthenticated() {
@@ -93,7 +106,7 @@ export function initVueAuthenticate(config) {
       mgr: mgr,
       events() {
         return mgr.events
-      }
+      },
     }
   }
 }

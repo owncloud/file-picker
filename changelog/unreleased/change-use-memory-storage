@@ -1,0 +1,7 @@
+Change: Keep user token in the memory storage
+
+We've switched the location to save bearer token from browser session storage to an in-memory based storage.
+Session storage cannot be safely used anymore as modern browsers are starting to block third party iframes from accessing it.
+
+https://github.com/owncloud/file-picker/issues/67
+https://github.com/owncloud/file-picker/pull/74

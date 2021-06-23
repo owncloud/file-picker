@@ -58,6 +58,13 @@ npm install @ownclouders/file-picker --save
 yarn add @ownclouders/file-picker
 ```
 
+## Select browser storage
+In order to authorize any request to the ownCloud server, we are storing the Bearer token in a browser storage. By default, it is the session storage. As browsers are adding more strict policies when it comes to blocking third party cookies, your users might experience issues with the token not being saved in the storage. For this reason, it is possible to specify a storage name in the config of File picker. To make it possible to run the File picker inside of an iframe, specify `storage: memory`.
+
+{{< hint danger >}}
+If the memory storage is used, it is not persisted in the session. This leads to users having to authorize again after a refresh has happened.
+{{< /hint >}}
+
 ## Integrate in HTML page with vanilla JavaScript
 When including File picker in an HTML page, it is important to include Vue.js as well. In this case, we will import it via [unpkg](https://unpkg.com). Without this, the component won't work. Vue needs to be included also if you're importing the File picker into a web application built with other framework than Vue (e.g. React, Angular).
 
