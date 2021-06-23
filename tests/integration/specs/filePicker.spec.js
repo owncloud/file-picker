@@ -64,13 +64,31 @@ describe('Users can select location from within the file picker', () => {
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
 
-    expect(emitted().update[emitted().update.length - 1][0].id).toEqual('144055')
+    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('144055')
 
     await fireEvent.click(getByText('Photos'))
 
     await waitFor(() => expect(getByText('Teotihuacan')).toBeVisible())
 
-    expect(emitted().update[emitted().update.length - 1][0].id).toEqual('144228')
+    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('144228')
+  })
+
+  test('Developers can get current loaded folder from "folderLoaded" event after the load is finished', async () => {
+    const { getByTestId, emitted, getByText } = render(FilePicker, {
+      props: {
+        variation: 'location',
+      },
+    })
+
+    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+
+    expect(emitted().folderLoaded[0][0].id).toEqual('144055')
+
+    await fireEvent.click(getByText('Photos'))
+
+    await waitFor(() => expect(getByText('Teotihuacan')).toBeVisible())
+
+    expect(emitted().folderLoaded[1][0].id).toEqual('144228')
   })
 })
 

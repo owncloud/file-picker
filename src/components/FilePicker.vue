@@ -119,8 +119,10 @@ export default {
           this.currentFolder = resources[0]
 
           if (this.isLocationPicker) {
-            this.$emit('update', this.currentFolder)
+            this.$emit('update', [this.currentFolder])
           }
+
+          this.$emit('folderLoaded', this.currentFolder)
 
           this.state = 'loaded'
         })

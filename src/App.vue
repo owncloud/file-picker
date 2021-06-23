@@ -18,6 +18,7 @@
       @update="selectResources"
       @select="emitSelectBtnClick"
       @cancel="cancel"
+      @folderLoaded="onFolderLoaded"
     />
   </div>
 </template>
@@ -216,6 +217,10 @@ export default {
       }
       this.$emit('cancel')
     },
+
+    onFolderLoaded(folder) {
+      this.$emit('folderLoaded', folder)
+    }
   },
 }
 </script>
