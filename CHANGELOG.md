@@ -1,3 +1,34 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.7.0...master
+
+## Summary
+
+* Bugfix - Emit location as an array: [#71](https://github.com/owncloud/file-picker/issues/71)
+* Enhancement - Emit current folder in "folderLoaded" event: [#71](https://github.com/owncloud/file-picker/issues/71)
+
+## Details
+
+* Bugfix - Emit location as an array: [#71](https://github.com/owncloud/file-picker/issues/71)
+
+   When loading new folder in Location picker, we are emitting an "update" with the current route
+   as an argument. We've fixed that the argument has type array now so that it is consistent with all
+   other arguments returned in the "update" event.
+
+   https://github.com/owncloud/file-picker/issues/71
+   https://github.com/owncloud/file-picker/pull/75
+
+
+* Enhancement - Emit current folder in "folderLoaded" event: [#71](https://github.com/owncloud/file-picker/issues/71)
+
+   We've added event called "folderLoaded" that is emitted every time a loading of any folder has
+   ended. It is emitting the current folder as an argument.
+
+   https://github.com/owncloud/file-picker/issues/71
+   https://github.com/owncloud/file-picker/pull/75
+
 # Changelog for [0.7.0] (2021-06-18)
 
 The following sections list the changes in ownCloud File picker 0.7.0.
