@@ -9,7 +9,7 @@ geekdocFilePath: accessing-resources.md
 
 {{< toc >}}
 
-File picker is returning selected resources via event called `selectResources`. To access them, you need to set an event listener where you'll be able to get them as part of the response of the callback function.
+If using File picker as a web component, it is returning selected resources via events called `select` and `update`. To access them, you need to set an event listener where you'll be able to get them as part of the response of the callback function.
 
 ## Access resources
 ```html
@@ -19,7 +19,7 @@ File picker is returning selected resources via event called `selectResources`. 
   const item = document.getElementById('file-picker')
   let resources = []
 
-  item.addEventListener('selectResources', event => {
+  item.addEventListener('select', event => {
     resources = event.detail[0]
   })
 </script>

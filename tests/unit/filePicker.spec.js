@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue, shallowMount } from '@vue/test-utils'
 
 import { listResources } from '../helpers/mocks'
 import { stubs } from '../helpers/stubs'
@@ -14,6 +14,12 @@ localVue.prototype.$client = {
 }
 
 describe('File picker', () => {
+  const waitTillItemsLoaded = async (wrapper) => {
+    // Wait twice to give the list of resources enough time to render
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+  }
+
   it('renders a list of resources', async () => {
     const wrapper = mount(FilePicker, {
       localVue,
@@ -23,9 +29,7 @@ describe('File picker', () => {
       stubs,
     })
 
-    // Wait twice to give the list of resources enough time to render
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
+    await waitTillItemsLoaded(wrapper)
 
     expect(wrapper.findAll('[filename="ownCloud Manual.pdf"]').length).toEqual(1)
   })
@@ -53,9 +57,7 @@ describe('File picker', () => {
       stubs,
     })
 
-    // Wait twice to give the list of resources enough time to render
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
+    await waitTillItemsLoaded(wrapper)
 
     // For test purpose set only the folder name instead of the whole object
     await wrapper.setData({ selectedResources: 'Documents' })
@@ -85,5 +87,32 @@ describe('File picker', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.emitted().cancel).toBeTruthy()
+  })
+
+  describe('emits events after loading folders in location variant', () => {
+    const createWrapper = () =>
+      shallowMount(FilePicker, {
+        localVue,
+        propsData: {
+          variation: 'location',
+        },
+        stubs,
+      })
+
+    it('emits "update" with argument of type array', async () => {
+      const wrapper = createWrapper()
+
+      await waitTillItemsLoaded(wrapper)
+
+      expect(Array.isArray(wrapper.emitted().update[0][0])).toBe(true)
+    })
+
+    it('emits "folderLoaded" with current folder as an argument', async () => {
+      const wrapper = createWrapper()
+
+      await waitTillItemsLoaded(wrapper)
+
+      expect(wrapper.emitted().folderLoaded[0][0].id).toEqual('144055')
+    })
   })
 })
