@@ -6,10 +6,20 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Current breadcrumb item shouldn't be interactable: [#64](https://github.com/owncloud/file-picker/issues/64)
 * Bugfix - Emit location as an array: [#71](https://github.com/owncloud/file-picker/issues/71)
 * Enhancement - Emit current folder in "folderLoaded" event: [#71](https://github.com/owncloud/file-picker/issues/71)
 
 ## Details
+
+* Bugfix - Current breadcrumb item shouldn't be interactable: [#64](https://github.com/owncloud/file-picker/issues/64)
+
+   We've fixed the last item in the breadcrumb which is equal to the current folder so that it is not
+   interactable anymore.
+
+   https://github.com/owncloud/file-picker/issues/64
+   https://github.com/owncloud/file-picker/pull/76
+
 
 * Bugfix - Emit location as an array: [#71](https://github.com/owncloud/file-picker/issues/71)
 
