@@ -66,7 +66,7 @@ If the memory storage is used, it is not persisted in the session. This leads to
 {{< /hint >}}
 
 {{< hint info >}}
-Users might still be experiencing issues with the authorization even if memory storage is used. That can happen due to authorization popup needing to trigger a callback in the File picker. To make sure it will work as supposed, be sure to set correct CORS headers.
+Users might still be experiencing issues with the authentication even if the memory storage is used. That can happen due to the authentication popup needing to trigger a callback in the File picker. To make sure it will work as supposed, be sure to set correct CORS headers.
 {{< /hint >}}
 
 ## Integrate in HTML page with vanilla JavaScript
