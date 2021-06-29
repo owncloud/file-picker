@@ -65,6 +65,10 @@ In order to authorize any request to the ownCloud server, we are storing the Bea
 If the memory storage is used, it is not persisted in the session. This leads to users having to authorize again after a refresh has happened.
 {{< /hint >}}
 
+{{< hint info >}}
+Users might still be experiencing issues with the authorization even if memory storage is used. That can happen due to authorization popup needing to trigger a callback in the File picker. To make sure it will work as supposed, be sure to set correct CORS headers.
+{{< /hint >}}
+
 ## Integrate in HTML page with vanilla JavaScript
 When including File picker in an HTML page, it is important to include Vue.js as well. In this case, we will import it via [unpkg](https://unpkg.com). Without this, the component won't work. Vue needs to be included also if you're importing the File picker into a web application built with other framework than Vue (e.g. React, Angular).
 
