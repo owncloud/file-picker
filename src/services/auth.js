@@ -9,6 +9,7 @@ export function initVueAuthenticate(config) {
     })
 
     const openIdConfig = {
+      stateStore: store,
       userStore: store,
       redirect_uri: window.location.origin + '/oidc-callback.html',
       response_type: 'code', // code triggers auth code grant flow
