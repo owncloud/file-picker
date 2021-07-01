@@ -1,3 +1,21 @@
+# Changelog for [0.9.0] (2021-06-30)
+
+The following sections list the changes in ownCloud File picker 0.9.0.
+
+[0.9.0]: https://github.com/owncloud/file-picker/compare/v0.8.0...v0.9.0
+
+## Summary
+
+* Enhancement - Set state store: [#78](https://github.com/owncloud/file-picker/pull/78)
+
+## Details
+
+* Enhancement - Set state store: [#78](https://github.com/owncloud/file-picker/pull/78)
+
+   We've added the same storage that we're using in the user store to the state store.
+
+   https://github.com/owncloud/file-picker/pull/78
+
 # Changelog for [0.8.0] (2021-06-29)
 
 The following sections list the changes in ownCloud File picker 0.8.0.
