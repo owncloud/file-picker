@@ -115,4 +115,41 @@ describe('File picker', () => {
       expect(wrapper.emitted().folderLoaded[0][0].id).toEqual('144055')
     })
   })
+
+  describe('has focus management', () => {
+    describe('initial folder load', () => {
+      it('does not focus last breadcrumb item if initial focus is disabled', async () => {
+        const wrapper = shallowMount(FilePicker, {
+          localVue,
+          propsData: {
+            variation: 'resource',
+          },
+          stubs,
+        })
+
+        wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()
+
+        await waitTillItemsLoaded(wrapper)
+
+        expect(wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb).not.toHaveBeenCalled()
+      })
+
+      it('focuses last breadcrumb item if initial focus is disabled', async () => {
+        const wrapper = shallowMount(FilePicker, {
+          localVue,
+          propsData: {
+            variation: 'resource',
+            isInitialFocusEnabled: true,
+          },
+          stubs,
+        })
+
+        wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()
+
+        await waitTillItemsLoaded(wrapper)
+
+        expect(wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb).toHaveBeenCalled()
+      })
+    })
+  })
 })

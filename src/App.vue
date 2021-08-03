@@ -15,6 +15,7 @@
       :select-btn-label="selectBtnLabel"
       :is-select-btn-displayed="isSelectBtnDisplayed"
       :cancel-btn-label="cancelBtnLabel"
+      :is-initial-focus-enabled="isInitialFocusEnabled"
       @update="selectResources"
       @select="emitSelectBtnClick"
       @cancel="cancel"
@@ -123,6 +124,11 @@ export default {
       required: false,
       default: null,
     },
+    isInitialFocusEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data: () => ({
@@ -220,7 +226,7 @@ export default {
 
     onFolderLoaded(folder) {
       this.$emit('folderLoaded', folder)
-    }
+    },
   },
 }
 </script>

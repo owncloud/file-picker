@@ -16,6 +16,9 @@ config.mocks = {
   },
   $gettext: (str) => str,
   $gettextInterpolate: (str) => str,
+  $ngettext: (arg) => {
+    return arg[2].length > 1 ? arg[1] : arg[0]
+  },
   $language: {
     current: 'en_US',
   },
