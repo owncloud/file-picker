@@ -25,6 +25,7 @@ geekdocFilePath: component-reference.md
 | `cancelBtnLabel` | `String` | `nulll` | Displays the cancel button and uses the given value as a label |
 | `isOdsProvided` | `Boolean` | `false` | Asserts whether the ownCloud Design System has been already initialised in the consuming app |
 | `locale` | `String` | `null` | Sets the language in which the File Picker should be displayed. If omitted, the browser language will be used |
+| `isInitialFocusEnabled` | `Boolean` | `false` | Enables focusing last item of breadcrumbs after the first folder has been loaded |
 
 ## Events
 | Event | Arguments | Description |
