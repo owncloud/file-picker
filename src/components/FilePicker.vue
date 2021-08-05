@@ -37,6 +37,8 @@ import { buildResource } from '@/helpers/resources'
 import ListResources from './ListResources.vue'
 import ListHeader from './ListHeader.vue'
 
+import MixinAccessibility from '@/mixins/accessibility'
+
 export default {
   name: 'FilePicker',
 
@@ -44,6 +46,8 @@ export default {
     ListHeader,
     ListResources,
   },
+
+  mixins: [MixinAccessibility],
 
   props: {
     variation: {
@@ -66,6 +70,11 @@ export default {
       required: false,
       default: true,
     },
+    isInitialFocusEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data: () => ({
@@ -87,6 +96,7 @@ export default {
       '{DAV:}getetag',
       '{DAV:}resourcetype',
     ],
+    isInitial: true,
   }),
 
   computed: {
@@ -125,6 +135,14 @@ export default {
           this.$emit('folderLoaded', this.currentFolder)
 
           this.state = 'loaded'
+
+          if ((this.isInitial && this.isInitialFocusEnabled) || !this.isInitial) {
+            this.$nextTick(() =>
+              this.$_accessibility_focusAndAnnounceBreadcrumb(this.resources.length)
+            )
+          }
+
+          this.isInitial = false
         })
         .catch((error) => {
           console.error(error)

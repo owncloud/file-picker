@@ -162,4 +162,19 @@ describe('Users can select resources from within the file picker', () => {
 
     expect(emitted().update[0][0].length).toBe(1)
   })
+
+  test('Last breadcrumb item is focused after folder has been loaded', async () => {
+    const { getByTestId, getByText } = render(FilePicker, {
+      props: {
+        variation: 'resource',
+      },
+    })
+
+    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    await fireEvent.click(getByText('Photos'))
+
+    expect(document.querySelector('.oc-breadcrumb-list-item span[aria-current="page"]')).toBe(
+      document.activeElement
+    )
+  })
 })

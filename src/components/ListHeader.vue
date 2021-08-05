@@ -1,6 +1,6 @@
 <template>
   <header class="file-picker-header uk-padding-small uk-flex uk-flex-middle uk-flex-between">
-    <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" />
+    <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" data-testid="breadcrumbs" />
     <div v-if="cancelBtnLabel || isSelectBtnDisplayed">
       <oc-button
         v-if="cancelBtnLabel"
