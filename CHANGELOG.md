@@ -1,3 +1,24 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.9.0...master
+
+## Summary
+
+* Enhancement - Focus last breadcrumb item: [#79](https://github.com/owncloud/file-picker/pull/79)
+
+## Details
+
+* Enhancement - Focus last breadcrumb item: [#79](https://github.com/owncloud/file-picker/pull/79)
+
+   We've added focus management so that the last breadcrumb item will be focused after a folder has
+   been loaded. By default, this focus management is disabled on the first load when opening the
+   file picker. To enable it also during the first load, set prop `isInitialFocusEnabled` to
+   `true`.
+
+   https://github.com/owncloud/file-picker/pull/79
+
 # Changelog for [0.9.0] (2021-06-30)
 
 The following sections list the changes in ownCloud File picker 0.9.0.
