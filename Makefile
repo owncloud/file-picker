@@ -17,6 +17,7 @@ docs-copy:
 	git remote add origin https://github.com/owncloud/owncloud.github.io; \
 	git fetch; \
 	git checkout origin/source -f; \
+	make theme; \
 	rsync --delete -ax ../docs/ content/integration/$(NAME)
 
 .PHONY: docs-build
