@@ -9,8 +9,8 @@ const localVue = createLocalVue()
 
 localVue.prototype.$client = {
   files: {
-    list: listResources,
-  },
+    list: listResources
+  }
 }
 
 describe('File picker', () => {
@@ -24,9 +24,9 @@ describe('File picker', () => {
     const wrapper = mount(FilePicker, {
       localVue,
       propsData: {
-        variation: 'resource',
+        variation: 'resource'
       },
-      stubs,
+      stubs
     })
 
     await waitTillItemsLoaded(wrapper)
@@ -39,9 +39,9 @@ describe('File picker', () => {
       localVue,
       propsData: {
         variation: 'resource',
-        selectBtnLabel: 'TestLabel',
+        selectBtnLabel: 'TestLabel'
       },
-      stubs,
+      stubs
     })
 
     expect(wrapper.findAll('.file-picker-btn-select-resources').length).toBe(1)
@@ -52,9 +52,9 @@ describe('File picker', () => {
     const wrapper = mount(FilePicker, {
       localVue,
       propsData: {
-        variation: 'resource',
+        variation: 'resource'
       },
-      stubs,
+      stubs
     })
 
     await waitTillItemsLoaded(wrapper)
@@ -76,9 +76,9 @@ describe('File picker', () => {
       localVue,
       propsData: {
         variation: 'resource',
-        cancelBtnLabel: 'Cancel',
+        cancelBtnLabel: 'Cancel'
       },
-      stubs,
+      stubs
     })
 
     // Emit click event instead of calling `trigger()` due to stubbed component
@@ -94,9 +94,9 @@ describe('File picker', () => {
       shallowMount(FilePicker, {
         localVue,
         propsData: {
-          variation: 'location',
+          variation: 'location'
         },
-        stubs,
+        stubs
       })
 
     it('emits "update" with argument of type array', async () => {
@@ -122,9 +122,9 @@ describe('File picker', () => {
         const wrapper = shallowMount(FilePicker, {
           localVue,
           propsData: {
-            variation: 'resource',
+            variation: 'resource'
           },
-          stubs,
+          stubs
         })
 
         wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()
@@ -139,9 +139,9 @@ describe('File picker', () => {
           localVue,
           propsData: {
             variation: 'resource',
-            isInitialFocusEnabled: true,
+            isInitialFocusEnabled: true
           },
-          stubs,
+          stubs
         })
 
         wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()

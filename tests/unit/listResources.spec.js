@@ -12,9 +12,9 @@ describe('List resources', () => {
   it('Resets resources selection on navigation', async () => {
     const wrapper = mount(ListResources, {
       propsData: {
-        resources: _resources,
+        resources: _resources
       },
-      stubs,
+      stubs
     })
 
     await wrapper.setData({ selectedResources: _resources })

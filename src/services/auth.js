@@ -5,7 +5,7 @@ export function initVueAuthenticate(config) {
     const storage = config.storage === 'memory' ? new InMemoryWebStorage() : sessionStorage
     const store = new WebStorageStateStore({
       prefix: 'oc_oAuth',
-      store: storage,
+      store: storage
     })
 
     const openIdConfig = {
@@ -21,7 +21,7 @@ export function initVueAuthenticate(config) {
       automaticSilentRenew: true,
       filterProtocolClaims: true,
       loadUserInfo: true,
-      logLevel: Log.INFO,
+      logLevel: Log.INFO
     }
     if (config.openIdConnect && config.openIdConnect.authority) {
       Object.assign(openIdConfig, config.openIdConnect)
@@ -34,7 +34,7 @@ export function initVueAuthenticate(config) {
           client_id: config.auth.clientId,
           redirect_uri: config.auth.redirectUri
             ? config.auth.redirectUri
-            : window.location.origin + '/oidc-callback.html',
+            : window.location.origin + '/oidc-callback.html'
         })
       } else {
         // oauth2 setup
@@ -45,7 +45,7 @@ export function initVueAuthenticate(config) {
             issuer: config.auth.url,
             authorization_endpoint: config.auth.authUrl,
             token_endpoint: config.auth.url,
-            userinfo_endpoint: '',
+            userinfo_endpoint: ''
           },
           client_id: config.auth.clientId,
           redirect_uri: config.auth.redirectUri
@@ -53,7 +53,7 @@ export function initVueAuthenticate(config) {
             : window.location.origin + '/oidc-callback.html',
           response_type: 'token', // token is implicit flow - to be killed
           scope: 'openid profile',
-          loadUserInfo: false,
+          loadUserInfo: false
         })
       }
     }
@@ -107,7 +107,7 @@ export function initVueAuthenticate(config) {
       mgr: mgr,
       events() {
         return mgr.events
-      },
+      }
     }
   }
 }

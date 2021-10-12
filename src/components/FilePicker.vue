@@ -44,7 +44,7 @@ export default {
 
   components: {
     ListHeader,
-    ListResources,
+    ListResources
   },
 
   mixins: [MixinAccessibility],
@@ -53,28 +53,28 @@ export default {
     variation: {
       type: String,
       required: true,
-      validator: (value) => value === 'resource' || 'location',
+      validator: (value) => value === 'resource' || 'location'
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     isSelectBtnDisplayed: {
       type: Boolean,
       required: false,
-      default: true,
+      default: true
     },
     isInitialFocusEnabled: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
 
   data: () => ({
@@ -94,9 +94,9 @@ export default {
       '{http://owncloud.org/ns}size',
       '{DAV:}getlastmodified',
       '{DAV:}getetag',
-      '{DAV:}resourcetype',
+      '{DAV:}resourcetype'
     ],
-    isInitial: true,
+    isInitial: true
   }),
 
   computed: {
@@ -110,7 +110,7 @@ export default {
 
     areResourcesSelected() {
       return this.selectedResources.length > 0
-    },
+    }
   },
 
   created() {
@@ -167,7 +167,7 @@ export default {
 
     emitCancel() {
       this.$emit('cancel')
-    },
-  },
+    }
+  }
 }
 </script>

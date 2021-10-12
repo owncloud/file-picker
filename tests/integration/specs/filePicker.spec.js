@@ -7,8 +7,8 @@ describe('Users can select location from within the file picker', () => {
   test('User can select the current folder', async () => {
     const { getByTestId, emitted } = render(FilePicker, {
       props: {
-        variation: 'location',
-      },
+        variation: 'location'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -25,8 +25,8 @@ describe('Users can select location from within the file picker', () => {
   test('User can select a nested folder as a location', async () => {
     const { getByTestId, emitted, getByText } = render(FilePicker, {
       props: {
-        variation: 'location',
-      },
+        variation: 'location'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -58,8 +58,8 @@ describe('Users can select location from within the file picker', () => {
   test('Developers can get location from update event when folder is loaded', async () => {
     const { getByTestId, emitted, getByText } = render(FilePicker, {
       props: {
-        variation: 'location',
-      },
+        variation: 'location'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -76,8 +76,8 @@ describe('Users can select location from within the file picker', () => {
   test('Developers can get current loaded folder from "folderLoaded" event after the load is finished', async () => {
     const { getByTestId, emitted, getByText } = render(FilePicker, {
       props: {
-        variation: 'location',
-      },
+        variation: 'location'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -96,8 +96,8 @@ describe('Users can select resources from within the file picker', () => {
   test('User can select resources from the current folder', async () => {
     const { getByTestId, getByText, emitted } = render(FilePicker, {
       props: {
-        variation: 'resource',
-      },
+        variation: 'resource'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -136,8 +136,8 @@ describe('Users can select resources from within the file picker', () => {
   test('Developers can listen to event each time a resource is selected', async () => {
     const { getByTestId, emitted } = render(FilePicker, {
       props: {
-        variation: 'resource',
-      },
+        variation: 'resource'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
@@ -166,8 +166,8 @@ describe('Users can select resources from within the file picker', () => {
   test('Last breadcrumb item is focused after folder has been loaded', async () => {
     const { getByTestId, getByText } = render(FilePicker, {
       props: {
-        variation: 'resource',
-      },
+        variation: 'resource'
+      }
     })
 
     await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())

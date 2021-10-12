@@ -11,8 +11,8 @@ Vue.config.language = 'en'
 config.mocks = {
   $client: {
     files: {
-      list: listResources,
-    },
+      list: listResources
+    }
   },
   $gettext: (str) => str,
   $gettextInterpolate: (str) => str,
@@ -20,6 +20,6 @@ config.mocks = {
     return arg[2].length > 1 ? arg[1] : arg[0]
   },
   $language: {
-    current: 'en_US',
-  },
+    current: 'en_US'
+  }
 }

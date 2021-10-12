@@ -5,8 +5,8 @@ new Vue({
   render: (h) => {
     return h(App, {
       props: {
-        variation: 'resource',
-      },
+        variation: 'resource'
+      }
     })
-  },
+  }
 }).$mount('#app')

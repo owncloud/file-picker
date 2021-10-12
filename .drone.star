@@ -56,7 +56,6 @@ def changelog(ctx):
       {
         'name': 'generate',
         'image': 'toolhippie/calens:latest',
-        'pull': 'always',
         'commands': [
           'calens >| CHANGELOG.md',
         ],
@@ -64,7 +63,6 @@ def changelog(ctx):
       {
         'name': 'diff',
         'image': 'owncloudci/alpine:latest',
-        'pull': 'always',
         'commands': [
           'git diff',
         ],
@@ -72,7 +70,6 @@ def changelog(ctx):
       {
         'name': 'output',
         'image': 'owncloudci/alpine:latest',
-        'pull': 'always',
         'commands': [
           'cat CHANGELOG.md',
         ],
@@ -246,7 +243,6 @@ def tests(ctx):
       {
         'name': 'install',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn install --frozen-lockfile',
         ],
@@ -254,7 +250,6 @@ def tests(ctx):
       {
         'name': 'lint',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn lint',
         ],
@@ -263,7 +258,6 @@ def tests(ctx):
       {
         'name': 'build',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn build',
         ],
@@ -272,7 +266,6 @@ def tests(ctx):
       {
         'name': 'unit',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn test:unit'
         ],
@@ -281,7 +274,6 @@ def tests(ctx):
       {
         'name': 'integration',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn test:integration'
         ],
@@ -311,7 +303,6 @@ def release(ctx):
       {
         'name': 'build',
         'image': 'owncloudci/nodejs:14',
-        'pull': 'always',
         'commands': [
           'yarn install --frozen-lockfile',
           'yarn build'
@@ -325,7 +316,6 @@ def release(ctx):
       {
         'name': 'changelog',
         'image': 'toolhippie/calens:latest',
-        'pull': 'always',
         'commands': [
           'calens --version %s -o dist/CHANGELOG.md' % ctx.build.ref.replace("refs/tags/v", "").split("-")[0],
         ],
@@ -338,7 +328,6 @@ def release(ctx):
       {
         'name': 'publish-github',
         'image': 'plugins/github-release:latest',
-        'pull': 'always',
         'settings': {
           'api_key': {
             'from_secret': 'github_token',
@@ -356,7 +345,6 @@ def release(ctx):
       {
         'name': 'publish-npm',
         'image': 'plugins/npm:latest',
-        'pull': 'always',
         'settings': {
           'username': {
             'from_secret': 'npm_username',

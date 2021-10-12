@@ -11,13 +11,13 @@ module.exports = {
     '<rootDir>/src/**/*.{vue, js}',
     '!<rootDir>/src/main.js',
     '!<rootDir>/src/services/auth.js',
-    '!<rootDir>/src/assets/**/*',
+    '!<rootDir>/src/assets/**/*'
   ],
   coverageDirectory: '<rootDir>/coverage',
   moduleFileExtensions: ['js', 'vue'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^.+\\.(css|scss)$': 'babel-jest',
+    '^.+\\.(css|scss)$': 'babel-jest'
   },
   modulePaths: ['<rootDir>'],
   rootDir: path.resolve(__dirname, './'),
@@ -31,7 +31,7 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '^.+\\.vue$': 'vue-jest',
     '^.+\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/__mocks__/file.js',
+      '<rootDir>/__mocks__/file.js'
   },
-  transformIgnorePatterns: ['node_modules/(?!lodash-es/.*)'],
+  transformIgnorePatterns: ['node_modules/(?!lodash-es/.*)']
 }

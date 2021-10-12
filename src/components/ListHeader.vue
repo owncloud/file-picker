@@ -34,36 +34,36 @@ export default {
     currentFolder: {
       type: Object,
       required: false,
-      default: () => null,
+      default: () => null
     },
     isSelectBtnEnabled: {
       type: Boolean,
-      required: true,
+      required: true
     },
     isSelectBtnDisplayed: {
       type: Boolean,
       required: false,
-      default: true,
+      default: true
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     isLocationPicker: {
       type: Boolean,
-      required: true,
+      required: true
     },
     areResourcesSelected: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
 
   computed: {
@@ -81,7 +81,7 @@ export default {
 
         breadcrumbs.push({
           index: i,
-          text: i === 0 ? this.$gettext('Home') : pathSplit.slice(0, i + 1)[i],
+          text: i === 0 ? this.$gettext('Home') : pathSplit.slice(0, i + 1)[i]
         })
 
         if (pathSplit.length > 1 && i < pathSplit.length - 1) {
@@ -114,7 +114,7 @@ export default {
       }
 
       return this.$gettext('Select resources')
-    },
+    }
   },
 
   methods: {
@@ -128,7 +128,7 @@ export default {
 
     cancel() {
       this.$emit('cancel')
-    },
-  },
+    }
+  }
 }
 </script>

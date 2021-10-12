@@ -25,6 +25,6 @@ export default {
 
       activeBreadcrumb.append(invisibleHint)
       activeBreadcrumb.focus()
-    },
-  },
+    }
+  }
 }
