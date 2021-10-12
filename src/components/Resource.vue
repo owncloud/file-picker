@@ -39,8 +39,8 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
 
   computed: {
@@ -69,7 +69,7 @@ export default {
         return {
           ariaLabel: this.navigateButtonLabel,
           appearance: 'raw',
-          variation: 'passive',
+          variation: 'passive'
         }
       }
 
@@ -88,7 +88,7 @@ export default {
       const translated = this.$gettext('Last modified %{ date }')
 
       return this.$gettextInterpolate(translated, { date: formDateFromNow(this.item.mdate) })
-    },
+    }
   },
 
   mounted() {
@@ -102,7 +102,7 @@ export default {
   methods: {
     navigate() {
       this.$emit('navigate', this.item.path)
-    },
-  },
+    }
+  }
 }
 </script>

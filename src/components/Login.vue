@@ -26,13 +26,13 @@ export default {
   computed: {
     backgroundImage() {
       return backgroundImage
-    },
+    }
   },
 
   methods: {
     login() {
       this.$emit('login')
-    },
-  },
+    }
+  }
 }
 </script>

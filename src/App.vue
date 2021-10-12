@@ -53,7 +53,7 @@ if (!Vue.prototype.$gettext) {
     cs: 'Czech',
     fr: 'Français',
     it: 'Italiano',
-    gl: 'Galego',
+    gl: 'Galego'
   }
   const translations = merge({}, filePickerTranslations, odsTranslations)
 
@@ -61,7 +61,7 @@ if (!Vue.prototype.$gettext) {
     availableLanguages: supportedLanguages,
     defaultLanguage: navigator.language.substring(0, 2),
     translations,
-    silent: true,
+    silent: true
   })
 }
 
@@ -70,77 +70,77 @@ export default {
 
   components: {
     FilePicker,
-    Login,
+    Login
   },
 
   props: {
     variation: {
       type: String,
       required: true,
-      validator: (value) => value === 'resource' || value === 'location',
+      validator: (value) => value === 'resource' || value === 'location'
     },
     configLocation: {
       type: String,
       required: false,
-      default: () => window.location.origin + '/file-picker-config.json',
+      default: () => window.location.origin + '/file-picker-config.json'
     },
     bearerToken: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     configObject: {
       type: [Object, String],
       required: false,
-      default: null,
+      default: null
     },
     isSdkProvided: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     selectBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     isSelectBtnDisplayed: {
       type: Boolean,
       required: false,
-      default: true,
+      default: true
     },
     cancelBtnLabel: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     isOdsProvided: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     locale: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     isInitialFocusEnabled: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
 
   data: () => ({
     authInstance: null,
     state: 'loading',
-    config: null,
+    config: null
   }),
 
   computed: {
     currentLocale() {
       return this.locale || navigator.language.substring(0, 2)
-    },
+    }
   },
 
   created() {
@@ -169,11 +169,11 @@ export default {
         this.$client.init({
           baseUrl: this.config.server,
           auth: {
-            bearer: bearerToken,
+            bearer: bearerToken
           },
           headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-          },
+            'X-Requested-With': 'XMLHttpRequest'
+          }
         })
       }
 
@@ -226,8 +226,8 @@ export default {
 
     onFolderLoaded(folder) {
       this.$emit('folderLoaded', folder)
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -21,14 +21,14 @@ export function buildResource(resource) {
     viewId: uniqueId('file-'),
     starred: resource.fileInfo['{http://owncloud.org/ns}favorite'] !== '0',
     mdate: resource.fileInfo['{DAV:}getlastmodified'],
-    size: (function() {
+    size: (function () {
       if (resource.type === 'dir') {
         return resource.fileInfo['{http://owncloud.org/ns}size']
       } else {
         return resource.fileInfo['{DAV:}getcontentlength']
       }
     })(),
-    extension: (function() {
+    extension: (function () {
       return ext
     })(),
     name: path.basename(resource.name),
@@ -37,16 +37,16 @@ export function buildResource(resource) {
     etag: resource.fileInfo['{DAV:}getetag'],
     sharePermissions:
       resource.fileInfo['{http://open-collaboration-services.org/ns}share-permissions'],
-    shareTypes: (function() {
+    shareTypes: (function () {
       let shareTypes = resource.fileInfo['{http://owncloud.org/ns}share-types']
       if (shareTypes) {
         shareTypes = chain(shareTypes)
           .filter(
-            xmlvalue =>
+            (xmlvalue) =>
               xmlvalue.namespaceURI === 'http://owncloud.org/ns' &&
               xmlvalue.nodeName.split(':')[1] === 'share-type'
           )
-          .map(xmlvalue => parseInt(xmlvalue.textContent || xmlvalue.text, 10))
+          .map((xmlvalue) => parseInt(xmlvalue.textContent || xmlvalue.text, 10))
           .value()
       }
       return shareTypes || []
@@ -56,28 +56,28 @@ export function buildResource(resource) {
       username: resource.fileInfo['{http://owncloud.org/ns}owner-id'],
       displayName: resource.fileInfo['{http://owncloud.org/ns}owner-display-name']
     },
-    canUpload: function() {
+    canUpload: function () {
       return this.permissions.indexOf('C') >= 0
     },
-    canDownload: function() {
+    canDownload: function () {
       return this.type !== 'folder'
     },
-    canBeDeleted: function() {
+    canBeDeleted: function () {
       return this.permissions.indexOf('D') >= 0
     },
-    canRename: function() {
+    canRename: function () {
       return this.permissions.indexOf('N') >= 0
     },
-    canShare: function() {
+    canShare: function () {
       return this.permissions.indexOf('R') >= 0
     },
-    canCreate: function() {
+    canCreate: function () {
       return this.permissions.indexOf('C') >= 0
     },
-    isMounted: function() {
+    isMounted: function () {
       return this.permissions.indexOf('M') >= 0
     },
-    isReceivedShare: function() {
+    isReceivedShare: function () {
       return this.permissions.indexOf('S') >= 0
     }
   }

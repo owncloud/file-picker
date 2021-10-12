@@ -6,17 +6,17 @@ import ListHeader from '@/components/ListHeader.vue'
 
 const defaultProps = {
   currentFolder: {
-    path: '/Documents/PDF',
+    path: '/Documents/PDF'
   },
   isSelectBtnEnabled: true,
-  isLocationPicker: false,
+  isLocationPicker: false
 }
 
 describe('List header', () => {
   it('builds correct path for breadcrumbs', async () => {
     const wrapper = shallowMount(ListHeader, {
       propsData: defaultProps,
-      stubs,
+      stubs
     })
 
     expect(wrapper.vm.breadcrumbsItems.length).toEqual(3)
@@ -27,9 +27,9 @@ describe('List header', () => {
     const wrapper = shallowMount(ListHeader, {
       propsData: {
         ...defaultProps,
-        isSelectBtnDisplayed: false,
+        isSelectBtnDisplayed: false
       },
-      stubs,
+      stubs
     })
 
     expect(wrapper.findAll('[data-testid="list-header-btn-select"]').length).toBe(0)
@@ -39,9 +39,9 @@ describe('List header', () => {
     const wrapper = shallowMount(ListHeader, {
       propsData: {
         ...defaultProps,
-        cancelBtnLabel: 'Cancel',
+        cancelBtnLabel: 'Cancel'
       },
-      stubs,
+      stubs
     })
 
     expect(wrapper.find('[data-testid="list-header-btn-cancel"]').exists()).toBeTruthy()
@@ -51,7 +51,7 @@ describe('List header', () => {
   it('hides cancel button by default', () => {
     const wrapper = shallowMount(ListHeader, {
       propsData: defaultProps,
-      stubs,
+      stubs
     })
 
     expect(wrapper.find('[data-testid="list-header-btn-cancel"]').exists()).toBeFalsy()
@@ -60,7 +60,7 @@ describe('List header', () => {
   it("doesn't insert last breadcrumb item as interactible element", () => {
     const wrapper = shallowMount(ListHeader, {
       propsData: defaultProps,
-      stubs,
+      stubs
     })
 
     expect(typeof wrapper.vm.breadcrumbsItems[0].onClick).toEqual('function')

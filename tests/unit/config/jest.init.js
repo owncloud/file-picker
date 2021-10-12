@@ -7,5 +7,5 @@ Vue.config.language = 'en'
 
 config.mocks = {
   $gettext: (str) => str,
-  $gettextInterpolate: (str) => str,
+  $gettextInterpolate: (str) => str
 }

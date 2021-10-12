@@ -48,29 +48,29 @@ export default {
   name: 'ListResources',
 
   components: {
-    Resource,
+    Resource
   },
 
   props: {
     resources: {
       type: Array,
-      required: true,
+      required: true
     },
     isLocationPicker: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
 
   data: () => ({
-    selectedResources: [],
+    selectedResources: []
   }),
 
   computed: {
     resourcesSorted() {
       return this.sortResources(this.resources)
-    },
+    }
   },
 
   methods: {
@@ -141,8 +141,8 @@ export default {
 
     selectLocation(location) {
       this.$emit('selectLocation', [location])
-    },
-  },
+    }
+  }
 }
 </script>
 
