@@ -1,10 +1,12 @@
 import { Log, User, UserManager, InMemoryWebStorage, WebStorageStateStore } from 'oidc-client'
 
+const AUTH_STORAGE_PREFIX = 'oc_oAuth'
+
 export function initVueAuthenticate(config) {
   if (config) {
-    const storage = config.storage === 'memory' ? new InMemoryWebStorage() : sessionStorage
+    const storage = config.storage === 'memory' ? new InMemoryWebStorage() : localStorage
     const store = new WebStorageStateStore({
-      prefix: 'oc_oAuth',
+      prefix: AUTH_STORAGE_PREFIX,
       store: storage
     })
 
@@ -67,27 +69,41 @@ export function initVueAuthenticate(config) {
       console.log('UserSignedOut：', arguments)
     })
 
+    mgr.events.addSilentRenewError(() => {
+      mgr.clearStaleState(store, 0)
+    })
+
     return {
       authenticate() {
+        mgr.clearStaleState(store, 0)
         return mgr.signinPopup()
       },
       getToken() {
-        const storageString = storage.getItem('oc_oAuth' + mgr._userStoreKey)
+        const storageString = storage.getItem(AUTH_STORAGE_PREFIX + mgr._userStoreKey)
 
         if (storageString) {
           const user = User.fromStorageString(storageString)
 
           if (user) {
             mgr.events.load(user, false)
-
-            return user.access_token
+            if (user.expired) {
+              mgr.signinSilent().then((_, reject) => {
+                if (reject) {
+                  mgr.clearStaleState(store, 0)
+                  return null
+                }
+                return user.access_token
+              })
+            } else {
+              return user.access_token
+            }
           }
         }
 
         return null
       },
       getStoredUserObject() {
-        const storageString = storage.getItem('oc_oAuth' + mgr._userStoreKey)
+        const storageString = storage.getItem(AUTH_STORAGE_PREFIX + mgr._userStoreKey)
 
         if (storageString) {
           const user = User.fromStorageString(storageString)
