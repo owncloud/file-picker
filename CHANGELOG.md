@@ -6,9 +6,18 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Authentication fixes: [#92](https://github.com/owncloud/file-picker/pull/92)
 * Bugfix - Update dependencies: [#86](https://github.com/owncloud/file-picker/pull/86)
 
 ## Details
+
+* Bugfix - Authentication fixes: [#92](https://github.com/owncloud/file-picker/pull/92)
+
+   We've fixed a bug causing the file-picker becoming stuck on the loading spinner when the access
+   token is already expired.
+
+   https://github.com/owncloud/file-picker/pull/92
+
 
 * Bugfix - Update dependencies: [#86](https://github.com/owncloud/file-picker/pull/86)
 
