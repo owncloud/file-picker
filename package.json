@@ -78,7 +78,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "jest-environment-jsdom-sixteen": "^2.0.0",
     "jest-fetch-mock": "^3.0.3",
-    "jsdom": "^16.5.3",
+    "jsdom": "^18.0.1",
     "prettier": "^2.2.1",
     "sass": "^1.32.12",
     "sass-loader": "10",
