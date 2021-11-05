@@ -25,12 +25,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import sdk from 'owncloud-sdk'
 import DesignSystem from 'owncloud-design-system'
 import VueGettext from 'vue-gettext'
 import merge from 'lodash-es/merge'
 
-/* global Vue */
 if (!Vue.prototype.$client) {
   Vue.prototype.$client = new sdk()
 }

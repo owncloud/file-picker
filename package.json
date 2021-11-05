@@ -4,7 +4,7 @@
   "author": "ownclouders <devops@owncloud.com>",
   "description": "Easily integrate ownCloud into your existing products",
   "type": "commonjs",
-  "module": "dist/lib/file-picker.umd.min.js",
+  "module": "dist/wc/file-picker.min.js",
   "main": "dist/lib/file-picker.umd.js",
   "unpkg": "dist/file-picker.min.js",
   "repository": {
@@ -28,7 +28,7 @@
   "homepage": "https://owncloud.github.io/integration/file_picker",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build:wc": "vue-cli-service build --target wc --name file-picker --dest ./dist/wc",
+    "build:wc": "vue-cli-service build --target wc --name file-picker --inline-vue --dest ./dist/wc",
     "build:lib": "vue-cli-service build --target lib --name file-picker --dest ./dist/lib",
     "test:unit": "TEST_MODE=unit vue-cli-service test:unit",
     "test:integration": "TEST_MODE=integration jest --config ./jest.config.js --env jest-environment-jsdom-sixteen",
