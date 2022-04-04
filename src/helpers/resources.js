@@ -6,7 +6,7 @@ function _extName(fileName) {
   let ext = ''
   const ex = fileName.match(/\.[0-9a-z]+$/i)
   if (ex) {
-    ext = ex[0].substr(1)
+    ext = ex[0].slice(1)
   }
   return ext
 }
