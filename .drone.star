@@ -132,7 +132,7 @@ def website(ctx):
       },
       {
         'name': 'test',
-				'image': 'owncloudci/hugo:0.71.0',
+        'image': 'owncloudci/hugo',
         'commands': [
           'cd hugo',
           'hugo',
