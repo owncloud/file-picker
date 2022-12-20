@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 lang_map = cs_CZ: cs
 
-[owncloud.file-picker]
+[o:owncloud-org:p:owncloud:r:file-picker]
 file_filter = locale/<lang>/file-picker.po
 minimum_perc = 0
 source_file = template.pot
