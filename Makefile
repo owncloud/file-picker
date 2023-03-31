@@ -1,8 +1,8 @@
 Name := file-picker
 HUGO := hugo
 
-node_modules: package.json yarn.lock
-	yarn install --frozen-lockfile && touch node_modules
+node_modules: package.json pnpm-lock.yaml
+	pnpm install --frozen-lockfile && touch node_modules
 
 #
 # Docs

@@ -3,25 +3,27 @@ Easily integrate ownCloud into your own web applications.
 
 ## Project setup
 ```
-yarn install
+pnpm install
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+The install step will also take care of installing ownCloud Design System because we're manually building it from the release branch
 
 ### Compiles and minifies for production
 ```
-yarn build
+pnpm build
+```
+
+### Copies over oCIS example and starts a server
+```
+pnpm preview
 ```
 
 ### Run your unit tests
 ```
-yarn test:unit
+pnpm test:unit
 ```
 
 ### Lints and fixes files
 ```
-yarn lint
+pnpm lint
 ```

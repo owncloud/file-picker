@@ -56,6 +56,8 @@ To integrate File picker into your own product, you can install it via one of th
 npm install @ownclouders/file-picker --save
 # OR
 yarn add @ownclouders/file-picker
+# OR
+pnpm add @ownclouders/file-picker
 ```
 
 ## Select browser storage
