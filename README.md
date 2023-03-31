@@ -3,25 +3,25 @@ Easily integrate ownCloud into your own web applications.
 
 ## Project setup
 ```
-yarn install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+pnpm serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+pnpm build
 ```
 
 ### Run your unit tests
 ```
-yarn test:unit
+pnpm test:unit
 ```
 
 ### Lints and fixes files
 ```
-yarn lint
+pnpm lint
 ```
