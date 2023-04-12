@@ -9,3 +9,4 @@ geekdocCollapseSection: true
 ---
 
 Easily integrate ownCloud into your own product.
+https://github.com/owncloud/file-picker
