@@ -34,7 +34,8 @@
     "preview": "cp -r ./examples/ocis/ ./dist/wc && vite preview --mode web-component",
     "lint": "eslint",
     "test:unit": "BABEL_ENV=test TEST_MODE=unit jest --config ./jest.config.cjs",
-    "test:integration": "BABEL_ENV=test TEST_MODE=integration jest --config ./jest.config.cjs"
+    "test:integration": "BABEL_ENV=test TEST_MODE=integration jest --config ./jest.config.cjs",
+    "postinstall": "cp ./node_modules/oidc-client-ts/dist/browser/oidc-client-ts.min.js ./public/oidc-client.min.js"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -83,7 +84,7 @@
     "events": "^3.3.0",
     "lodash-es": "^4.17.21",
     "luxon": "^3.3.0",
-    "oidc-client": "^1.11.5",
+    "oidc-client-ts": "^2.2.2",
     "vue-gettext": "^2.1.12"
   },
   "pnpm": {

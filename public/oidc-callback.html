@@ -7,12 +7,12 @@
 </head>
 
 <body>
-  <script src="oidc-client.min.js"></script>
+  <script src="./oidc-client.min.js"></script>
   <script>
-    Oidc.Log.logger = console;
-    Oidc.Log.level = Oidc.Log.INFO;
+    oidc.Log.setLogger(console);
+    oidc.Log.setLevel(oidc.Log.INFO);
 
-    new Oidc.UserManager().signinPopupCallback();
+    new oidc.UserManager().signinPopupCallback();
   </script>
 </body>
 

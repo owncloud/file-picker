@@ -1,4 +1,10 @@
-import { Log, User, UserManager, InMemoryWebStorage, WebStorageStateStore } from 'oidc-client'
+import {
+  Log,
+  UserManager,
+  InMemoryWebStorage,
+  WebStorageStateStore,
+  UserManagerSettings
+} from 'oidc-client-ts'
 
 const AUTH_STORAGE_PREFIX = 'oc_oAuth'
 
@@ -10,21 +16,29 @@ export function initVueAuthenticate(config) {
       store: storage
     })
 
-    const openIdConfig = {
+    let logLevel = Log.INFO
+
+    if (Object.prototype.hasOwnProperty.call(config, 'logLevel')) {
+      logLevel = config.logLevel
+    }
+
+    const openIdConfig: UserManagerSettings = {
       stateStore: store,
       userStore: store,
-      redirect_uri: window.location.origin + '/oidc-callback.html',
+      popup_redirect_uri: window.location.origin + '?redirect=true',
+      redirect_uri: window.location.origin + '?redirect=true',
       response_type: 'code', // code triggers auth code grant flow
       response_mode: 'query',
       scope: 'openid profile offline_access',
       monitorSession: false,
-      silent_redirect_uri: window.location.origin + '/oidc-silent-redirect.html',
-      accessTokenExpiringNotificationTime: 10,
+      silent_redirect_uri: window.location.origin + '?redirect=true&silent=true',
       automaticSilentRenew: true,
       filterProtocolClaims: true,
       loadUserInfo: true,
-      logLevel: Log.INFO
+      authority: '',
+      client_id: ''
     }
+
     if (config.openIdConnect && config.openIdConnect.authority) {
       Object.assign(openIdConfig, config.openIdConnect)
     } else {
@@ -36,7 +50,7 @@ export function initVueAuthenticate(config) {
           client_id: config.auth.clientId,
           redirect_uri: config.auth.redirectUri
             ? config.auth.redirectUri
-            : window.location.origin + '/oidc-callback.html'
+            : window.location.origin + '?redirect=true'
         })
       } else {
         // oauth2 setup
@@ -52,7 +66,7 @@ export function initVueAuthenticate(config) {
           client_id: config.auth.clientId,
           redirect_uri: config.auth.redirectUri
             ? config.auth.redirectUri
-            : window.location.origin + '/oidc-callback.html',
+            : window.location.origin + '?redirect=true',
           response_type: 'token', // token is implicit flow - to be killed
           scope: 'openid profile',
           loadUserInfo: false
@@ -62,68 +76,36 @@ export function initVueAuthenticate(config) {
 
     const mgr = new UserManager(openIdConfig)
 
-    Log.logger = console
-    Log.level = openIdConfig.logLevel
+    Log.setLogger(console)
+    Log.setLevel(logLevel)
 
-    mgr.events.addUserSignedOut(function () {
-      console.log('UserSignedOut：', arguments)
+    mgr.events.addUserSignedOut(function (...args) {
+      console.log('UserSignedOut：', args)
     })
 
     mgr.events.addSilentRenewError(() => {
-      mgr.clearStaleState(store, 0)
+      mgr.clearStaleState()
     })
 
     return {
       authenticate() {
-        mgr.clearStaleState(store, 0)
+        mgr.clearStaleState()
         return mgr.signinPopup()
       },
-      getToken() {
-        const storageString = storage.getItem(AUTH_STORAGE_PREFIX + mgr._userStoreKey)
 
-        if (storageString) {
-          const user = User.fromStorageString(storageString)
+      async getToken() {
+        const user = await mgr.getUser()
 
-          if (user) {
-            mgr.events.load(user, false)
-            if (user.expired) {
-              mgr.signinSilent().then((_, reject) => {
-                if (reject) {
-                  mgr.clearStaleState(store, 0)
-                  return null
-                }
-                return user.access_token
-              })
-            } else {
-              return user.access_token
-            }
-          }
-        }
-
-        return null
+        return user?.access_token || ''
       },
-      getStoredUserObject() {
-        const storageString = storage.getItem(AUTH_STORAGE_PREFIX + mgr._userStoreKey)
 
-        if (storageString) {
-          const user = User.fromStorageString(storageString)
+      async isAuthenticated() {
+        const user = await mgr.getUser()
 
-          if (user) {
-            mgr.events.load(user, false)
-
-            return user
-          }
-        }
-
-        return null
+        return !!user?.access_token
       },
-      isAuthenticated() {
-        return this.getToken() !== null
-      },
-      mgr: mgr,
-      events() {
-        return mgr.events
-      }
+
+      mgr
     }
   }
 }
