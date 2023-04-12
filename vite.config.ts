@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       https: true,
-      port: 8080,
+      port: 3000,
       host: 'host.docker.internal'
     },
     build: {

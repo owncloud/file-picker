@@ -8,9 +8,7 @@ import App from './App.vue'
 
 // sax.js needs these
 window.Buffer = Buffer
-// TODO: figure out the following ts error
-// @ts-expect-error declaring global EventEmitter on the window still leads to an error
-window.EventEmitter = EventEmitter
+window.EventEmitter = new EventEmitter()
 window.process = process
 
 Vue.config.productionTip = false
