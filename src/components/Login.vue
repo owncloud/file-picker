@@ -1,6 +1,6 @@
 <template>
   <div
-    class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center"
+    class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center uk-background-cover uk-background-center-center uk-background-norepeat"
     :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
   >
     <div class="oc-login-card">

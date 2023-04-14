@@ -7,6 +7,7 @@
       <oc-spinner :aria-label="$gettext('Loading ownCloud File Picker')" />
     </div>
     <login v-if="state === 'unauthorized'" key="login-form" @login="authenticate" />
+    <oidc-callback v-if="state === 'authorizing'" />
     <file-picker
       v-if="state === 'authorized'"
       key="file-picker"
@@ -38,12 +39,15 @@ if (!Vue.prototype.$client) {
 import initVueAuthenticate from './services/auth'
 
 import { loadConfig } from './helpers/config'
+import { getQueryParam } from './helpers/url'
 
 import filePickerTranslations from '../l10n/translations.json'
 import odsTranslations from 'owncloud-design-system/dist/system/translations.json'
 
 import FilePicker from './components/FilePicker.vue'
 import Login from './components/Login.vue'
+import OidcCallback from './components/OidcCallback.vue'
+import { computed, getCurrentInstance, nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 
 if (!Vue.prototype.$gettext) {
   const supportedLanguages = {
@@ -68,10 +72,7 @@ if (!Vue.prototype.$gettext) {
 export default {
   name: 'App',
 
-  components: {
-    FilePicker,
-    Login
-  },
+  components: { FilePicker, Login, OidcCallback },
 
   props: {
     variation: {
@@ -131,43 +132,31 @@ export default {
     }
   },
 
-  data: () => ({
-    authInstance: null,
-    state: 'loading',
-    config: null
-  }),
+  emits: ['update', 'select', 'cancel', 'folderLoaded'],
 
-  computed: {
-    currentLocale() {
-      return this.locale || navigator.language.substring(0, 2)
+  setup(props, { emit }) {
+    let authInstance = null
+
+    const { proxy } = getCurrentInstance()
+
+    const config = ref(null)
+    const state = ref('loading')
+
+    const currentLocale = computed(() => {
+      return props.locale || navigator.language.substring(0, 2)
+    })
+
+    const authorizeUser = () => {
+      authInstance.mgr.signinPopupCallback()
     }
-  },
 
-  created() {
-    if (!this.isOdsProvided) {
-      // TODO: After we enable importing single components, remove this
-      Vue.use(DesignSystem)
-    }
-
-    this.initAuthentication()
-  },
-
-  mounted() {
-    this.$language.current = this.currentLocale
-  },
-
-  beforeDestroy() {
-    this.authInstance.mgr.events.removeUserLoaded()
-  },
-
-  methods: {
-    initApp() {
-      if (!this.isSdkProvided) {
-        const bearerToken = this.bearerToken || this.authInstance.getToken()
+    const initApp = async () => {
+      if (!props.isSdkProvided) {
+        const bearerToken = props.bearerToken || (await authInstance.getToken())
 
         // Init owncloud-sdk
-        this.$client.init({
-          baseUrl: this.config.server,
+        proxy.$client.init({
+          baseUrl: config.value.server,
           auth: {
             bearer: bearerToken
           },
@@ -177,55 +166,95 @@ export default {
         })
       }
 
-      this.state = 'authorized'
-    },
+      state.value = 'authorized'
+    }
 
-    async initAuthentication() {
-      this.config = await loadConfig(this.configObject, this.configLocation)
-
-      if (this.bearerToken) {
-        return this.initApp()
+    const checkUserAuthentication = async () => {
+      if (await authInstance.isAuthenticated()) {
+        return initApp()
       }
 
-      this.authInstance = initVueAuthenticate(this.config)
-      this.checkUserAuthentication()
-    },
-
-    checkUserAuthentication() {
-      if (this.authInstance.isAuthenticated()) {
-        return this.initApp()
-      }
-
-      this.state = 'unauthorized'
+      state.value = 'unauthorized'
 
       // If the user is not authenticated, we add event listener when he logs in to automatically init the application afterwards
-      this.authInstance.mgr.events.addUserLoaded(() => {
-        this.initApp()
+      authInstance.mgr.events.addUserLoaded(() => {
+        initApp()
       })
-    },
+    }
 
-    authenticate() {
-      this.authInstance.authenticate()
-    },
+    const initAuthentication = async () => {
+      config.value = await loadConfig(props.configObject, props.configLocation)
 
-    selectResources(resources) {
-      this.$emit('update', resources)
-    },
+      if (props.bearerToken) {
+        return initApp()
+      }
 
-    emitSelectBtnClick(resources) {
-      this.$emit('select', resources)
-    },
+      authInstance = initVueAuthenticate(config.value)
 
-    cancel() {
-      if (this.cancelBtnLabel === null) {
+      if (getQueryParam('redirect') === 'true') {
+        state.value = 'authorizing'
+
+        nextTick(() => {
+          authorizeUser()
+        })
+
+        return
+      }
+
+      checkUserAuthentication()
+    }
+
+    const authenticate = () => {
+      authInstance.authenticate()
+    }
+
+    const selectResources = (resources) => {
+      emit('update', resources)
+    }
+
+    const emitSelectBtnClick = (resources) => {
+      emit('select', resources)
+    }
+
+    const cancel = () => {
+      if (props.cancelBtnLabel === null) {
         // don't propagate cancel events if we don't have a cancel button
         return
       }
-      this.$emit('cancel')
-    },
 
-    onFolderLoaded(folder) {
-      this.$emit('folderLoaded', folder)
+      emit('cancel')
+    }
+
+    const onFolderLoaded = (folder) => {
+      emit('folderLoaded', folder)
+    }
+
+    onBeforeMount(() => {
+      if (!props.isOdsProvided) {
+        // TODO: After we enable importing single components, remove this
+        Vue.use(DesignSystem)
+      }
+
+      initAuthentication()
+    })
+
+    onMounted(() => {
+      proxy.$language.current = currentLocale.value
+    })
+
+    onBeforeUnmount(() => {
+      authInstance.mgr.events.removeUserLoaded()
+    })
+
+    return {
+      config,
+      state,
+      authorizeUser,
+      cancel,
+      authenticate,
+      emitSelectBtnClick,
+      onFolderLoaded,
+      selectResources
     }
   }
 }
