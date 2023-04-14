@@ -1,134 +1,213 @@
 export default {
   '/': [
     {
+      id: 'root',
+      fileId: 'root',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
       name: '',
-      type: 'dir',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'NVCK',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '144055',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144055',
-        '{http://owncloud.org/ns}size': '7505867',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fc4c975019f9"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
+      extension: '',
+      path: '/',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      type: 'folder',
+      isFolder: true,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 21:46:57 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVCKZ',
+      starred: false,
+      etag: '"e82bcdc0c6b5c2fce92100d6a40caa17"',
+      shareTypes: [3],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21aa01a3d1-fc03-4956-839a-9a2d2f4c7192',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => false,
+      canCreate: () => true
     },
     {
-      name: '/Documents',
-      type: 'dir',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVCK',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '144227',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144227',
-        '{http://owncloud.org/ns}size': '0',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fb64a9d08be7"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
+      id: 'documents',
+      fileId: 'documents',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      name: 'Documents',
+      extension: '',
+      path: '/Documents',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Documents',
+      type: 'folder',
+      isFolder: true,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 21:46:57 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVCKZ',
+      starred: false,
+      etag: '"e82bcdc0c6b5c2fce92100d6a40caa17"',
+      shareTypes: [3],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21aa01a3d1-fc03-4956-839a-9a2d2f4c7192',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
     },
     {
-      name: '/Photos',
-      type: 'dir',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVCK',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '144228',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144228',
-        '{http://owncloud.org/ns}size': '1395095',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fb64b0c5ba65"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
-    },
-    {
-      name: '/ownCloud Manual.pdf',
+      id: 'teotihuacan',
+      fileId: 'teotihuacan',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      mimeType: 'text/markdown',
+      name: 'Teotihuacan.jpg',
+      extension: 'md',
+      path: '/Teotihuacan.jpg',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Teotihuacan.jpg',
       type: 'file',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVW',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '144242',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144242',
-        '{DAV:}getcontentlength': '6110772',
-        '{http://owncloud.org/ns}size': '6110772',
-        '{DAV:}getlastmodified': 'Wed, 21 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"4b585b2818ce17bd711919b56d1bdaf2"',
-        '{DAV:}resourcetype': ''
-      },
-      tusSupport: null
+      isFolder: false,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 22:53:41 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVWZ',
+      starred: false,
+      etag: '"5288509f01672cfcdd558ad946e78186"',
+      shareTypes: [],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21ed8c0447-27db-4736-a138-19695023dd8c',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
     }
   ],
-  '/Photos': [
+  '/Documents': [
     {
-      name: '/Photos',
-      type: 'dir',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVCK',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '144228',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144228',
-        '{http://owncloud.org/ns}size': '1395095',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fb64b0c5ba65"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
+      id: 'documents',
+      fileId: 'documents',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      name: 'Documents',
+      extension: '',
+      path: '/Documents',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Documents',
+      type: 'folder',
+      isFolder: true,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 21:46:57 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVCKZ',
+      starred: false,
+      etag: '"e82bcdc0c6b5c2fce92100d6a40caa17"',
+      shareTypes: [3],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21aa01a3d1-fc03-4956-839a-9a2d2f4c7192',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
     },
     {
-      name: '/Photos/Teotihuacan.jpg',
+      id: 'invoices',
+      fileId: 'invoices',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      name: 'Invoices',
+      extension: '',
+      path: '/Documents/Invoices',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Documents/Invoices',
+      type: 'folder',
+      isFolder: true,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 21:46:57 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVCKZ',
+      starred: false,
+      etag: '"e82bcdc0c6b5c2fce92100d6a40caa17"',
+      shareTypes: [3],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21aa01a3d1-fc03-4956-839a-9a2d2f4c7192',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
+    },
+    {
+      id: 'readme',
+      fileId: 'readme',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      mimeType: 'text/markdown',
+      name: 'readme.md',
+      extension: 'md',
+      path: '/Documents/readme.md',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Documents/readme.md',
       type: 'file',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVW',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '9',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144227',
-        '{DAV:}getcontentlength': '228789',
-        '{http://owncloud.org/ns}size': '228789',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fb64a9d08be7"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
-    },
+      isFolder: false,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 22:53:41 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVWZ',
+      starred: false,
+      etag: '"5288509f01672cfcdd558ad946e78186"',
+      shareTypes: [],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21ed8c0447-27db-4736-a138-19695023dd8c',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
+    }
+  ],
+  '/Documents/Invoices': [
     {
-      name: '/Vacation',
-      type: 'dir',
-      fileInfo: {
-        '{http://owncloud.org/ns}permissions': 'RDNVCK',
-        '{http://owncloud.org/ns}favorite': '0',
-        '{http://owncloud.org/ns}fileid': '1',
-        '{http://owncloud.org/ns}owner-id': 'alice',
-        '{http://owncloud.org/ns}owner-display-name': 'alice',
-        '{http://owncloud.org/ns}share-types': '',
-        '{http://owncloud.org/ns}privatelink': 'http://host.docker.internal:8080/f/144228',
-        '{http://owncloud.org/ns}size': '1395095',
-        '{DAV:}getlastmodified': 'Thu, 22 Apr 2021 15:25:32 GMT',
-        '{DAV:}getetag': '"5fb64b0c5ba65"',
-        '{DAV:}resourcetype': [{}]
-      },
-      tusSupport: null
+      id: 'invoices',
+      fileId: 'invoices',
+      storageId: '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51',
+      parentFolderId:
+        '1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51!4c510ada-c86b-4815-8820-42cdf82c3d51',
+      name: 'Invoices',
+      extension: '',
+      path: '/Documents/Invoices',
+      webDavPath:
+        '/spaces/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51/Documents/Invoices',
+      type: 'folder',
+      isFolder: true,
+      processing: false,
+      mdate: 'Thu, 13 Apr 2023 21:46:57 GMT',
+      size: '0',
+      indicators: [],
+      permissions: 'RDNVCKZ',
+      starred: false,
+      etag: '"e82bcdc0c6b5c2fce92100d6a40caa17"',
+      shareTypes: [3],
+      privateLink:
+        'https://host.docker.internal:9200/f/1284d238-aa92-42ce-bdc4-0b0000009157$4c510ada-c86b-4815-8820-42cdf82c3d51%21aa01a3d1-fc03-4956-839a-9a2d2f4c7192',
+      ownerId: 'einstein',
+      ownerDisplayName: 'Albert Einstein',
+      tags: [],
+      canShare: () => true,
+      canCreate: () => true
     }
   ]
 }

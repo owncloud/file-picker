@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "allowJs": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "~/*": ["./*"]
     },
     "outDir": "./dist",
     "module": "ESNext",

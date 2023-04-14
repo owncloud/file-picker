@@ -3,11 +3,6 @@ const path = require('path')
 const { TEST_MODE } = process.env
 process.env.TZ = 'GMT'
 
-/*
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/en/configuration.html
- */
-
 module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{vue, js}',
@@ -16,9 +11,9 @@ module.exports = {
     '!<rootDir>/src/assets/**/*'
   ],
   coverageDirectory: '<rootDir>/coverage',
-  moduleFileExtensions: ['js', 'vue'],
+  moduleFileExtensions: ['js', 'vue', 'ts'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^~/(.*)$': '<rootDir>/$1',
     '^.+\\.(css|scss)$': 'babel-jest',
     'node_modules/vue/dist/vue.runtime.esm.js': 'node_modules/vue/dist/vue.runtime.js',
     '^lodash-es/(.*)$': '<rootDir>/node_modules/lodash/$1'
@@ -32,6 +27,7 @@ module.exports = {
       ? ['**/tests/integration/specs/**/*.spec.js']
       : ['**/tests/unit/**/*.spec.js'],
   transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx|mjs)$': 'babel-jest',
     '^.+\\.vue$': '@vue/vue2-jest',
     '^.+\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':

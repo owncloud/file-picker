@@ -11,28 +11,27 @@
             $gettext('Please, click the button below to authenticate and get access to your data.')
           "
         />
-        <oc-button variation="primary" @click="login" v-text="$gettext('Log in')" />
+        <oc-button variation="primary" @click="login">
+          {{ $gettext('Log in') }}
+        </oc-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import backgroundImage from '../assets/img/background.jpg'
 
-export default {
-  name: 'Login',
+export default defineComponent({
+  emits: ['login'],
 
-  computed: {
-    backgroundImage() {
-      return backgroundImage
+  setup(props, { emit }) {
+    const login = () => {
+      emit('login')
     }
-  },
 
-  methods: {
-    login() {
-      this.$emit('login')
-    }
+    return { backgroundImage, login }
   }
-}
+})
 </script>

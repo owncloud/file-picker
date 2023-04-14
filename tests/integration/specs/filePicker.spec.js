@@ -1,180 +1,179 @@
-import { render, waitFor, fireEvent } from '@testing-library/vue'
+import { render, fireEvent, screen } from '@testing-library/vue'
 import '@testing-library/jest-dom'
+
 import resources from '../../fixtures/resources'
-import FilePicker from '@/components/FilePicker.vue'
+
+import { listResources } from '~/tests/helpers/mocks'
+
+import FilePicker from '~/src/components/FilePicker.vue'
+
+const SELECTORS = Object.freeze({
+  listResources: 'list-resources',
+  listRow: (id) => `list-resources-row-${id}`,
+  btnSelect: 'list-header-btn-select',
+  listRowCheckbox: (id) => `list-resources-checkbox-${id}`,
+  btnReturn: 'btn-return'
+})
+
+const renderPage = ({ props } = {}) =>
+  render(FilePicker, {
+    props: { variation: 'location', ...props },
+    provide: {
+      client: { value: {} },
+      webdav: {
+        value: {
+          listFiles: listResources
+        }
+      },
+      sdk: { value: {} },
+      config: { value: {} },
+      capabilities: { value: { capabilities: {} } },
+      user: { value: {} }
+    }
+  })
 
 describe('Users can select location from within the file picker', () => {
   test('User can select the current folder', async () => {
-    const { getByTestId, emitted } = render(FilePicker, {
-      props: {
-        variation: 'location'
-      }
-    })
+    const { emitted } = renderPage()
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
-    expect(getByTestId('list-header-btn-select')).toBeVisible()
-    await fireEvent.click(getByTestId('list-header-btn-select'))
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
+    expect(screen.getByTestId(SELECTORS.btnSelect)).toBeVisible()
+    await fireEvent.click(screen.getByTestId(SELECTORS.btnSelect))
 
-    const rootFolder = resources['/'][0]
-
-    expect(emitted().select[0][0][0].id).toMatch(
-      rootFolder.fileInfo['{http://owncloud.org/ns}fileid']
-    )
+    expect(emitted().select[0][0][0].id).toBe(resources['/'][0].id)
   })
 
   test('User can select a nested folder as a location', async () => {
-    const { getByTestId, emitted, getByText } = render(FilePicker, {
-      props: {
-        variation: 'location'
-      }
-    })
+    const { emitted } = renderPage()
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
 
-    expect(getByText('Photos')).toBeVisible()
+    expect(screen.getByText('Documents')).toBeVisible()
 
-    await fireEvent.click(getByText('Photos'))
+    await fireEvent.click(screen.getByText('Documents'))
 
-    await waitFor(() => expect(getByText('Vacation')).toBeVisible())
-    expect(getByText('Teotihuacan')).toBeVisible()
-    expect(getByTestId('list-resources-row-9')).toHaveClass('files-list-row-disabled')
-
-    await fireEvent.click(getByTestId('list-resources-row-1'))
-
-    expect(getByTestId('list-resources-row-1')).toHaveClass('oc-background-selected')
-    expect(getByTestId('list-header-btn-select')).toBeVisible()
-
-    await fireEvent.click(getByTestId('list-header-btn-select'))
-
-    const expectedFolder = resources['/Photos'].find(
-      (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === '1'
+    expect(await screen.findByText('Invoices')).toBeVisible()
+    expect(screen.getByText('readme')).toBeVisible()
+    expect(screen.getByTestId(SELECTORS.listRow(resources['/Documents'][2].id))).toHaveClass(
+      'files-list-row-disabled'
     )
 
-    expect(emitted().select[0][0][0].id).toMatch(
-      expectedFolder.fileInfo['{http://owncloud.org/ns}fileid']
+    await fireEvent.click(screen.getByTestId(SELECTORS.listRow(resources['/Documents'][1].id)))
+
+    expect(screen.getByTestId(SELECTORS.listRow(resources['/Documents'][1].id))).toHaveClass(
+      'oc-background-selected'
     )
+
+    await fireEvent.click(screen.getByTestId(SELECTORS.btnSelect))
+
+    expect(emitted().select[0][0][0].id).toBe(resources['/Documents/Invoices'][0].id)
   })
 
   test('Developers can get location from update event when folder is loaded', async () => {
-    const { getByTestId, emitted, getByText } = render(FilePicker, {
-      props: {
-        variation: 'location'
-      }
-    })
+    const { emitted } = renderPage()
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
 
-    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('144055')
+    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('root')
 
-    await fireEvent.click(getByText('Photos'))
+    await fireEvent.click(screen.getByText('Documents'))
 
-    await waitFor(() => expect(getByText('Teotihuacan')).toBeVisible())
+    expect(await screen.findByText('readme')).toBeVisible()
 
-    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('144228')
+    expect(emitted().update[emitted().update.length - 1][0][0].id).toEqual('documents')
   })
 
   test('Developers can get current loaded folder from "folderLoaded" event after the load is finished', async () => {
-    const { getByTestId, emitted, getByText } = render(FilePicker, {
-      props: {
-        variation: 'location'
-      }
-    })
+    const { emitted } = renderPage()
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
 
-    expect(emitted().folderLoaded[0][0].id).toEqual('144055')
+    expect(emitted().folderLoaded[0][0].id).toEqual('root')
 
-    await fireEvent.click(getByText('Photos'))
+    await fireEvent.click(screen.getByText('Documents'))
 
-    await waitFor(() => expect(getByText('Teotihuacan')).toBeVisible())
-
-    expect(emitted().folderLoaded[1][0].id).toEqual('144228')
+    expect(await screen.findByText('readme')).toBeVisible()
+    expect(emitted().folderLoaded[1][0].id).toEqual('documents')
   })
 })
 
 describe('Users can select resources from within the file picker', () => {
   test('User can select resources from the current folder', async () => {
-    const { getByTestId, getByText, emitted } = render(FilePicker, {
+    const { emitted } = renderPage({
       props: {
         variation: 'resource'
       }
     })
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
+    expect(screen.getByText('Documents')).toBeVisible()
 
-    expect(getByText('Photos')).toBeVisible()
+    await fireEvent.click(screen.getByText('Documents'))
 
-    await fireEvent.click(getByText('Photos'))
+    expect(await screen.findByText('Invoices')).toBeVisible()
+    expect(screen.getByText('readme')).toBeVisible()
+    expect(screen.getByTestId('list-resources-row-readme')).not.toHaveClass(
+      'files-list-row-disabled'
+    )
 
-    await waitFor(() => expect(getByText('Vacation')).toBeVisible())
-    expect(getByText('Teotihuacan')).toBeVisible()
-    expect(getByTestId('list-resources-row-9')).not.toHaveClass('files-list-row-disabled')
+    await fireEvent.click(
+      screen.getByTestId(SELECTORS.listRowCheckbox('invoices')).querySelector('.oc-checkbox')
+    )
+    await fireEvent.click(
+      screen.getByTestId(SELECTORS.listRowCheckbox('readme')).querySelector('.oc-checkbox')
+    )
 
-    await fireEvent.click(getByTestId('list-resources-checkbox-1').querySelector('.oc-checkbox'))
-    await fireEvent.click(getByTestId('list-resources-checkbox-9').querySelector('.oc-checkbox'))
+    expect(screen.getByTestId(SELECTORS.listRow('invoices'))).toHaveClass('oc-background-selected')
+    expect(screen.getByTestId(SELECTORS.listRow('readme'))).toHaveClass('oc-background-selected')
+    expect(screen.getByTestId(SELECTORS.btnSelect)).toBeVisible()
 
-    expect(getByTestId('list-resources-row-1')).toHaveClass('oc-background-selected')
-    expect(getByTestId('list-resources-row-9')).toHaveClass('oc-background-selected')
-    expect(getByTestId('list-header-btn-select')).toBeVisible()
+    await fireEvent.click(screen.getByTestId(SELECTORS.btnSelect))
 
-    await fireEvent.click(getByTestId('list-header-btn-select'))
-
-    const expectedResources = resources['/Photos']
-
-    expect(
-      expectedResources.find(
-        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().select[0][0][0].id
-      )
-    ).toBeTruthy()
-    expect(
-      expectedResources.find(
-        (r) => r.fileInfo['{http://owncloud.org/ns}fileid'] === emitted().select[0][0][1].id
-      )
-    ).toBeTruthy()
+    expect(emitted().select[0][0][0].id).toBe('invoices')
+    expect(emitted().select[0][0][1].id).toBe('readme')
   })
 
   test('Developers can listen to event each time a resource is selected', async () => {
-    const { getByTestId, emitted } = render(FilePicker, {
+    const { emitted } = renderPage({
       props: {
         variation: 'resource'
       }
     })
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
 
-    expect(getByTestId('list-resources-checkbox-144228')).toBeVisible()
-    expect(getByTestId('list-resources-checkbox-144242')).toBeVisible()
+    expect(screen.getByTestId(SELECTORS.listRowCheckbox('documents'))).toBeVisible()
+    expect(screen.getByTestId(SELECTORS.listRowCheckbox('teotihuacan'))).toBeVisible()
 
     await fireEvent.click(
-      getByTestId('list-resources-checkbox-144228').querySelector('.oc-checkbox')
+      screen.getByTestId(SELECTORS.listRowCheckbox('documents')).querySelector('.oc-checkbox')
     )
     await fireEvent.click(
-      getByTestId('list-resources-checkbox-144242').querySelector('.oc-checkbox')
+      screen.getByTestId(SELECTORS.listRowCheckbox('teotihuacan')).querySelector('.oc-checkbox')
     )
 
     expect(emitted().update[0][0].length).toBe(2)
-    expect(emitted().update[0][0][0].id).toMatch('144228')
-    expect(emitted().update[0][0][1].id).toMatch('144242')
+    expect(emitted().update[0][0][0].id).toBe('documents')
+    expect(emitted().update[0][0][1].id).toBe('teotihuacan')
 
     await fireEvent.click(
-      getByTestId('list-resources-checkbox-144242').querySelector('.oc-checkbox')
+      screen.getByTestId(SELECTORS.listRowCheckbox('teotihuacan')).querySelector('.oc-checkbox')
     )
 
     expect(emitted().update[0][0].length).toBe(1)
   })
 
-  test('Last breadcrumb item is focused after folder has been loaded', async () => {
-    const { getByTestId, getByText } = render(FilePicker, {
+  test('Go back button is focused after folder has been loaded', async () => {
+    renderPage({
       props: {
-        variation: 'resource'
+        variation: 'resource',
+        isInitialFocusEnabled: true
       }
     })
 
-    await waitFor(() => expect(getByTestId('list-resources-table')).toBeVisible())
-    await fireEvent.click(getByText('Photos'))
+    expect(await screen.findByTestId(SELECTORS.listResources)).toBeVisible()
+    await fireEvent.click(screen.getByText('Documents'))
 
-    expect(document.querySelector('.oc-breadcrumb-list-item span[aria-current="page"]')).toBe(
-      document.activeElement
-    )
+    expect(screen.getByTestId(SELECTORS.btnReturn)).toBe(document.activeElement)
   })
 })

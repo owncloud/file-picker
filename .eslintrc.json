@@ -1,3 +1,6 @@
 {
-  "extends": "@ownclouders"
+  "extends": "@ownclouders",
+  "rules": {
+    "vue/no-deprecated-v-on-native-modifier": "off"
+  }
 }

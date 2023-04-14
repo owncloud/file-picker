@@ -64,11 +64,13 @@ export function initVueAuthenticate(config) {
             userinfo_endpoint: ''
           },
           client_id: config.auth.clientId,
-          redirect_uri: config.auth.redirectUri
+          client_secret: config.auth.clientSecret,
+          client_authentication: 'client_secret_basic',
+          redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin,
+          popup_redirect_uri: config.auth.redirectUri
             ? config.auth.redirectUri
-            : window.location.origin + '?redirect=true',
-          response_type: 'token', // token is implicit flow - to be killed
-          scope: 'openid profile',
+            : window.location.origin,
+          scope: 'profile',
           loadUserInfo: false
         })
       }
@@ -91,6 +93,12 @@ export function initVueAuthenticate(config) {
       authenticate() {
         mgr.clearStaleState()
         return mgr.signinPopup()
+      },
+
+      async getUser() {
+        const user = await mgr.getUser()
+
+        return user
       },
 
       async getToken() {

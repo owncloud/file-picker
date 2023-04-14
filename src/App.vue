@@ -26,15 +26,23 @@
 </template>
 
 <script>
-import sdk from 'owncloud-sdk'
+import {
+  computed,
+  getCurrentInstance,
+  nextTick,
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  ref
+} from 'vue'
 import DesignSystem from 'owncloud-design-system'
 import VueGettext from 'vue-gettext'
 import merge from 'lodash-es/merge'
-
-/* global Vue */
-if (!Vue.prototype.$client) {
-  Vue.prototype.$client = new sdk()
-}
+import { client as webClient } from '@ownclouders/web-client'
+import axios from 'axios'
+import owncloudSdk from 'owncloud-sdk'
+import { webdav as initWebdav } from '@ownclouders/web-client/src/webdav'
 
 import initVueAuthenticate from './services/auth'
 
@@ -47,7 +55,6 @@ import odsTranslations from 'owncloud-design-system/dist/system/translations.jso
 import FilePicker from './components/FilePicker.vue'
 import Login from './components/Login.vue'
 import OidcCallback from './components/OidcCallback.vue'
-import { computed, getCurrentInstance, nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 
 if (!Vue.prototype.$gettext) {
   const supportedLanguages = {
@@ -141,6 +148,18 @@ export default {
 
     const config = ref(null)
     const state = ref('loading')
+    const client = ref(null)
+    const capabilities = ref(null)
+    const user = ref(null)
+    const webdav = ref(null)
+    const sdk = ref(null)
+
+    provide('client', client)
+    provide('capabilities', capabilities)
+    provide('user', user)
+    provide('webdav', webdav)
+    provide('sdk', sdk)
+    provide('config', config)
 
     const currentLocale = computed(() => {
       return props.locale || navigator.language.substring(0, 2)
@@ -150,23 +169,52 @@ export default {
       authInstance.mgr.signinPopupCallback()
     }
 
-    const initApp = async () => {
-      if (!props.isSdkProvided) {
-        const bearerToken = props.bearerToken || (await authInstance.getToken())
+    const get_axios_instance = (token) => {
+      const instance = axios.create({
+        headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
+      })
 
-        // Init owncloud-sdk
-        proxy.$client.init({
-          baseUrl: config.value.server,
-          auth: {
-            bearer: bearerToken
-          },
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          }
-        })
+      return instance
+    }
+
+    const initSdk = (token) => {
+      if (props.isSdkProvided) {
+        sdk.value = proxy.$client
+
+        return
       }
 
-      state.value = 'authorized'
+      sdk.value = new owncloudSdk({
+        baseUrl: config.value.server,
+        auth: {
+          bearer: token
+        },
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+    }
+
+    const initApp = async () => {
+      try {
+        const token = await authInstance.getToken()
+        const axiosInstance = get_axios_instance(token)
+        const _client = webClient(config.value.server, axiosInstance)
+        // const { data: userData } = await _client.graph.users.getMe()
+
+        initSdk(token)
+
+        const login = await sdk.value.getCurrentUser()
+
+        client.value = _client
+        capabilities.value = await _client.ocs.getCapabilities()
+        webdav.value = initWebdav({ sdk: sdk.value })
+        user.value = login
+
+        state.value = 'authorized'
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     const checkUserAuthentication = async () => {
@@ -191,7 +239,7 @@ export default {
 
       authInstance = initVueAuthenticate(config.value)
 
-      if (getQueryParam('redirect') === 'true') {
+      if (getQueryParam('redirect') === 'true' || getQueryParam('code') !== null) {
         state.value = 'authorizing'
 
         nextTick(() => {

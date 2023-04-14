@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { getQueryParam } from '@/helpers/url'
+import { getQueryParam } from '~/src/helpers/url'
 import { defineComponent, onBeforeMount, ref } from 'vue'
 import BACKGROUND_IMAGE from '../assets/img/background.jpg'
 
