@@ -1,0 +1,26 @@
+diff --git a/dist/vue-wc-wrapper.js b/dist/vue-wc-wrapper.js
+index 721bf1f13b0deca95e11d8b6803ccedda0a77cfc..71698d43bb0277214f7f30c1a3c58fa7aeb99cef 100644
+--- a/dist/vue-wc-wrapper.js
++++ b/dist/vue-wc-wrapper.js
+@@ -167,12 +167,10 @@ function wrap (Vue, Component) {
+   class CustomElement extends HTMLElement {
+     constructor () {
+       const self = super();
+-      self.attachShadow({ mode: 'open' });
+ 
+       const wrapper = self._wrapper = new Vue({
+         name: 'shadow-root',
+         customElement: self,
+-        shadowRoot: self.shadowRoot,
+         data () {
+           return {
+             props: {},
+@@ -246,7 +244,7 @@ function wrap (Vue, Component) {
+           this.childNodes
+         ));
+         wrapper.$mount();
+-        this.shadowRoot.appendChild(wrapper.$el);
++        this.appendChild(wrapper.$el);
+       } else {
+         callHooks(this.vueComponent, 'activated');
+       }

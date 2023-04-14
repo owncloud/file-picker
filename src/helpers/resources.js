@@ -1,6 +1,8 @@
-import { uniqueId, chain } from 'lodash'
-import fileTypeIconMappings from './fileTypeIconMappings.json'
 import path from 'path'
+import chain from 'lodash-es/chain'
+import uniqueId from 'lodash-es/uniqueId'
+
+import fileTypeIconMappings from './fileTypeIconMappings.json'
 
 function _extName(fileName) {
   let ext = ''

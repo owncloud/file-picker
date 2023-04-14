@@ -1,25 +1,26 @@
-**/l10n/locale
-**/l10n/template.pot
-
-/hugo
-
-.idea
-
-package-lock.json
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 node_modules
 dist
+dist-ssr
+*.local
 
-*.log
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-.envrc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 public/file-picker-config.json
-public/demo.html
-public/file-picker.js
-public/img
-public/file-picker.min.js
-public/file-picker.js.map
-public/file-picker.min.js.map
-
-coverage

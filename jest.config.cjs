@@ -1,5 +1,7 @@
 const path = require('path')
+
 const { TEST_MODE } = process.env
+process.env.TZ = 'GMT'
 
 /*
  * For a detailed explanation regarding each configuration property, visit:
@@ -17,7 +19,9 @@ module.exports = {
   moduleFileExtensions: ['js', 'vue'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^.+\\.(css|scss)$': 'babel-jest'
+    '^.+\\.(css|scss)$': 'babel-jest',
+    'node_modules/vue/dist/vue.runtime.esm.js': 'node_modules/vue/dist/vue.runtime.js',
+    '^lodash-es/(.*)$': '<rootDir>/node_modules/lodash/$1'
   },
   modulePaths: ['<rootDir>'],
   rootDir: path.resolve(__dirname, './'),
@@ -28,10 +32,10 @@ module.exports = {
       ? ['**/tests/integration/specs/**/*.spec.js']
       : ['**/tests/unit/**/*.spec.js'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '^.+\\.vue$': 'vue-jest',
+    '^.+\\.(js|jsx|mjs)$': 'babel-jest',
+    '^.+\\.vue$': '@vue/vue2-jest',
     '^.+\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/file.js'
   },
-  transformIgnorePatterns: ['node_modules/(?!lodash-es/.*)']
+  testEnvironment: 'jest-environment-jsdom'
 }

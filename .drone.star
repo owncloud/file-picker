@@ -245,14 +245,14 @@ def tests(ctx):
         'name': 'install',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn install --frozen-lockfile',
+          'pnpm install --frozen-lockfile',
         ],
       },
       {
         'name': 'lint',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn lint',
+          'pnpm lint',
         ],
         'depends_on': ['install']
       },
@@ -260,7 +260,7 @@ def tests(ctx):
         'name': 'build',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn build',
+          'pnpm build',
         ],
         'depends_on': ['lint']
       },
@@ -268,7 +268,7 @@ def tests(ctx):
         'name': 'unit',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn test:unit'
+          'pnpm test:unit'
         ],
         'depends_on': ['build']
       },
@@ -276,7 +276,7 @@ def tests(ctx):
         'name': 'integration',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn test:integration'
+          'pnpm test:integration'
         ],
         'depends_on': ['build']
       }
@@ -305,8 +305,8 @@ def release(ctx):
         'name': 'build',
         'image': 'owncloudci/nodejs:14',
         'commands': [
-          'yarn install --frozen-lockfile',
-          'yarn build'
+          'pnpm install --frozen-lockfile',
+          'pnpm build'
         ],
         'when': {
           'ref': [

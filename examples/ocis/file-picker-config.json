@@ -1,0 +1,8 @@
+{
+  "server": "https://host.docker.internal:9200",
+  "openIdConnect": {
+    "metadataUrl": "https://host.docker.internal:9200/.well-known/openid-configuration",
+    "authority": "https://host.docker.internal:9200",
+    "client_id": "filepicker"
+  }
+}
