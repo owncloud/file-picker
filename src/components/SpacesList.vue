@@ -1,14 +1,14 @@
 <template>
   <oc-list>
-    <li class="oc-p-m">
+    <li class="oc-px-m oc-py-s">
       <button class="btn-space" @click="() => openSpace('personal', $gettext('Personal'))">
-        <oc-icon name="resource-type-folder" color="var(--oc-color-icon-folder)" size="large" />
+        <oc-icon name="resource-type-folder" size="large" />
         <span v-text="$gettext('Personal')" />
       </button>
     </li>
     <li class="oc-border-t oc-p-m">
       <button class="btn-space" @click="() => openSpace('shares', $gettext('Shares'))">
-        <oc-icon name="resource-type-folder" color="var(--oc-color-icon-folder)" size="large" />
+        <oc-icon name="share-forward" size="large" />
         <span v-text="$gettext('Shares')" />
       </button>
     </li>

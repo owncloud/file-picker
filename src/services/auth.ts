@@ -65,7 +65,6 @@ export function initVueAuthenticate(config) {
           },
           client_id: config.auth.clientId,
           client_secret: config.auth.clientSecret,
-          client_authentication: 'client_secret_basic',
           redirect_uri: config.auth.redirectUri ? config.auth.redirectUri : window.location.origin,
           popup_redirect_uri: config.auth.redirectUri
             ? config.auth.redirectUri
@@ -73,6 +72,10 @@ export function initVueAuthenticate(config) {
           scope: 'profile',
           loadUserInfo: false
         })
+
+        if (Object.prototype.hasOwnProperty.call(config.auth, 'clientSecret')) {
+          openIdConfig.client_authentication = 'client_secret_basic'
+        }
       }
     }
 

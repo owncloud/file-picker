@@ -2,7 +2,7 @@
   <div id="oc-file-picker" tabindex="-1" @keyup.esc="cancel">
     <div
       v-if="state === 'loading'"
-      class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center oc-border"
+      class="oc-height-1-1 oc-width-1-1 oc-flex oc-flex-middle oc-flex-center oc-border"
     >
       <oc-spinner :aria-label="$gettext('Loading ownCloud File Picker')" />
     </div>
@@ -11,7 +11,7 @@
     <file-picker
       v-if="state === 'authorized'"
       key="file-picker"
-      class="uk-height-1-1"
+      class="oc-height-1-1"
       :variation="variation"
       :select-btn-label="selectBtnLabel"
       :is-select-btn-displayed="isSelectBtnDisplayed"
@@ -143,6 +143,7 @@ export default {
 
   setup(props, { emit }) {
     let authInstance = null
+    let axiosInstance = null
 
     const { proxy } = getCurrentInstance()
 
@@ -198,7 +199,7 @@ export default {
     const initApp = async () => {
       try {
         const token = await authInstance.getToken()
-        const axiosInstance = get_axios_instance(token)
+        axiosInstance = get_axios_instance(token)
         const _client = webClient(config.value.server, axiosInstance)
         // const { data: userData } = await _client.graph.users.getMe()
 
@@ -217,8 +218,22 @@ export default {
       }
     }
 
+    const updateBearerToken = async () => {
+      let token = await authInstance.getToken()
+      token = token.startsWith('Bearer') ? token : `Bearer ${token}`
+
+      axiosInstance.defaults.headers.common.Authorization = token
+
+      sdk.value.helpers.setAuthorization(token)
+    }
+
     const checkUserAuthentication = async () => {
       if (await authInstance.isAuthenticated()) {
+        // If the user is authenticated, we add event listener when he's updated to automatically update the token
+        authInstance.mgr.events.addUserLoaded(() => {
+          updateBearerToken()
+        })
+
         return initApp()
       }
 

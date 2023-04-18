@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-flex uk-height-1-1 uk-flex-column uk-overflow-hidden">
+  <div class="oc-flex oc-height-1-1 oc-flex-column oc-overflow-hidden">
     <list-header
       data-testid="list-header"
       :current-folder="currentFolder"
@@ -16,7 +16,7 @@
     <div
       v-if="state === 'loading'"
       key="loading-message"
-      class="uk-flex uk-flex-1 uk-flex-middle uk-flex-center"
+      class="oc-flex oc-flex-1 oc-flex-middle oc-flex-center"
     >
       <oc-spinner :aria-label="$gettext('Loading resources')" />
     </div>
@@ -32,7 +32,7 @@
         v-else
         key="resources-list"
         data-testid="list-resources"
-        class="uk-flex-1 oc-border"
+        class="oc-flex-1"
         :resources="resources"
         :is-location-picker="isLocationPicker"
         @openFolder="loadFolder"
@@ -160,8 +160,10 @@ export default defineComponent({
       try {
         const { resource, children } = await webdav.value.listFiles(currentSpace, { path })
 
+        console.log(path, currentSpace.driveType)
+
         currentFolder.value =
-          path === '/' && currentSpace.driveType === 'personal'
+          resource.path === '/' && currentSpace.driveType === 'personal'
             ? { ...resource, name: proxy?.$gettext('Personal') }
             : resource
         resources.value = children
@@ -233,7 +235,18 @@ export default defineComponent({
       if (currentFolder.value === null) return
 
       if (currentFolder.value.path === '/') {
+        if (currentSpace?.driveType === 'share') {
+          loadShares()
+
+          nextTick(() => {
+            currentSpace = null
+          })
+
+          return
+        }
+
         currentFolder.value = null
+        currentSpace = null
 
         return
       }

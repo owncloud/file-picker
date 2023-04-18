@@ -1,5 +1,5 @@
 <template>
-  <header class="file-picker-header oc-p-m uk-flex uk-flex-middle uk-flex-between">
+  <header class="file-picker-header oc-p-m oc-flex oc-flex-middle oc-flex-between">
     <div class="oc-flex oc-flex-middle oc-button-gap-m">
       <button
         v-if="currentFolder !== null"
@@ -21,19 +21,19 @@
       <oc-button
         v-if="cancelBtnLabel"
         data-testid="list-header-btn-cancel"
-        class="file-picker-btn-cancel uk-margin-small-right"
+        class="file-picker-btn-cancel oc-margin-small-right"
         @click="cancel"
       >
         {{ cancelBtnLabel }}
       </oc-button>
       <oc-button
         v-if="isSelectBtnDisplayed"
+        v-oc-tooltip="disabledSelectBtnTooltip"
         data-testid="list-header-btn-select"
         class="file-picker-btn-select-resources"
         variation="primary"
         appearance="filled"
         :disabled="!isSelectBtnEnabled"
-        :uk-tooltip="disabledSelectBtnTooltip"
         @click="select"
       >
         {{ submitBtnLabel }}

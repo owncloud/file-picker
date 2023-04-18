@@ -1,7 +1,7 @@
 <template>
   <oc-table-simple data-testid="list-resources-table">
     <oc-tr
-      v-for="resource in resources"
+      v-for="resource in resourcesSorted"
       :key="resource.fileId"
       :class="rowClasses(resource)"
       :data-testid="`list-resources-row-${resource.id}`"
@@ -10,7 +10,7 @@
       <oc-td class="oc-pm oc-display-relative" width="shrink">
         <oc-checkbox
           v-if="!isLocationPicker"
-          class="file-picker-resource-checkbox uk-margin-small-left"
+          class="file-picker-resource-checkbox oc-margin-small-left"
           :data-testid="`list-resources-checkbox-${resource.id}`"
           :value="isResourceSelected(resource)"
           :label="selectLabel(resource.name)"
@@ -26,10 +26,10 @@
           v-text="selectLabel(resource.name)"
         />
       </oc-td>
-      <oc-td class="oc-py-m oc-pr-m">
+      <oc-td class="oc-py-s oc-pr-m">
         <base-resource
           data-testid="resource"
-          class="uk-width-auto"
+          class="oc-width-auto"
           :resource="resource"
           @navigate="openFolder"
           @open-share="openShare"
@@ -44,7 +44,7 @@ import path from 'path'
 import { computed, defineComponent, getCurrentInstance, PropType, ref } from 'vue'
 import { Resource } from '@ownclouders/web-client'
 
-import { sortByName } from '../helpers/sort'
+import { SortDir, sortHelper } from '../helpers/sort'
 
 import BaseResource from '~/src/components/BaseResource.vue'
 
@@ -123,7 +123,7 @@ export default defineComponent({
     }
 
     const rowClasses = (resource) => {
-      const classes = ['oc-file-picker-row']
+      const classes = ['oc-file-picker-row oc-border-t']
 
       if (isResourceSelected(resource)) {
         classes.push('oc-background-selected')
@@ -137,7 +137,7 @@ export default defineComponent({
     }
 
     const sortResources = (resources) => {
-      return resources.sort(sortByName)
+      return sortHelper<Resource>(resources, [{ name: 'name' }], 'name', SortDir.Asc)
     }
 
     const selectLocation = (location) => {
