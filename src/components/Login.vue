@@ -1,6 +1,6 @@
 <template>
   <div
-    class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center uk-background-cover uk-background-center-center uk-background-norepeat"
+    class="oc-height-1-1 oc-width-1-1 oc-flex oc-flex-middle oc-flex-center oc-background-cover oc-background-center-center oc-background-norepeat"
     :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
   >
     <div class="oc-login-card">
@@ -11,28 +11,27 @@
             $gettext('Please, click the button below to authenticate and get access to your data.')
           "
         />
-        <oc-button variation="primary" @click="login" v-text="$gettext('Log in')" />
+        <oc-button variation="primary" @click="login">
+          {{ $gettext('Log in') }}
+        </oc-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import backgroundImage from '../assets/img/background.jpg'
 
-export default {
-  name: 'Login',
+export default defineComponent({
+  emits: ['login'],
 
-  computed: {
-    backgroundImage() {
-      return backgroundImage
+  setup(props, { emit }) {
+    const login = () => {
+      emit('login')
     }
-  },
 
-  methods: {
-    login() {
-      this.$emit('login')
-    }
+    return { backgroundImage, login }
   }
-}
+})
 </script>

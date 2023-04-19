@@ -1,6 +1,6 @@
 <template>
   <div
-    class="uk-height-1-1 uk-width-1-1 uk-flex uk-flex-middle uk-flex-center uk-background-cover uk-background-center-center uk-background-norepeat"
+    class="oc-height-1-1 oc-width-1-1 oc-flex oc-flex-middle oc-flex-center oc-background-cover oc-background-center-center oc-background-norepeat"
     :style="{ backgroundImage: 'url(' + BACKGROUND_IMAGE + ')' }"
   >
     <div class="oc-login-card">
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { getQueryParam } from '@/helpers/url'
+import { getQueryParam } from '~/src/helpers/url'
 import { defineComponent, onBeforeMount, ref } from 'vue'
 import BACKGROUND_IMAGE from '../assets/img/background.jpg'
 

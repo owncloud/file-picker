@@ -1,33 +1,52 @@
 <template>
-  <header class="file-picker-header uk-padding-small uk-flex uk-flex-middle uk-flex-between">
-    <oc-breadcrumb class="oc-light" :items="breadcrumbsItems" data-testid="breadcrumbs" />
+  <header class="file-picker-header oc-p-m oc-flex oc-flex-middle oc-flex-between">
+    <div class="oc-flex oc-flex-middle oc-button-gap-m">
+      <button
+        v-if="currentFolder !== null"
+        data-testid="btn-return"
+        class="btn-return"
+        :aria-label="$gettext('Go back')"
+        @click="emitGoBack"
+      >
+        <oc-icon name="arrow-drop-left" size="large" fill-type="line" />
+      </button>
+      <h1
+        data-testid="title-folder"
+        class="oc-text-normal oc-text-medium oc-my-rm"
+        v-text="folderName"
+      />
+    </div>
+
     <div v-if="cancelBtnLabel || isSelectBtnDisplayed">
       <oc-button
         v-if="cancelBtnLabel"
         data-testid="list-header-btn-cancel"
-        class="file-picker-btn-cancel uk-margin-small-right"
+        class="file-picker-btn-cancel oc-margin-small-right"
         @click="cancel"
-        v-text="cancelBtnLabel"
-      />
+      >
+        {{ cancelBtnLabel }}
+      </oc-button>
       <oc-button
         v-if="isSelectBtnDisplayed"
+        v-oc-tooltip="disabledSelectBtnTooltip"
         data-testid="list-header-btn-select"
         class="file-picker-btn-select-resources"
         variation="primary"
         appearance="filled"
         :disabled="!isSelectBtnEnabled"
-        :uk-tooltip="disabledSelectBtnTooltip"
         @click="select"
-        v-text="submitBtnLabel"
-      />
+      >
+        {{ submitBtnLabel }}
+      </oc-button>
     </div>
   </header>
 </template>
 
-<script>
-import path from 'path'
+<script lang="ts">
+import { computed, defineComponent, getCurrentInstance, inject, Ref } from 'vue'
+import { Capabilities } from '@ownclouders/web-client/src/ocs'
 
-export default {
+export default defineComponent({
   name: 'ListHeader',
 
   props: {
@@ -66,69 +85,68 @@ export default {
     }
   },
 
-  computed: {
-    breadcrumbsItems() {
-      const breadcrumbs = []
+  emits: ['go-back', 'select', 'cancel'],
 
-      if (!this.currentFolder) {
-        return breadcrumbs
-      }
+  setup(props, { emit }) {
+    const { proxy } = getCurrentInstance() || {}
 
-      const pathSplit = this.currentFolder.path ? this.currentFolder.path.split('/') : ['']
+    const capabilities = inject<Ref<Capabilities>>('capabilities')
 
-      for (let i = 0; i < pathSplit.length; i++) {
-        let itemPath = encodeURIComponent(path.join.apply(null, pathSplit.slice(0, i + 1)))
+    const folderName = computed(() => {
+      if (props.currentFolder !== null) return props.currentFolder.name
 
-        breadcrumbs.push({
-          index: i,
-          text: i === 0 ? this.$gettext('Home') : pathSplit.slice(0, i + 1)[i]
-        })
+      return capabilities.value.capabilities.spaces?.enabled
+        ? proxy?.$gettext('Files')
+        : proxy?.$gettext('All Files')
+    })
 
-        if (pathSplit.length > 1 && i < pathSplit.length - 1) {
-          breadcrumbs[i].onClick = () => this.openFolder(itemPath || '/')
-        }
-      }
+    const disabledSelectBtnTooltip = computed(() => {
+      if (props.isSelectBtnEnabled) return null
 
-      return breadcrumbs
-    },
-
-    disabledSelectBtnTooltip() {
-      if (this.isSelectBtnEnabled) {
-        return null
-      }
-
-      return this.$gettext(
+      return proxy?.$gettext(
         'Please, select at least one resource. You can select a resource by clicking on its row or via its checkbox.'
       )
-    },
+    })
 
-    submitBtnLabel() {
-      if (this.selectBtnLabel) {
-        return this.selectBtnLabel
+    const submitBtnLabel = computed(() => {
+      if (props.selectBtnLabel) return props.selectBtnLabel
+
+      if (props.isLocationPicker) {
+        return props.areResourcesSelected
+          ? proxy?.$gettext('Select folder')
+          : proxy?.$gettext('Select current folder')
       }
 
-      if (this.isLocationPicker) {
-        return this.areResourcesSelected
-          ? this.$gettext('Select folder')
-          : this.$gettext('Select current folder')
-      }
+      return proxy?.$gettext('Select resources')
+    })
 
-      return this.$gettext('Select resources')
+    const emitGoBack = () => {
+      emit('go-back')
     }
-  },
 
-  methods: {
-    openFolder(path) {
-      this.$emit('openFolder', path)
-    },
-
-    select() {
-      this.$emit('select')
-    },
-
-    cancel() {
-      this.$emit('cancel')
+    const select = () => {
+      emit('select')
     }
+
+    const cancel = () => {
+      emit('cancel')
+    }
+
+    return { folderName, disabledSelectBtnTooltip, submitBtnLabel, emitGoBack, select, cancel }
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+.btn-return {
+  align-items: center;
+  background: transparent;
+  border: none;
+  display: flex;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
   }
 }
-</script>
+</style>

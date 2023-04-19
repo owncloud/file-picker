@@ -1,4 +1,4 @@
-import { loadConfig } from '@/helpers/config'
+import { loadConfig } from '~/src/helpers/config'
 
 const exampleConfig = {
   server: 'https://own.cloud/',

@@ -1,59 +1,59 @@
 <template>
   <oc-table-simple data-testid="list-resources-table">
     <oc-tr
-      v-for="resource in resources"
-      :key="resource.viewId"
+      v-for="resource in resourcesSorted"
+      :key="resource.fileId"
       :class="rowClasses(resource)"
       :data-testid="`list-resources-row-${resource.id}`"
-      @click.native="toggleResourceSelection(resource)"
+      @click.native="() => toggleResourceSelection(resource)"
     >
-      <oc-td class="oc-pm uk-display-relative" width="shrink">
+      <oc-td class="oc-pm oc-display-relative" width="shrink">
         <oc-checkbox
           v-if="!isLocationPicker"
-          class="file-picker-resource-checkbox uk-margin-small-left"
+          class="file-picker-resource-checkbox oc-margin-small-left"
           :data-testid="`list-resources-checkbox-${resource.id}`"
           :value="isResourceSelected(resource)"
           :label="selectLabel(resource.name)"
           :hide-label="true"
           @click.native.stop
-          @input="toggleResourceSelection(resource)"
+          @input="() => toggleResourceSelection(resource)"
         />
         <button
           v-else-if="isLocationPicker && resource.type === 'folder'"
           class="file-picker-btn-sr-select"
           tabindex="0"
-          @click="selectLocation(resource)"
+          @click="() => selectLocation(resource)"
           v-text="selectLabel(resource.name)"
         />
       </oc-td>
-      <oc-td class="oc-pm">
-        <resource
-          class="file-picker-resource uk-width-auto"
-          :item="resource"
+      <oc-td class="oc-py-s oc-pr-m">
+        <base-resource
+          data-testid="resource"
+          class="oc-width-auto"
+          :resource="resource"
           @navigate="openFolder"
+          @open-share="openShare"
         />
       </oc-td>
     </oc-tr>
   </oc-table-simple>
 </template>
 
-<script>
+<script lang="ts">
 import path from 'path'
+import { computed, defineComponent, getCurrentInstance, PropType, ref } from 'vue'
+import { Resource } from '@ownclouders/web-client'
 
-import { sortByName } from '../helpers/sort'
+import { SortDir, sortHelper } from '../helpers/sort'
 
-import Resource from './Resource.vue'
+import BaseResource from '~/src/components/BaseResource.vue'
 
-export default {
-  name: 'ListResources',
-
-  components: {
-    Resource
-  },
+export default defineComponent({
+  components: { BaseResource },
 
   props: {
     resources: {
-      type: Array,
+      type: Array as PropType<Resource[]>,
       required: true
     },
     isLocationPicker: {
@@ -63,87 +63,100 @@ export default {
     }
   },
 
-  data: () => ({
-    selectedResources: []
-  }),
+  emits: ['selectResources', 'openFolder', 'selectLocation', 'open-share'],
 
-  computed: {
-    resourcesSorted() {
-      return this.sortResources(this.resources)
+  setup(props, { emit }) {
+    const { proxy } = getCurrentInstance() || {}
+
+    const selectedResources = ref([])
+
+    const resourcesSorted = computed(() => sortResources(props.resources))
+
+    const resetResourceSelection = () => {
+      selectedResources.value = []
+      emit('selectResources', [])
     }
-  },
 
-  methods: {
-    openFolder(path) {
-      this.resetResourceSelection()
-      this.$emit('openFolder', path)
-    },
+    const openFolder = (path: string) => {
+      resetResourceSelection()
+      emit('openFolder', path)
+    }
 
-    toggleResourceSelection(resource) {
-      if (this.isRowDisabled(resource)) {
-        return
-      }
+    const openShare = (share: { path: string; shareId: string }) => {
+      resetResourceSelection()
+      emit('open-share', share)
+    }
 
-      if (this.isResourceSelected(resource)) {
+    const toggleResourceSelection = (resource) => {
+      if (isRowDisabled(resource)) return
+
+      if (isResourceSelected(resource)) {
         // Always pass as an array so the final product doesn't have to differentiate between two different types
-        this.isLocationPicker
-          ? (this.selectedResources = [])
-          : this.selectedResources.splice(this.selectedResources.indexOf(resource), 1)
+        props.isLocationPicker
+          ? (selectedResources.value = [])
+          : selectedResources.value.splice(selectedResources.value.indexOf(resource), 1)
       } else {
-        this.isLocationPicker
-          ? (this.selectedResources = [resource])
-          : this.selectedResources.push(resource)
+        props.isLocationPicker
+          ? (selectedResources.value = [resource])
+          : selectedResources.value.push(resource)
       }
 
-      this.$emit('selectResources', this.selectedResources)
-    },
+      emit('selectResources', selectedResources.value)
+    }
 
-    selectLabel(name) {
-      const translated = this.$gettext('Select %{ name }')
+    const selectLabel = (name) => {
+      const translated = proxy?.$gettext('Select %{ name }')
 
-      return this.$gettextInterpolate(translated, { name: path.basename(name) })
-    },
+      return proxy.$gettextInterpolate(translated, { name: path.basename(name) })
+    }
 
-    isResourceSelected(resource) {
-      return this.selectedResources.indexOf(resource) > -1
-    },
+    const isResourceSelected = (resource) => {
+      return selectedResources.value.indexOf(resource) > -1
+    }
 
-    isRowDisabled(resource) {
-      if (this.isLocationPicker) {
+    const isRowDisabled = (resource) => {
+      if (props.isLocationPicker) {
         return resource.type !== 'folder' || resource.canCreate() === false
       }
 
       return resource.canShare() === false
-    },
+    }
 
-    rowClasses(resource) {
-      const classes = ['oc-file-picker-row']
+    const rowClasses = (resource) => {
+      const classes = ['oc-file-picker-row oc-border-t']
 
-      if (this.isResourceSelected(resource)) {
+      if (isResourceSelected(resource)) {
         classes.push('oc-background-selected')
       }
 
-      this.isRowDisabled(resource)
+      isRowDisabled(resource)
         ? classes.push('files-list-row-disabled')
         : classes.push('oc-cursor-pointer')
 
       return classes
-    },
+    }
 
-    sortResources(resources) {
-      return resources.sort(sortByName)
-    },
+    const sortResources = (resources) => {
+      return sortHelper<Resource>(resources, [{ name: 'name' }], 'name', SortDir.Asc)
+    }
 
-    resetResourceSelection() {
-      this.selectedResources = []
-      this.$emit('selectResources', [])
-    },
+    const selectLocation = (location) => {
+      emit('selectLocation', [location])
+    }
 
-    selectLocation(location) {
-      this.$emit('selectLocation', [location])
+    return {
+      selectedResources,
+      resourcesSorted,
+      openFolder,
+      openShare,
+      selectLocation,
+      rowClasses,
+      selectLabel,
+      toggleResourceSelection,
+      isResourceSelected
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

@@ -1,16 +1,44 @@
-import { mount, createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+
+import resources from '../fixtures/resources'
 
 import { listResources } from '../helpers/mocks'
 import { stubs } from '../helpers/stubs'
 
-import FilePicker from '@/components/FilePicker.vue'
+import FilePicker from '~/src/components/FilePicker.vue'
 
-const localVue = createLocalVue()
+const mockFocus = jest.fn()
 
-localVue.prototype.$client = {
-  files: {
-    list: listResources
-  }
+function mockA11yComposable() {
+  return { focusAndAnnounceBreadcrumb: mockFocus }
+}
+
+jest.mock('~/src/composables/useA11y', () => mockA11yComposable)
+
+const SELECTORS = Object.freeze({
+  headerList: '[data-testid="list-header"]',
+  listResources: '[data-testid="list-resources"]'
+})
+
+const getWrapper = ({ props } = {}) => {
+  const wrapper = shallowMount(FilePicker, {
+    propsData: { variation: 'resource', ...props },
+    stubs,
+    provide: {
+      client: { value: {} },
+      webdav: {
+        value: {
+          listFiles: listResources
+        }
+      },
+      sdk: { value: {} },
+      config: { value: {} },
+      capabilities: { value: { capabilities: {} } },
+      user: { value: {} }
+    }
+  })
+
+  return wrapper
 }
 
 describe('File picker', () => {
@@ -20,87 +48,44 @@ describe('File picker', () => {
     await wrapper.vm.$nextTick()
   }
 
-  it('renders a list of resources', async () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource'
-      },
-      stubs
-    })
+  it('loads root folder on init', async () => {
+    const wrapper = getWrapper()
 
     await waitTillItemsLoaded(wrapper)
 
-    expect(wrapper.findAll('[filename="ownCloud Manual.pdf"]').length).toEqual(1)
-  })
-
-  it('renders the select button with the provided label', () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource',
-        selectBtnLabel: 'TestLabel'
-      },
-      stubs
-    })
-
-    expect(wrapper.findAll('.file-picker-btn-select-resources').length).toBe(1)
-    expect(wrapper.find('.file-picker-btn-select-resources').text()).toBe('TestLabel')
+    expect(listResources).toHaveBeenCalledWith({ driveType: 'personal' }, { path: '/' })
   })
 
   it('emits selected resources', async () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource'
-      },
-      stubs
-    })
+    const wrapper = getWrapper()
 
     await waitTillItemsLoaded(wrapper)
 
     // For test purpose set only the folder name instead of the whole object
-    await wrapper.setData({ selectedResources: 'Documents' })
+    wrapper.find(SELECTORS.listResources).vm.$emit('selectResources', ['Documents'])
 
     // Emit click event instead of calling `trigger()` due to stubbed component
-    wrapper.find('.file-picker-btn-select-resources').vm.$emit('click')
-
-    await wrapper.vm.$nextTick()
+    wrapper.find(SELECTORS.headerList).vm.$emit('select')
 
     // Need to access nested array
     expect(wrapper.emitted().select[0][0]).toContain('Documents')
   })
 
-  it('emits a cancel event on button click', async () => {
-    const wrapper = mount(FilePicker, {
-      localVue,
-      propsData: {
-        variation: 'resource',
+  it('emits a cancel event on cancel', () => {
+    const wrapper = getWrapper({
+      props: {
         cancelBtnLabel: 'Cancel'
-      },
-      stubs
+      }
     })
 
-    // Emit click event instead of calling `trigger()` due to stubbed component
-    wrapper.find('.file-picker-btn-cancel').vm.$emit('click')
+    wrapper.find(SELECTORS.headerList).vm.$emit('cancel')
 
-    await wrapper.vm.$nextTick()
-
-    expect(wrapper.emitted().cancel).toBeTruthy()
+    expect(wrapper.emitted()).toHaveProperty('cancel')
   })
 
   describe('emits events after loading folders in location variant', () => {
-    const createWrapper = () =>
-      shallowMount(FilePicker, {
-        localVue,
-        propsData: {
-          variation: 'location'
-        },
-        stubs
-      })
-
     it('emits "update" with argument of type array', async () => {
-      const wrapper = createWrapper()
+      const wrapper = getWrapper({ props: { variation: 'location' } })
 
       await waitTillItemsLoaded(wrapper)
 
@@ -108,47 +93,34 @@ describe('File picker', () => {
     })
 
     it('emits "folderLoaded" with current folder as an argument', async () => {
-      const wrapper = createWrapper()
+      const wrapper = getWrapper({ props: { variation: 'location' } })
 
       await waitTillItemsLoaded(wrapper)
 
-      expect(wrapper.emitted().folderLoaded[0][0].id).toEqual('144055')
+      expect(wrapper.emitted().folderLoaded[0][0].id).toEqual(resources['/'][0].id)
     })
   })
 
   describe('has focus management', () => {
     describe('initial folder load', () => {
       it('does not focus last breadcrumb item if initial focus is disabled', async () => {
-        const wrapper = shallowMount(FilePicker, {
-          localVue,
-          propsData: {
-            variation: 'resource'
-          },
-          stubs
-        })
-
-        wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()
+        const wrapper = getWrapper()
 
         await waitTillItemsLoaded(wrapper)
 
-        expect(wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb).not.toHaveBeenCalled()
+        expect(mockFocus).not.toHaveBeenCalled()
       })
 
       it('focuses last breadcrumb item if initial focus is disabled', async () => {
-        const wrapper = shallowMount(FilePicker, {
-          localVue,
-          propsData: {
-            variation: 'resource',
+        const wrapper = getWrapper({
+          props: {
             isInitialFocusEnabled: true
-          },
-          stubs
+          }
         })
-
-        wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb = jest.fn()
 
         await waitTillItemsLoaded(wrapper)
 
-        expect(wrapper.vm.$_accessibility_focusAndAnnounceBreadcrumb).toHaveBeenCalled()
+        expect(mockFocus).toHaveBeenCalled()
       })
     })
   })

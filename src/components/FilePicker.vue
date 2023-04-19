@@ -1,6 +1,7 @@
 <template>
-  <div class="uk-flex uk-height-1-1 uk-flex-column uk-overflow-hidden">
+  <div class="oc-flex oc-height-1-1 oc-flex-column oc-overflow-hidden">
     <list-header
+      data-testid="list-header"
       :current-folder="currentFolder"
       :is-select-btn-enabled="isSelectBtnEnabled"
       :is-select-btn-displayed="isSelectBtnDisplayed"
@@ -8,52 +9,75 @@
       :are-resources-selected="areResourcesSelected"
       :select-btn-label="selectBtnLabel"
       :cancel-btn-label="cancelBtnLabel"
-      @openFolder="loadFolder"
       @select="emitSelectBtnClick"
       @cancel="emitCancel"
+      @go-back="goBack"
     />
     <div
       v-if="state === 'loading'"
       key="loading-message"
-      class="uk-flex uk-flex-1 uk-flex-middle uk-flex-center"
+      class="oc-flex oc-flex-1 oc-flex-middle oc-flex-center"
     >
       <oc-spinner :aria-label="$gettext('Loading resources')" />
     </div>
-    <list-resources
-      v-if="state === 'loaded'"
-      key="resources-list"
-      class="uk-flex-1 oc-border"
-      :resources="resources"
-      :is-location-picker="isLocationPicker"
-      @openFolder="loadFolder"
-      @selectResources="selectResources"
-      @selectLocation="emitSelectBtnClick"
-    />
+
+    <template v-if="state === 'loaded'">
+      <spaces-list
+        v-if="currentFolder === null && drives.length > 0"
+        key="list-spaces"
+        :spaces="spaces"
+        @open-space="openSpace"
+      />
+      <list-resources
+        v-else
+        key="resources-list"
+        data-testid="list-resources"
+        class="oc-flex-1"
+        :resources="resources"
+        :is-location-picker="isLocationPicker"
+        @openFolder="loadFolder"
+        @selectResources="selectResources"
+        @selectLocation="emitSelectBtnClick"
+        @open-share="openShare"
+      />
+    </template>
   </div>
 </template>
 
-<script>
-import { buildResource } from '@/helpers/resources'
+<script lang="ts">
+import { computed, defineComponent, getCurrentInstance, inject, nextTick, Ref, ref } from 'vue'
+import { client as webClient } from '@ownclouders/web-client'
+import { webdav as initWebdav } from '@ownclouders/web-client/src/webdav'
+import {
+  buildShareSpaceResource,
+  buildSpace as buildDrive,
+  SpaceResource,
+  User
+} from '@ownclouders/web-client/src/helpers'
+import { OwnCloudSdk } from '@ownclouders/web-client/src/types'
+import { Capabilities } from '@ownclouders/web-client/src/ocs'
+
+import { buildSharedResource } from '~/src/helpers/resources'
+import { buildSpace, Space } from '~/src/helpers/spaces'
+
+import useA11y from '~/src/composables/useA11y'
+
 import ListResources from './ListResources.vue'
 import ListHeader from './ListHeader.vue'
+import SpacesList from './SpacesList.vue'
 
-import MixinAccessibility from '@/mixins/accessibility'
+import { FilePickerConfig } from '~/types/file-picker'
 
-export default {
+export default defineComponent({
   name: 'FilePicker',
 
-  components: {
-    ListHeader,
-    ListResources
-  },
-
-  mixins: [MixinAccessibility],
+  components: { ListHeader, ListResources, SpacesList },
 
   props: {
     variation: {
       type: String,
       required: true,
-      validator: (value) => value === 'resource' || 'location'
+      validator: (value) => value === 'resource' || value === 'location'
     },
     selectBtnLabel: {
       type: String,
@@ -77,97 +101,217 @@ export default {
     }
   },
 
-  data: () => ({
-    state: 'loading',
-    resources: [],
-    currentFolder: null,
-    selectedResources: [],
-    davProperties: [
-      '{http://owncloud.org/ns}permissions',
-      '{http://owncloud.org/ns}favorite',
-      '{http://owncloud.org/ns}fileid',
-      '{http://owncloud.org/ns}owner-id',
-      '{http://owncloud.org/ns}owner-display-name',
-      '{http://owncloud.org/ns}share-types',
-      '{http://owncloud.org/ns}privatelink',
-      '{DAV:}getcontentlength',
-      '{http://owncloud.org/ns}size',
-      '{DAV:}getlastmodified',
-      '{DAV:}getetag',
-      '{DAV:}resourcetype'
-    ],
-    isInitial: true
-  }),
+  emits: ['select', 'cancel', 'update', 'folderLoaded'],
 
-  computed: {
-    isSelectBtnEnabled() {
-      return this.isLocationPicker || this.areResourcesSelected
-    },
+  setup(props, { emit }) {
+    let currentSpace = null
+    let isInitial = true
 
-    isLocationPicker() {
-      return this.variation === 'location'
-    },
+    const { proxy } = getCurrentInstance() || {}
+    const { focusAndAnnounceBreadcrumb } = useA11y()
 
-    areResourcesSelected() {
-      return this.selectedResources.length > 0
+    const client = inject<Ref<ReturnType<typeof webClient>>>('client')
+    const webdav = inject<Ref<ReturnType<typeof initWebdav>>>('webdav')
+    const sdk = inject<Ref<OwnCloudSdk>>('sdk')
+    const config = inject<Ref<FilePickerConfig>>('config')
+    const user = inject<Ref<User>>('user')
+    const capabilities = inject<Ref<Capabilities>>('capabilities')
+
+    const state = ref('loading')
+    const resources = ref([])
+    const currentFolder = ref(null)
+    const spaces = ref<Space[]>([])
+    const drives = ref<SpaceResource[]>([])
+    const selectedResources = ref([])
+
+    const isLocationPicker = computed(() => props.variation === 'location')
+
+    const areResourcesSelected = computed(() => selectedResources.value.length > 0)
+
+    const isSelectBtnEnabled = computed(() => isLocationPicker.value || areResourcesSelected.value)
+
+    const loadDrives = async () => {
+      state.value = 'loading'
+
+      try {
+        const {
+          data: { value }
+        } = await client.value.graph.drives.listMyDrives('name')
+
+        drives.value = value.map(buildDrive)
+        spaces.value = value.filter((drive) => drive.driveType === 'project').map(buildSpace)
+        state.value = 'loaded'
+
+        if ((isInitial && props.isInitialFocusEnabled) || !isInitial) {
+          nextTick(() => focusAndAnnounceBreadcrumb(resources.value.length))
+        }
+
+        isInitial = false
+      } catch (error) {
+        console.error(error)
+
+        state.value = 'failed'
+      }
     }
-  },
 
-  created() {
-    this.loadFolder('/')
-  },
+    const loadFolder = async (path: string) => {
+      state.value = 'loading'
 
-  methods: {
-    loadFolder(path) {
-      this.state = 'loading'
+      try {
+        const { resource, children } = await webdav.value.listFiles(currentSpace, { path })
 
-      this.$client.files
-        .list(decodeURIComponent(path), 1, this.davProperties)
-        .then((resources) => {
-          resources = resources.map((resource) => buildResource(resource))
-          this.resources = resources.splice(1)
-          this.currentFolder = resources[0]
+        console.log(path, currentSpace.driveType)
 
-          if (this.isLocationPicker) {
-            this.$emit('update', [this.currentFolder])
+        currentFolder.value =
+          resource.path === '/' && currentSpace.driveType === 'personal'
+            ? { ...resource, name: proxy?.$gettext('Personal') }
+            : resource
+        resources.value = children
+
+        if (isLocationPicker.value) {
+          emit('update', [currentFolder.value])
+        }
+
+        emit('folderLoaded', currentFolder.value)
+
+        state.value = 'loaded'
+
+        if ((isInitial && props.isInitialFocusEnabled) || !isInitial) {
+          nextTick(() => focusAndAnnounceBreadcrumb(resources.value.length))
+        }
+
+        isInitial = false
+      } catch (error) {
+        console.error(error)
+
+        state.value = 'failed'
+      }
+    }
+
+    const openShare = ({ path, shareId }: { path: string; shareId: string }) => {
+      const [shareName, ...item] = path.replace(/^[\/]/, '').split('/').slice(1)
+
+      currentSpace = buildShareSpaceResource({
+        shareId,
+        serverUrl: config.value.server,
+        shareName: encodeURIComponent(shareName)
+      })
+
+      loadFolder(item.join('/'))
+    }
+
+    const loadShares = async () => {
+      const res = await sdk.value.shares.getShares('', { shared_with_me: true, state: 'accepted' })
+
+      currentFolder.value = {
+        name: proxy?.$gettext('Shares'),
+        path: '/'
+      }
+      resources.value = res.map((share) => buildSharedResource(share.shareInfo))
+    }
+
+    const openSpace = (space: Space) => {
+      if (space.id === 'shares') {
+        loadShares()
+
+        return
+      }
+
+      currentSpace =
+        drives.value.find((drive) => {
+          if (space.id === 'personal') {
+            return drive.driveType === 'personal'
           }
 
-          this.$emit('folderLoaded', this.currentFolder)
+          return drive.id === space.id
+        }) || {}
 
-          this.state = 'loaded'
+      nextTick(() => {
+        loadFolder('/')
+      })
+    }
 
-          if ((this.isInitial && this.isInitialFocusEnabled) || !this.isInitial) {
-            this.$nextTick(() =>
-              this.$_accessibility_focusAndAnnounceBreadcrumb(this.resources.length)
-            )
-          }
+    const goBack = () => {
+      if (currentFolder.value === null) return
 
-          this.isInitial = false
-        })
-        .catch((error) => {
-          console.error(error)
+      if (currentFolder.value.path === '/') {
+        if (currentSpace?.driveType === 'share') {
+          loadShares()
 
-          this.state = 'failed'
-        })
-    },
+          nextTick(() => {
+            currentSpace = null
+          })
 
-    selectResources(resources) {
-      this.selectedResources = resources
-      this.$emit('update', resources)
-    },
+          return
+        }
 
-    emitSelectBtnClick() {
+        currentFolder.value = null
+        currentSpace = null
+
+        return
+      }
+
+      const parentFolderPath = currentFolder.value.path.slice(
+        0,
+        currentFolder.value.path.lastIndexOf('/')
+      )
+
+      loadFolder(parentFolderPath)
+    }
+
+    const selectResources = (resources) => {
+      selectedResources.value = resources
+      emit('update', resources)
+    }
+
+    const emitSelectBtnClick = () => {
       const resources =
-        this.selectedResources.length < 1 && this.isLocationPicker
-          ? [this.currentFolder]
-          : this.selectedResources
+        selectedResources.value.length < 1 && isLocationPicker.value
+          ? [currentFolder.value]
+          : selectedResources.value
 
-      this.$emit('select', resources)
-    },
+      emit('select', resources)
+    }
 
-    emitCancel() {
-      this.$emit('cancel')
+    const emitCancel = () => {
+      emit('cancel')
+    }
+
+    // Init
+    if (capabilities.value.capabilities.spaces?.enabled) {
+      loadDrives()
+    } else {
+      currentSpace = buildDrive({
+        id: user.value.id,
+        driveAlias: `personal/${user.value.id}`,
+        driveType: 'personal',
+        name: proxy?.$gettext('All Files') || 'All Files',
+        serverUrl: config.value.server,
+        webDavPath: `/files/${user.value.id}`
+      })
+
+      nextTick(() => {
+        loadFolder('/')
+      })
+    }
+
+    return {
+      state,
+      resources,
+      currentFolder,
+      spaces,
+      drives,
+      isSelectBtnEnabled,
+      isLocationPicker,
+      areResourcesSelected,
+      openSpace,
+      loadFolder,
+      openShare,
+      goBack,
+      selectResources,
+      emitSelectBtnClick,
+      emitCancel
     }
   }
-}
+})
 </script>
