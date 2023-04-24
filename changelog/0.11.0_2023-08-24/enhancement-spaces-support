@@ -1,0 +1,9 @@
+Enhancement: Spaces support
+
+We've brought support for the "Spaces" feature of ownCloud Infinite Scale to the file picker.
+
+https://github.com/owncloud/file-picker/issues/194
+https://github.com/owncloud/file-picker/pull/198
+https://github.com/owncloud/file-picker/pull/199
+https://github.com/owncloud/file-picker/pull/201
+https://github.com/owncloud/file-picker/pull/203
