@@ -1,13 +1,14 @@
-# Changelog for [unreleased] (UNRELEASED)
+# Changelog for [0.11.0] (2023-08-24)
 
-The following sections list the changes in ownCloud File picker unreleased.
+The following sections list the changes in ownCloud File picker 0.11.0.
 
-[unreleased]: https://github.com/owncloud/file-picker/compare/v0.10.0...master
+[0.11.0]: https://github.com/owncloud/file-picker/compare/v0.10.0...v0.11.0
 
 ## Summary
 
 * Bugfix - Update dependencies: [#86](https://github.com/owncloud/file-picker/pull/86)
 * Bugfix - Authentication fixes: [#92](https://github.com/owncloud/file-picker/pull/92)
+* Enhancement - Spaces support: [#194](https://github.com/owncloud/file-picker/issues/194)
 
 ## Details
 
@@ -24,6 +25,17 @@ The following sections list the changes in ownCloud File picker unreleased.
    token is already expired.
 
    https://github.com/owncloud/file-picker/pull/92
+
+
+* Enhancement - Spaces support: [#194](https://github.com/owncloud/file-picker/issues/194)
+
+   We've brought support for the "Spaces" feature of ownCloud Infinite Scale to the file picker.
+
+   https://github.com/owncloud/file-picker/issues/194
+   https://github.com/owncloud/file-picker/pull/198
+   https://github.com/owncloud/file-picker/pull/199
+   https://github.com/owncloud/file-picker/pull/201
+   https://github.com/owncloud/file-picker/pull/203
 
 # Changelog for [0.10.0] (2021-08-05)
 
