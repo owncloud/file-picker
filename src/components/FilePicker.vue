@@ -160,8 +160,6 @@ export default defineComponent({
       try {
         const { resource, children } = await webdav.value.listFiles(currentSpace, { path })
 
-        console.log(path, currentSpace.driveType)
-
         currentFolder.value =
           resource.path === '/' && currentSpace.driveType === 'personal'
             ? { ...resource, name: proxy?.$gettext('Personal') }

@@ -1,0 +1,5 @@
+Enhancement: Token event
+
+We're emitting a `token` event with the current access token whenever the access token gets updated internally.
+
+https://github.com/owncloud/file-picker/pull/205

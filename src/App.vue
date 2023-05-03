@@ -139,7 +139,7 @@ export default {
     }
   },
 
-  emits: ['update', 'select', 'cancel', 'folderLoaded'],
+  emits: ['update', 'select', 'cancel', 'folderLoaded', 'token'],
 
   setup(props, { emit }) {
     let authInstance = null
@@ -213,18 +213,22 @@ export default {
         user.value = login
 
         state.value = 'authorized'
+
+        emit('token', token)
       } catch (error) {
         console.error(error)
       }
     }
 
     const updateBearerToken = async () => {
-      let token = await authInstance.getToken()
-      token = token.startsWith('Bearer') ? token : `Bearer ${token}`
+      const token = await authInstance.getToken()
+      const auth = token.startsWith('Bearer') ? token : `Bearer ${token}`
 
-      axiosInstance.defaults.headers.common.Authorization = token
+      axiosInstance.defaults.headers.common.Authorization = auth
 
-      sdk.value.helpers.setAuthorization(token)
+      sdk.value.helpers.setAuthorization(auth)
+
+      emit('token', token)
     }
 
     const checkUserAuthentication = async () => {
