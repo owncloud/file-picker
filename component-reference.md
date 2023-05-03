@@ -34,3 +34,4 @@ geekdocFilePath: component-reference.md
 | `select` | Resources array | Emitted when the select button is clicked |
 | `cancel` | Native click event object | Emitted when the cancel button is clicked |
 | `folderLoaded` | Current folder object | Emitted when loading of a folder has ended |
+| `token` | Current access token | Emitted when the access token gets set after authentication or renewal |
