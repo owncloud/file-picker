@@ -1,3 +1,22 @@
+# Changelog for [unreleased] (UNRELEASED)
+
+The following sections list the changes in ownCloud File picker unreleased.
+
+[unreleased]: https://github.com/owncloud/file-picker/compare/v0.11.0...master
+
+## Summary
+
+* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
+
+## Details
+
+* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
+
+   We're emitting a `token` event with the current access token whenever the access token gets
+   updated internally.
+
+   https://github.com/owncloud/file-picker/pull/205
+
 # Changelog for [0.11.0] (2023-08-24)
 
 The following sections list the changes in ownCloud File picker 0.11.0.
