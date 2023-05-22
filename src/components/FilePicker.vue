@@ -101,7 +101,7 @@ export default defineComponent({
     }
   },
 
-  emits: ['select', 'cancel', 'update', 'folderLoaded'],
+  emits: ['authError', 'cancel', 'folderLoaded', 'select', 'update'],
 
   setup(props, { emit }) {
     let currentSpace = null
@@ -181,6 +181,9 @@ export default defineComponent({
         isInitial = false
       } catch (error) {
         console.error(error)
+        if (error?.response?.status === 401) {
+          emit('authError')
+        }
 
         state.value = 'failed'
       }
