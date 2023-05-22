@@ -215,8 +215,11 @@ export default {
         state.value = 'authorized'
 
         emit('token', token)
+
+        return true
       } catch (error) {
         console.error(error)
+        return false
       }
     }
 
@@ -229,24 +232,6 @@ export default {
       sdk.value.helpers.setAuthorization(auth)
 
       emit('token', token)
-    }
-
-    const checkUserAuthentication = async () => {
-      if (await authInstance.isAuthenticated()) {
-        // If the user is authenticated, we add event listener when he's updated to automatically update the token
-        authInstance.mgr.events.addUserLoaded(() => {
-          updateBearerToken()
-        })
-
-        return initApp()
-      }
-
-      state.value = 'unauthorized'
-
-      // If the user is not authenticated, we add event listener when he logs in to automatically init the application afterwards
-      authInstance.mgr.events.addUserLoaded(() => {
-        initApp()
-      })
     }
 
     const initAuthentication = async () => {
@@ -268,7 +253,22 @@ export default {
         return
       }
 
-      checkUserAuthentication()
+      authInstance.mgr.events.addUserLoaded(() => {
+        if (state.value === 'authorized') {
+          updateBearerToken()
+        } else {
+          initApp()
+        }
+      })
+
+      if (await authInstance.isAuthenticated()) {
+        if (await initApp()) {
+          return
+        }
+        await authInstance.mgr.clearStaleState()
+      }
+
+      state.value = 'unauthorized'
     }
 
     const authenticate = () => {

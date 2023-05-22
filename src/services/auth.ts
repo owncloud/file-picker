@@ -89,12 +89,12 @@ export function initVueAuthenticate(config) {
     })
 
     mgr.events.addSilentRenewError(() => {
-      mgr.clearStaleState()
+      return mgr.clearStaleState()
     })
 
     return {
-      authenticate() {
-        mgr.clearStaleState()
+      async authenticate() {
+        await mgr.clearStaleState()
         return mgr.signinPopup()
       },
 
