@@ -17,10 +17,11 @@
       :is-select-btn-displayed="isSelectBtnDisplayed"
       :cancel-btn-label="cancelBtnLabel"
       :is-initial-focus-enabled="isInitialFocusEnabled"
-      @update="selectResources"
-      @select="emitSelectBtnClick"
+      @auth-error="handleAuthError"
       @cancel="cancel"
-      @folderLoaded="onFolderLoaded"
+      @folder-loaded="onFolderLoaded"
+      @select="emitSelectBtnClick"
+      @update="selectResources"
     />
   </div>
 </template>
@@ -170,11 +171,25 @@ export default {
       authInstance.mgr.signinPopupCallback()
     }
 
-    const get_axios_instance = (token) => {
+    const handleAuthError = async () => {
+      if (authInstance) {
+        await authInstance.mgr.clearStaleState()
+        state.value = 'unauthorized'
+      }
+    }
+
+    const createAxiosInstance = (token) => {
       const instance = axios.create({
         headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
       })
-
+      instance.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          if (error?.response?.status === 401) {
+            return handleAuthError()
+          }
+        }
+      )
       return instance
     }
 
@@ -199,7 +214,7 @@ export default {
     const initApp = async () => {
       try {
         const token = await authInstance.getToken()
-        axiosInstance = get_axios_instance(token)
+        axiosInstance = createAxiosInstance(token)
         const _client = webClient(config.value.server, axiosInstance)
         // const { data: userData } = await _client.graph.users.getMe()
 
@@ -215,8 +230,11 @@ export default {
         state.value = 'authorized'
 
         emit('token', token)
+
+        return true
       } catch (error) {
         console.error(error)
+        return false
       }
     }
 
@@ -229,24 +247,6 @@ export default {
       sdk.value.helpers.setAuthorization(auth)
 
       emit('token', token)
-    }
-
-    const checkUserAuthentication = async () => {
-      if (await authInstance.isAuthenticated()) {
-        // If the user is authenticated, we add event listener when he's updated to automatically update the token
-        authInstance.mgr.events.addUserLoaded(() => {
-          updateBearerToken()
-        })
-
-        return initApp()
-      }
-
-      state.value = 'unauthorized'
-
-      // If the user is not authenticated, we add event listener when he logs in to automatically init the application afterwards
-      authInstance.mgr.events.addUserLoaded(() => {
-        initApp()
-      })
     }
 
     const initAuthentication = async () => {
@@ -268,7 +268,25 @@ export default {
         return
       }
 
-      checkUserAuthentication()
+      authInstance.mgr.events.addUserLoaded(() => {
+        if (state.value === 'authorized') {
+          updateBearerToken()
+        } else {
+          initApp()
+        }
+      })
+
+      authInstance.mgr.events.addSilentRenewError(() => {
+        handleAuthError()
+      })
+
+      if (await authInstance.isAuthenticated()) {
+        if (await initApp()) {
+          return
+        }
+        await authInstance.mgr.clearStaleState()
+      }
+      state.value = 'unauthorized'
     }
 
     const authenticate = () => {
@@ -321,7 +339,8 @@ export default {
       authenticate,
       emitSelectBtnClick,
       onFolderLoaded,
-      selectResources
+      selectResources,
+      handleAuthError
     }
   }
 }
