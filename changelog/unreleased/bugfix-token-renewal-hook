@@ -1,0 +1,7 @@
+Bugfix: Reduce requests on token renewal
+
+We've fixed a bug that caused always re-fetching the logged in user and the server capabilities on token renewal
+under certain circumstances. Now the logged in user and the server capabilities are only fetched once after
+successful authentication.
+
+https://github.com/owncloud/file-picker/pull/211

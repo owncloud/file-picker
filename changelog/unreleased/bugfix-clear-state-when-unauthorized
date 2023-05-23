@@ -1,0 +1,8 @@
+Bugfix: Clear state when unauthorized
+
+The filepicker now reacts to `401` responses by resetting the internal authentication state to `unauthorized`,
+forcing the user to log in again.
+This situation can happen when an access token that's not expired, yet, was invalidated server side (e.g. through
+a backchannel logout or session inactivity) and would previously lead to a broken application state.
+
+https://github.com/owncloud/file-picker/pull/211
