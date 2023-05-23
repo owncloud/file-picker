@@ -6,9 +6,30 @@ The following sections list the changes in ownCloud File picker unreleased.
 
 ## Summary
 
+* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
+* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
 * Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
 
 ## Details
+
+* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
+
+   The filepicker now reacts to `401` responses by resetting the internal authentication state
+   to `unauthorized`, forcing the user to log in again. This situation can happen when an access
+   token that's not expired, yet, was invalidated server side (e.g. through a backchannel logout
+   or session inactivity) and would previously lead to a broken application state.
+
+   https://github.com/owncloud/file-picker/pull/211
+
+
+* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
+
+   We've fixed a bug that caused always re-fetching the logged in user and the server capabilities
+   on token renewal under certain circumstances. Now the logged in user and the server
+   capabilities are only fetched once after successful authentication.
+
+   https://github.com/owncloud/file-picker/pull/211
+
 
 * Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
 
