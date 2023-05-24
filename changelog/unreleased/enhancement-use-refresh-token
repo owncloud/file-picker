@@ -1,0 +1,5 @@
+Enhancement: Use refresh token on init
+
+We've added a silent token renewal attempt during filepicker initialization. This way the user doesn't need to log in again if there still is a valid refresh token in the local storage.
+
+https://github.com/owncloud/file-picker/pull/213

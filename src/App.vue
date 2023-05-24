@@ -280,6 +280,14 @@ export default {
         handleAuthError()
       })
 
+      if (authInstance.isOfflineAccessSupported()) {
+        try {
+          await authInstance.mgr.signinSilent()
+        } catch (ignored) {
+          // not needed to log a failed silent sign in try. if it fails we show the login prompt anyway.
+        }
+      }
+
       if (await authInstance.isAuthenticated()) {
         if (await initApp()) {
           return
