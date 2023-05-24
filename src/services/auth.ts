@@ -116,6 +116,10 @@ export function initVueAuthenticate(config) {
         return !!user?.access_token
       },
 
+      isOfflineAccessSupported() {
+        return openIdConfig?.scope?.includes('offline_access')
+      },
+
       mgr
     }
   }
