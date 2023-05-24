@@ -9,6 +9,7 @@ The following sections list the changes in ownCloud File picker unreleased.
 * Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
 * Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
 * Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
+* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
 
 ## Details
 
@@ -37,6 +38,14 @@ The following sections list the changes in ownCloud File picker unreleased.
    updated internally.
 
    https://github.com/owncloud/file-picker/pull/205
+
+
+* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
+
+   We've added a silent token renewal attempt during filepicker initialization. This way the
+   user doesn't need to log in again if there still is a valid refresh token in the local storage.
+
+   https://github.com/owncloud/file-picker/pull/213
 
 # Changelog for [0.11.0] (2023-08-24)
 
