@@ -35,7 +35,8 @@
     "preview:oc10": "cp -r ./examples/oc10/ ./dist/wc && vite preview --mode web-component",
     "lint": "eslint",
     "test:unit": "BABEL_ENV=test TEST_MODE=unit jest --config ./jest.config.cjs",
-    "test:integration": "BABEL_ENV=test TEST_MODE=integration jest --config ./jest.config.cjs"
+    "test:integration": "BABEL_ENV=test TEST_MODE=integration jest --config ./jest.config.cjs",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -48,6 +49,7 @@
     "@ownclouders/eslint-config": "^0.0.1",
     "@ownclouders/prettier-config": "^0.0.1",
     "@ownclouders/tsconfig": "^0.0.4",
+    "@playwright/test": "^1.35.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/vue": "^5.9.0",
     "@types/events": "^3.0.0",
