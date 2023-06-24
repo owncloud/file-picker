@@ -20,7 +20,7 @@
         />
         <button
           v-else-if="isLocationPicker && resource.type === 'folder'"
-          class="file-picker-btn-sr-select"
+          class="oc-file-picker-file-picker-btn-sr-select"
           tabindex="0"
           @click="() => selectLocation(resource)"
           v-text="selectLabel(resource.name)"
@@ -130,7 +130,7 @@ export default defineComponent({
       }
 
       isRowDisabled(resource)
-        ? classes.push('files-list-row-disabled')
+        ? classes.push('oc-file-picker-files-list-row-disabled')
         : classes.push('oc-cursor-pointer')
 
       return classes
@@ -158,26 +158,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss">
-.files-list-row-disabled {
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-.file-picker-btn-sr-select {
-  position: absolute;
-  z-index: -1;
-  top: var(--oc-space-xsmall);
-  left: var(--oc-space-xsmall);
-  opacity: 0;
-  white-space: nowrap;
-  pointer-events: none;
-
-  &:focus {
-    opacity: 1;
-    z-index: 1;
-    pointer-events: auto;
-  }
-}
-</style>

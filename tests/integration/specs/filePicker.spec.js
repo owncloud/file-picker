@@ -55,7 +55,7 @@ describe('Users can select location from within the file picker', () => {
     expect(await screen.findByText('Invoices')).toBeVisible()
     expect(screen.getByText('readme')).toBeVisible()
     expect(screen.getByTestId(SELECTORS.listRow(resources['/Documents'][2].id))).toHaveClass(
-      'files-list-row-disabled'
+      'oc-file-picker-files-list-row-disabled'
     )
 
     await fireEvent.click(screen.getByTestId(SELECTORS.listRow(resources['/Documents'][1].id)))

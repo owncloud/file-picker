@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+@import '../node_modules/owncloud-design-system/dist/system/system.css';
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -12,6 +14,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+* {
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 a {
@@ -64,6 +70,53 @@ button:focus-visible {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+.oc-file-picker-btn-return {
+  align-items: center;
+  background: transparent;
+  border: none;
+  display: flex;
+  padding: 0;
+}
+
+.oc-file-picker-btn-return:hover {
+  cursor: pointer;
+}
+
+.oc-file-picker-files-list-row-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.oc-file-picker-file-picker-btn-sr-select {
+  position: absolute;
+  z-index: -1;
+  top: var(--oc-space-xsmall);
+  left: var(--oc-space-xsmall);
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.oc-file-picker-file-picker-btn-sr-select:focus {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.oc-file-picker-btn-space {
+  align-items: center;
+  background: transparent;
+  border: none;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.oc-file-picker-btn-space:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 @media (prefers-color-scheme: light) {

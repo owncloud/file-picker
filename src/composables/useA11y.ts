@@ -4,7 +4,7 @@ const useA11y = () => {
   const { proxy } = getCurrentInstance() || {}
 
   const focusAndAnnounceBreadcrumb = (itemsCount) => {
-    const activeBreadcrumb: HTMLButtonElement = document.querySelector('.btn-return')
+    const activeBreadcrumb: HTMLButtonElement = document.querySelector('.oc-file-picker-btn-return')
 
     if (!activeBreadcrumb) {
       return

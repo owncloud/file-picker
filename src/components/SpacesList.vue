@@ -1,19 +1,25 @@
 <template>
   <oc-list>
     <li class="oc-px-m oc-py-s">
-      <button class="btn-space" @click="() => openSpace('personal', $gettext('Personal'))">
+      <button
+        class="oc-file-picker-btn-space"
+        @click="() => openSpace('personal', $gettext('Personal'))"
+      >
         <oc-icon name="resource-type-folder" size="large" />
         <span v-text="$gettext('Personal')" />
       </button>
     </li>
     <li class="oc-border-t oc-p-m">
-      <button class="btn-space" @click="() => openSpace('shares', $gettext('Shares'))">
+      <button
+        class="oc-file-picker-btn-space"
+        @click="() => openSpace('shares', $gettext('Shares'))"
+      >
         <oc-icon name="share-forward" size="large" />
         <span v-text="$gettext('Shares')" />
       </button>
     </li>
     <li v-for="space in spaces" :key="space.id" class="oc-border-t oc-p-m">
-      <button class="btn-space" @click="() => openSpace(space.id, space.name)">
+      <button class="oc-file-picker-btn-space" @click="() => openSpace(space.id, space.name)">
         <oc-icon name="layout-grid" size="large" />
         <span v-text="space.name" />
       </button>
@@ -43,19 +49,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped lang="scss">
-.btn-space {
-  align-items: center;
-  background: transparent;
-  border: none;
-  display: flex;
-  gap: 0.5rem;
-  padding: 0;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-}
-</style>

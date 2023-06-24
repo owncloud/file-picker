@@ -56,7 +56,6 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: mode === 'library' ? './dist/lib' : './dist/wc',
-      cssCodeSplit: false,
       lib: mode === 'library' ? lib : wc,
       emptyOutDir: false,
       minify: false,
