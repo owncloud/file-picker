@@ -33,6 +33,10 @@ export default defineConfig(({ mode }) => {
           {
             src: path.resolve(__dirname, './node_modules/owncloud-design-system/dist/system/icons'),
             dest: path.resolve(__dirname, mode === 'library' ? './dist/lib/' : './dist/wc/')
+          },
+          {
+            src: path.resolve(__dirname, './node_modules/owncloud-design-system/dist/system/fonts'),
+            dest: path.resolve(__dirname, mode === 'library' ? './dist/lib/' : './dist/wc/')
           }
         ]
       })
