@@ -213,7 +213,7 @@ export default {
 
     const initApp = async () => {
       try {
-        const token = await authInstance.getToken()
+        const token = props.bearerToken || (await authInstance.getToken())
         axiosInstance = createAxiosInstance(token)
         const _client = webClient(config.value.server, axiosInstance)
         // const { data: userData } = await _client.graph.users.getMe()
