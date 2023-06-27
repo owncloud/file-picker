@@ -117,7 +117,7 @@ export default defineComponent({
           : proxy?.$gettext('Select current folder')
       }
 
-      return proxy?.$gettext('Select resources')
+      return proxy?.$gettext('Choose')
     })
 
     const emitGoBack = () => {
