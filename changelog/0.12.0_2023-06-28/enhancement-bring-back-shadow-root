@@ -1,0 +1,5 @@
+Enhancement: Bring back shadowRoot
+
+We've brought back the `shadowRoot` functionality of custom elements to encapsulate the styles inside of it. This will now prevent any leak of the styles to the parent document.
+
+https://github.com/owncloud/file-picker/pull/222

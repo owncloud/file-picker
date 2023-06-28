@@ -1,0 +1,5 @@
+Enhancement: Drop UIkit from examples
+
+We've dropped the last imports of UIkit inside of oCIS and oC examples. UIkit will no longer be imported anymore.
+
+https://github.com/owncloud/file-picker/pull/219

@@ -1,0 +1,5 @@
+Bugfix: Use bearerToken prop when set
+
+We've fixed a bug causing the `bearerToken` prop not being used when it is passed to the File picker. It will no longer try to get the token from the authentication instance and trigger an error blocking the load of the File picker.
+
+https://github.com/owncloud/file-picker/pull/218

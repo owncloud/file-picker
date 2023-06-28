@@ -1,0 +1,6 @@
+Enhancement: Rename select action label in resource picker
+
+We've renamed the label of the select action (previously "Select resource") to "Choose". This label is only visible when the File picker is set to type "resource".
+
+https://github.com/owncloud/file-picker/issues/194
+https://github.com/owncloud/file-picker/pull/220
