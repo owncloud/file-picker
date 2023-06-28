@@ -353,13 +353,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/* Import oC CI font and design system styles */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
-@import '../node_modules/owncloud-design-system/dist/system/system.css';
-
-* {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-</style>

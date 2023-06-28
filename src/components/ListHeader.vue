@@ -4,7 +4,7 @@
       <button
         v-if="currentFolder !== null"
         data-testid="btn-return"
-        class="btn-return"
+        class="oc-file-picker-btn-return"
         :aria-label="$gettext('Go back')"
         @click="emitGoBack"
       >
@@ -136,17 +136,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.btn-return {
-  align-items: center;
-  background: transparent;
-  border: none;
-  display: flex;
-  padding: 0;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-</style>

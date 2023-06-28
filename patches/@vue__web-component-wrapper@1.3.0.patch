@@ -1,26 +1,41 @@
 diff --git a/dist/vue-wc-wrapper.js b/dist/vue-wc-wrapper.js
-index 721bf1f13b0deca95e11d8b6803ccedda0a77cfc..71698d43bb0277214f7f30c1a3c58fa7aeb99cef 100644
+index 721bf1f13b0deca95e11d8b6803ccedda0a77cfc..87a7f33b2ab70b68a9929e092673c0a14437ba5a 100644
 --- a/dist/vue-wc-wrapper.js
 +++ b/dist/vue-wc-wrapper.js
-@@ -167,12 +167,10 @@ function wrap (Vue, Component) {
-   class CustomElement extends HTMLElement {
-     constructor () {
-       const self = super();
--      self.attachShadow({ mode: 'open' });
+@@ -95,7 +95,7 @@ function getAttributes (node) {
+   return res
+ }
  
+-function wrap (Vue, Component) {
++function wrap (Vue, Component, styles) {
+   const isAsync = typeof Component === 'function' && !Component.cid;
+   let isInitialized = false;
+   let hyphenatedPropsList;
+@@ -169,6 +169,13 @@ function wrap (Vue, Component) {
+       const self = super();
+       self.attachShadow({ mode: 'open' });
+ 
++      if (styles) {
++        const style = document.createElement("style");
++        style.textContent = styles;
++
++        self.shadowRoot.appendChild(style);
++      }
++
        const wrapper = self._wrapper = new Vue({
          name: 'shadow-root',
          customElement: self,
--        shadowRoot: self.shadowRoot,
-         data () {
-           return {
-             props: {},
-@@ -246,7 +244,7 @@ function wrap (Vue, Component) {
-           this.childNodes
-         ));
-         wrapper.$mount();
--        this.shadowRoot.appendChild(wrapper.$el);
-+        this.appendChild(wrapper.$el);
-       } else {
-         callHooks(this.vueComponent, 'activated');
-       }
+diff --git a/types/index.d.ts b/types/index.d.ts
+index 8b67b7b2d18a46cd8bbc99b41029e8e103f3b80d..d2c44980eaff6cfbc3605dd9511cf3e0443a7275 100644
+--- a/types/index.d.ts
++++ b/types/index.d.ts
+@@ -2,7 +2,8 @@ import _Vue, { Component, AsyncComponent } from 'vue'
+ 
+ declare function wrap(
+   Vue: typeof _Vue,
+-  Component: Component | AsyncComponent
++  Component: Component | AsyncComponent,
++  styles: string
+ ): HTMLElement
+ 
+ export default wrap

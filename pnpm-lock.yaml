@@ -1,8 +1,12 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 patchedDependencies:
   '@vue/web-component-wrapper@1.3.0':
-    hash: csvc6t6c3ulreayfl2jme6puzu
+    hash: erqkam5owipsdictyyzedrkumq
     path: patches/@vue__web-component-wrapper@1.3.0.patch
 
 dependencies:
@@ -11,7 +15,7 @@ dependencies:
     version: 0.0.1(axios@0.27.2)(lodash-es@4.17.21)
   '@vue/web-component-wrapper':
     specifier: ^1.3.0
-    version: 1.3.0(patch_hash=csvc6t6c3ulreayfl2jme6puzu)
+    version: 1.3.0(patch_hash=erqkam5owipsdictyyzedrkumq)
   axios:
     specifier: ^0.27.2
     version: 0.27.2
@@ -2666,7 +2670,7 @@ packages:
       - whiskers
     dev: true
 
-  /@vue/web-component-wrapper@1.3.0(patch_hash=csvc6t6c3ulreayfl2jme6puzu):
+  /@vue/web-component-wrapper@1.3.0(patch_hash=erqkam5owipsdictyyzedrkumq):
     resolution: {integrity: sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==}
     dev: false
     patched: true
