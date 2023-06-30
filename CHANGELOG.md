@@ -1,57 +1,8 @@
-# Changelog for [unreleased] (UNRELEASED)
-
-The following sections list the changes in ownCloud File picker unreleased.
-
-[unreleased]: https://github.com/owncloud/file-picker/compare/v0.11.0...master
-
-## Summary
-
-* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
-* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
-* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
-* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
-
-## Details
-
-* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
-
-   The filepicker now reacts to `401` responses by resetting the internal authentication state
-   to `unauthorized`, forcing the user to log in again. This situation can happen when an access
-   token that's not expired, yet, was invalidated server side (e.g. through a backchannel logout
-   or session inactivity) and would previously lead to a broken application state.
-
-   https://github.com/owncloud/file-picker/pull/211
-
-
-* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
-
-   We've fixed a bug that caused always re-fetching the logged in user and the server capabilities
-   on token renewal under certain circumstances. Now the logged in user and the server
-   capabilities are only fetched once after successful authentication.
-
-   https://github.com/owncloud/file-picker/pull/211
-
-
-* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
-
-   We're emitting a `token` event with the current access token whenever the access token gets
-   updated internally.
-
-   https://github.com/owncloud/file-picker/pull/205
-
-
-* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
-
-   We've added a silent token renewal attempt during filepicker initialization. This way the
-   user doesn't need to log in again if there still is a valid refresh token in the local storage.
-
-   https://github.com/owncloud/file-picker/pull/213
-
 # Changelog for [0.11.0] (2023-08-24)
 
 The following sections list the changes in ownCloud File picker 0.11.0.
 
-[0.11.0]: https://github.com/owncloud/file-picker/compare/v0.10.0...v0.11.0
+[0.11.0]: https://github.com/owncloud/file-picker/compare/v0.12.0...v0.11.0
 
 ## Summary
 
@@ -85,6 +36,104 @@ The following sections list the changes in ownCloud File picker 0.11.0.
    https://github.com/owncloud/file-picker/pull/199
    https://github.com/owncloud/file-picker/pull/201
    https://github.com/owncloud/file-picker/pull/203
+
+# Changelog for [0.12.0] (2023-06-30)
+
+The following sections list the changes in ownCloud File picker 0.12.0.
+
+[0.12.0]: https://github.com/owncloud/file-picker/compare/v0.10.0...v0.12.0
+
+## Summary
+
+* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
+* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
+* Bugfix - Use bearerToken prop when set: [#218](https://github.com/owncloud/file-picker/pull/218)
+* Enhancement - Rename select action label in resource picker: [#194](https://github.com/owncloud/file-picker/issues/194)
+* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
+* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
+* Enhancement - Drop UIkit from examples: [#219](https://github.com/owncloud/file-picker/pull/219)
+* Enhancement - Bring back shadowRoot: [#222](https://github.com/owncloud/file-picker/pull/222)
+* Enhancement - Use Inter font: [#222](https://github.com/owncloud/file-picker/pull/222)
+
+## Details
+
+* Bugfix - Clear state when unauthorized: [#211](https://github.com/owncloud/file-picker/pull/211)
+
+   The filepicker now reacts to `401` responses by resetting the internal authentication state
+   to `unauthorized`, forcing the user to log in again. This situation can happen when an access
+   token that's not expired, yet, was invalidated server side (e.g. through a backchannel logout
+   or session inactivity) and would previously lead to a broken application state.
+
+   https://github.com/owncloud/file-picker/pull/211
+
+
+* Bugfix - Reduce requests on token renewal: [#211](https://github.com/owncloud/file-picker/pull/211)
+
+   We've fixed a bug that caused always re-fetching the logged in user and the server capabilities
+   on token renewal under certain circumstances. Now the logged in user and the server
+   capabilities are only fetched once after successful authentication.
+
+   https://github.com/owncloud/file-picker/pull/211
+
+
+* Bugfix - Use bearerToken prop when set: [#218](https://github.com/owncloud/file-picker/pull/218)
+
+   We've fixed a bug causing the `bearerToken` prop not being used when it is passed to the File
+   picker. It will no longer try to get the token from the authentication instance and trigger an
+   error blocking the load of the File picker.
+
+   https://github.com/owncloud/file-picker/pull/218
+
+
+* Enhancement - Rename select action label in resource picker: [#194](https://github.com/owncloud/file-picker/issues/194)
+
+   We've renamed the label of the select action (previously "Select resource") to "Choose". This
+   label is only visible when the File picker is set to type "resource".
+
+   https://github.com/owncloud/file-picker/issues/194
+   https://github.com/owncloud/file-picker/pull/220
+
+
+* Enhancement - Token event: [#205](https://github.com/owncloud/file-picker/pull/205)
+
+   We're emitting a `token` event with the current access token whenever the access token gets
+   updated internally.
+
+   https://github.com/owncloud/file-picker/pull/205
+
+
+* Enhancement - Use refresh token on init: [#213](https://github.com/owncloud/file-picker/pull/213)
+
+   We've added a silent token renewal attempt during filepicker initialization. This way the
+   user doesn't need to log in again if there still is a valid refresh token in the local storage.
+
+   https://github.com/owncloud/file-picker/pull/213
+
+
+* Enhancement - Drop UIkit from examples: [#219](https://github.com/owncloud/file-picker/pull/219)
+
+   We've dropped the last imports of UIkit inside of oCIS and oC examples. UIkit will no longer be
+   imported anymore.
+
+   https://github.com/owncloud/file-picker/pull/219
+
+
+* Enhancement - Bring back shadowRoot: [#222](https://github.com/owncloud/file-picker/pull/222)
+
+   We've brought back the `shadowRoot` functionality of custom elements to encapsulate the
+   styles inside of it. This will now prevent any leak of the styles to the parent document.
+
+   https://github.com/owncloud/file-picker/pull/222
+
+
+* Enhancement - Use Inter font: [#222](https://github.com/owncloud/file-picker/pull/222)
+
+   We've added the Inter font into the File picker bundle so that it can be imported by the app. This
+   aligns the File picker with ownCloud Web. The font is imported automatically. Developers need
+   to only make sure that the font is available at path `/fonts/inter.css` and
+   `/fonts/inter.ttf`
+
+   https://github.com/owncloud/file-picker/pull/222
 
 # Changelog for [0.10.0] (2021-08-05)
 
