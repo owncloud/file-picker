@@ -1,0 +1,5 @@
+Enhancement: Use Inter font
+
+We've added the Inter font into the File picker bundle so that it can be imported by the app. This aligns the File picker with ownCloud Web. The font is imported automatically. Developers need to only make sure that the font is available at path `/fonts/inter.css` and `/fonts/inter.ttf`
+
+https://github.com/owncloud/file-picker/pull/222
