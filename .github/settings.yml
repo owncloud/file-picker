@@ -84,10 +84,10 @@ branches:
         dismiss_stale_reviews: false
         require_code_owner_reviews: false
         dismissal_restrictions: {}
-      required_status_checks:
-        strict: true
-        contexts:
-          - continuous-integration/drone/pr
+        bypass_pull_request_allowances:
+          users: []
+          teams:
+            - ci
       enforce_admins: false
       restrictions:
         users: []
