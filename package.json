@@ -51,7 +51,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/vue": "^5.9.0",
     "@types/events": "^3.0.0",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.4.8",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
     "@vitejs/plugin-vue2": "^2.2.0",
     "@vue/babel-preset-app": "^5.0.8",
