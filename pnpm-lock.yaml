@@ -33,7 +33,7 @@ dependencies:
     version: 2.4.0
   oidc-client-ts:
     specifier: ^2.2.2
-    version: 2.2.2
+    version: 2.2.4
   owncloud-sdk:
     specifier: 3.1.0-alpha.4
     version: 3.1.0-alpha.4(axios@0.27.2)(cross-fetch@3.1.5)(promise@8.3.0)(qs@6.11.1)(utf8@3.0.0)(uuid@8.3.2)(webdav@4.10.0)(xml-js@1.6.11)
@@ -6755,8 +6755,8 @@ packages:
       es-abstract: 1.21.2
     dev: true
 
-  /oidc-client-ts@2.2.2:
-    resolution: {integrity: sha512-tEpnC1xQX6PMhnDMNEvDhpqnsu0buh29b/sA9a1I5tq6lD87wRAW1rTj49B2+5925I0sQlvU64DoK0Pxeiu7Dg==}
+  /oidc-client-ts@2.2.4:
+    resolution: {integrity: sha512-nOZwIomju+AmXObl5Oq5PjrES/qTt8bLsENJCIydVgi9TEWk7SCkOU6X3RNkY7yfySRM1OJJvDKdREZdmnDT2g==}
     engines: {node: '>=12.13.0'}
     dependencies:
       crypto-js: 4.1.1
