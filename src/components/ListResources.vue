@@ -1,5 +1,16 @@
 <template>
   <oc-table-simple data-testid="list-resources-table">
+    <oc-tr>
+      <oc-td>
+        <oc-checkbox
+          class="file-picker-resource-checkbox oc-margin-small-left"
+          :hide-label="true"
+          :value="selectAllChecked"
+          @click.native.stop
+          @input="toggleSelectAll"
+        />
+      </oc-td>
+    </oc-tr>
     <oc-tr
       v-for="resource in resourcesSorted"
       :key="resource.fileId"
@@ -41,7 +52,7 @@
 
 <script lang="ts">
 import path from 'path'
-import { computed, defineComponent, getCurrentInstance, PropType, ref } from 'vue'
+import { computed, defineComponent, getCurrentInstance, PropType, ref, unref } from 'vue'
 import { Resource } from '@ownclouders/web-client'
 
 import { SortDir, sortHelper } from '../helpers/sort'
@@ -144,6 +155,23 @@ export default defineComponent({
       emit('selectLocation', [location])
     }
 
+    const toggleSelectAll = () => {
+      console.log(unref(selectAllChecked))
+      if (unref(selectAllChecked) === true) {
+        resetResourceSelection()
+        selectAllChecked.value = false
+        return
+      }
+      selectedResources.value = []
+      unref(resourcesSorted).forEach((r: Resource) => {
+        selectedResources.value.push(r)
+        emit('selectResources', selectedResources.value)
+      })
+      selectAllChecked.value = true
+    }
+
+    const selectAllChecked = ref(false)
+
     return {
       selectedResources,
       resourcesSorted,
@@ -153,7 +181,9 @@ export default defineComponent({
       rowClasses,
       selectLabel,
       toggleResourceSelection,
-      isResourceSelected
+      isResourceSelected,
+      toggleSelectAll,
+      selectAllChecked
     }
   }
 })
