@@ -156,7 +156,6 @@ export default defineComponent({
     }
 
     const toggleSelectAll = () => {
-      console.log(unref(selectAllChecked))
       if (unref(selectAllChecked) === true) {
         resetResourceSelection()
         selectAllChecked.value = false
