@@ -157,8 +157,9 @@ def website(ctx):
             'from_secret': 'github_token',
           },
           'pages_directory': 'docs/',
-	  'copy_contents': 'true',
+          'copy_contents': 'true',
           'target_branch': 'docs',
+          'delete': 'true',
         },
         'when': {
           'ref': {
