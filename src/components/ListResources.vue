@@ -1,7 +1,7 @@
 <template>
   <oc-table-simple data-testid="list-resources-table">
     <oc-tr>
-      <oc-td>
+      <oc-th>
         <oc-checkbox
           class="file-picker-resource-checkbox oc-margin-small-left"
           :hide-label="true"
@@ -9,7 +9,7 @@
           @click.native.stop
           @input="toggleSelectAll"
         />
-      </oc-td>
+      </oc-th>
     </oc-tr>
     <oc-tr
       v-for="resource in resourcesSorted"
@@ -155,18 +155,17 @@ export default defineComponent({
       emit('selectLocation', [location])
     }
 
+    const areAllResourcesSelected = computed(() => {
+      return selectedResources.value.length === unref(resourcesSorted).length
+    })
+
     const toggleSelectAll = () => {
-      if (unref(selectAllChecked) === true) {
+      if (unref(areAllResourcesSelected) === true) {
         resetResourceSelection()
-        selectAllChecked.value = false
-        return
-      }
-      selectedResources.value = []
-      unref(resourcesSorted).forEach((r: Resource) => {
-        selectedResources.value.push(r)
+      } else {
+        selectedResources.value = unref(resourcesSorted).slice()
         emit('selectResources', selectedResources.value)
-      })
-      selectAllChecked.value = true
+      }
     }
 
     const selectAllChecked = ref(false)
