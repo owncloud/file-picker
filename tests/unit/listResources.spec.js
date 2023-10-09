@@ -20,10 +20,26 @@ describe('List resources', () => {
 
     wrapper.findAll(SELECTORS.resource).at(0).vm.$emit('navigate')
 
-    // Wait twice to give the list of resources enough time to render
     await wrapper.vm.$nextTick()
 
-    // Need to access nested array
     expect(wrapper.emitted().selectResources[0][0].length).toEqual(0)
+  })
+
+  it('should be able to select/deselect all resources using computed', async () => {
+    const wrapper = getWrapper()
+
+    await wrapper.setData({ selectedResources: [] })
+
+    // Test the "select all" scenario
+    await wrapper.vm.toggleSelectAll()
+    expect(wrapper.vm.selectedResources).toEqual(resources['/'])
+
+    // Wait for next tick to confirm emission
+    await wrapper.vm.$nextTick()
+    expect(wrapper.emitted().selectResources[0][0]).toEqual(resources['/'])
+
+    // Test the "deselect all" scenario
+    await wrapper.vm.toggleSelectAll()
+    expect(wrapper.vm.selectedResources).toEqual([])
   })
 })
