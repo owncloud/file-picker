@@ -5,7 +5,7 @@
         <oc-checkbox
           class="file-picker-resource-checkbox oc-margin-small-left"
           :hide-label="true"
-          :value="selectAllChecked"
+          :value="areAllResourcesSelected"
           @click.native.stop
           @input="toggleSelectAll"
         />
@@ -168,8 +168,6 @@ export default defineComponent({
       }
     }
 
-    const selectAllChecked = ref(false)
-
     return {
       selectedResources,
       resourcesSorted,
@@ -181,7 +179,7 @@ export default defineComponent({
       toggleResourceSelection,
       isResourceSelected,
       toggleSelectAll,
-      selectAllChecked
+      areAllResourcesSelected
     }
   }
 })
