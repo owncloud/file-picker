@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project has been discontinued in favour of the [Web embed mode](https://owncloud.dev/clients/web/embed-mode/).
+
 # ownCloud File picker
 Easily integrate ownCloud into your own web applications.
 
