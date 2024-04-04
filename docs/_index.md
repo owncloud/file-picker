@@ -8,5 +8,9 @@ geekdocFilePath: _index.md
 geekdocCollapseSection: true
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 Easily integrate ownCloud into your own product.
 https://github.com/owncloud/file-picker

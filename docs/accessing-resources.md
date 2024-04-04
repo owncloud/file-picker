@@ -7,6 +7,10 @@ geekdocEditPath: edit/master/docs
 geekdocFilePath: accessing-resources.md
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 {{< toc >}}
 
 If using File picker as a web component, it is returning selected resources via events called `select` and `update`. To access them, you need to set an event listener where you'll be able to get them as part of the response of the callback function.

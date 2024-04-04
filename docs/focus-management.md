@@ -6,6 +6,10 @@ geekdocEditPath: edit/master/docs
 geekdocFilePath: focus-management.md
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 {{< toc >}}
 
 File Picker comes only with partial focus management. If you want to focus an element, it needs to be achieved through a code in the consuming app.
