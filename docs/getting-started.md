@@ -7,6 +7,10 @@ geekdocEditPath: edit/master/docs
 geekdocFilePath: getting-started.md
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 {{< toc >}}
 
 ownCloud File picker is a web component which can be integrated into existing web applications. It connects to an ownCloud server and enables a user to select resources which are then provided in a response of a fired event. Visit [installation]({{< ref "installation.md" >}}) to see how to integrate the File picker into your product.

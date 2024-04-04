@@ -6,6 +6,10 @@ geekdocEditPath: edit/master/docs
 geekdocFilePath: customising.md
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 {{< toc >}}
 
 It is possible to customise certain parts of the File Picker with the help of props.

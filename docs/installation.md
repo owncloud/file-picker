@@ -7,6 +7,10 @@ geekdocEditPath: edit/master/docs
 geekdocFilePath: installation.md
 ---
 
+{{< hint type=warning title="Deprecation Notice" >}}
+The File Picker development has been discontinued in favour of the [Web Embed Mode](https://owncloud.dev/clients/web/embed-mode/).
+{{< /hint >}}
+
 {{< toc >}}
 
 ## Setup authentication
