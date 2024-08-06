@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 
 public/file-picker-config.json
+/test-results/
+/playwright-report/
+/playwright/.cache/
