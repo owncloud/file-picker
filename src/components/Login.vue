@@ -11,7 +11,7 @@
             $gettext('Please, click the button below to authenticate and get access to your data.')
           "
         />
-        <oc-button variation="primary" @click="login">
+        <oc-button data-testid="btn-login" variation="primary" @click="login">
           {{ $gettext('Log in') }}
         </oc-button>
       </div>
