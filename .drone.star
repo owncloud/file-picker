@@ -11,13 +11,9 @@ def main(ctx):
 
   dependsOn(before, stages)
 
-  after = [
-    notify(),
-  ]
+  dependsOn(stages)
 
-  dependsOn(stages, after)
-
-  return before + stages + after
+  return before + stages
 
 def changelog(ctx):
   repo_slug = ctx.build.source_repo if ctx.build.source_repo else ctx.repo.slug
@@ -199,38 +195,6 @@ def website(ctx):
     },
   }
 
-def notify():
-  return {
-    'kind': 'pipeline',
-    'type': 'docker',
-    'name': 'chat-notification',
-    'clone': {
-      'disable': True
-    },
-    'steps': [
-      {
-        'name': 'notify-rocketchat',
-        'image': 'plugins/slack:1',
-        'pull': 'always',
-        'settings': {
-          'webhook': {
-            'from_secret': 'private_rocketchat'
-          },
-          'channel': 'builds'
-        }
-      },
-    ],
-    'depends_on': [],
-    'trigger': {
-      'ref': [
-        'refs/tags/**'
-      ],
-      'status': [
-        'success',
-        'failure'
-      ]
-    },
-  }
 
 def tests(ctx):
   return {
