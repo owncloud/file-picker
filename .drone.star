@@ -206,14 +206,14 @@ def tests(ctx):
     'steps': [
       {
         'name': 'install',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm install --frozen-lockfile',
         ],
       },
       {
         'name': 'lint',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm lint',
         ],
@@ -221,7 +221,7 @@ def tests(ctx):
       },
       {
         'name': 'build',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm build',
         ],
@@ -229,7 +229,7 @@ def tests(ctx):
       },
       {
         'name': 'unit',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm test:unit'
         ],
@@ -237,7 +237,7 @@ def tests(ctx):
       },
       {
         'name': 'integration',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm test:integration'
         ],
@@ -266,7 +266,7 @@ def release(ctx):
     'steps': [
       {
         'name': 'build',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm install --frozen-lockfile',
           'pnpm build'
