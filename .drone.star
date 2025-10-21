@@ -11,8 +11,6 @@ def main(ctx):
 
   dependsOn(before, stages)
 
-  dependsOn(stages)
-
   return before + stages
 
 def changelog(ctx):
