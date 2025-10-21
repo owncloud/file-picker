@@ -11,13 +11,7 @@ def main(ctx):
 
   dependsOn(before, stages)
 
-  after = [
-    notify(),
-  ]
-
-  dependsOn(stages, after)
-
-  return before + stages + after
+  return before + stages
 
 def changelog(ctx):
   repo_slug = ctx.build.source_repo if ctx.build.source_repo else ctx.repo.slug
@@ -199,38 +193,6 @@ def website(ctx):
     },
   }
 
-def notify():
-  return {
-    'kind': 'pipeline',
-    'type': 'docker',
-    'name': 'chat-notification',
-    'clone': {
-      'disable': True
-    },
-    'steps': [
-      {
-        'name': 'notify-rocketchat',
-        'image': 'plugins/slack:1',
-        'pull': 'always',
-        'settings': {
-          'webhook': {
-            'from_secret': 'private_rocketchat'
-          },
-          'channel': 'builds'
-        }
-      },
-    ],
-    'depends_on': [],
-    'trigger': {
-      'ref': [
-        'refs/tags/**'
-      ],
-      'status': [
-        'success',
-        'failure'
-      ]
-    },
-  }
 
 def tests(ctx):
   return {
@@ -244,14 +206,14 @@ def tests(ctx):
     'steps': [
       {
         'name': 'install',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm install --frozen-lockfile',
         ],
       },
       {
         'name': 'lint',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm lint',
         ],
@@ -259,7 +221,7 @@ def tests(ctx):
       },
       {
         'name': 'build',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm build',
         ],
@@ -267,7 +229,7 @@ def tests(ctx):
       },
       {
         'name': 'unit',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm test:unit'
         ],
@@ -275,7 +237,7 @@ def tests(ctx):
       },
       {
         'name': 'integration',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm test:integration'
         ],
@@ -304,7 +266,7 @@ def release(ctx):
     'steps': [
       {
         'name': 'build',
-        'image': 'owncloudci/nodejs:16',
+        'image': 'owncloudci/nodejs:18',
         'commands': [
           'pnpm install --frozen-lockfile',
           'pnpm build'
